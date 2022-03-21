@@ -7,3 +7,4 @@
 * __Substrate runtime__: It's like `wasm`, `bytecode` for other blockchain networks.
 
 # References
+* [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
