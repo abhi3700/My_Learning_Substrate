@@ -1,10 +1,14 @@
 # Substrate
 
 ## Terminology
-* __Relay chain__: The Polkadot super chain which is connected to different parachains.
-* __Parachain__: The side-chains which are connected to the main Polkadot relay chain.
-* __Collator__: Validator for Polkadot parachain
-* __Substrate runtime__: It's like `wasm`, `bytecode` for other blockchain networks.
+
+- **Relay chain**: The Polkadot super chain which is connected to different parachains.
+- **Parachain**: The side-chains which are connected to the main Polkadot relay chain.
+- **Collator**: Validator for Polkadot parachain
+- **Substrate runtime**: It's like `wasm`, `bytecode` for other blockchain networks.
 
 # References
-* [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
+
+- [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
+
+* [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
