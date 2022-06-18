@@ -29,11 +29,40 @@ There are different FRAME pallets to choose from in order to add into runtime.
 
 ![](img/anatomy_of_substrate_node.png)
 
+For networking, substrate use `libp2p` protocol (developed by IPFS creators).
+
+![](img/polkadot_modules.png)
+
+![](img/substrate_node_template.png)
+
+Using this template, we can start a chain locally. [repo](https://github.com/substrate-developer-hub/substrate-node-template).
+
+Using the front-end template, we can view the information on a website. [repo](https://github.com/substrate-developer-hub/substrate-front-end-template).
+
+Substrate pallets:
+![](img/substrate_pallet.png)
+
+The development workflow to pallet:
+![](img/workflow_to_pallet.png)
+
+where, sp: substrate pallet, sc: substrate client
+
+## Auction
+
+In Polkadot, in order to secure a slot, a project/parachain has to bid in the auction. This auction has no end time. The winning is completely based on the highest amounts in terms of ranking.
+
+This auction is similar to Candle auction in 16th century.
+
+![](img/polkadot_auction.png)
+
+There is also a feature of crowdloan where anyone holding DOT can lend to project/parachain. And after the auction period is over, the DOTs are returned back to the owners permissionlessly.
+
 ## Tools
 
 ![](img/built_with_substrate.png)
 
 - [Substrate](./substrate/)
+  - [playground](https://playground.substrate.dev/): setup w/o local PC.
 - [Telemetry](https://telemetry.polkadot.io/): View all the nodes running polkadot.
 - Polkadot explorer
   - polkascan: https://explorer.polkascan.io/polkadot

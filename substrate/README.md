@@ -7,8 +7,14 @@
 - **Collator**: Validator for Polkadot parachain
 - **Substrate runtime**: It's like `wasm`, `bytecode` for other blockchain networks.
 
-# References
+## Tutorial
+
+Try out the following tutorials:
+
+- [kitties-tutorial](https://learn.figment.io/tutorials/substrate-kitties-setup), [doc in PDF](tuts/Figment%20Learn%20_%20Substrate%20Kitties%20-%20Basic%20Setup.pdf)
+
+## References
 
 - [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
 
-* [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
+- [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
