@@ -7,7 +7,25 @@
 - **Collator**: Validator for Polkadot parachain
 - **Substrate runtime**: It's like `wasm`, `bytecode` for other blockchain networks.
 
-## Tutorial
+## ink!
+
+## Comparo with EVM
+
+| EVM Stack                          |
+| ---------------------------------- |
+| ![EVM stack](../img/evm_stack.png) |
+
+| Substrate Stack                 |
+| ------------------------------- |
+| ![](../img/substrate_stack.png) |
+
+![](../img/evm_vs_substrate_opcodes.png)
+
+## Architecture
+
+![](../img/substrate_arch.png)
+
+## Tutorials
 
 Try out the following tutorials:
 

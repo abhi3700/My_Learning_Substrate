@@ -18,7 +18,8 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
 
 ## Development
 
-- Substrate allows the different features of Polkadot as it allows a modular design.
+- Substrate allows the different features of Polkadot as it allows a modular design with pallets. Using different pallets like balance, account, transaction, block, consensus one can create own parachain.
+- Substrate (by default) has a `WASM` runtime but it also allows to create a custom runtime like `EVM` using pallet programming. So, if someone wants to create a `EVM` runtime for running EVM SCs, then a set of pallet (account, balance, consensus, etc.) has to be created in order to join them together & form the required runtime for a parachain with that runtime.
 - `FRAME` is the library which is used to build DApps.
 
 ![](img/substrate_structure.png)
