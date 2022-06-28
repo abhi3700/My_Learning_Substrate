@@ -21,9 +21,19 @@
 
 ![](../img/evm_vs_substrate_opcodes.png)
 
+## Why Rust
+
+- Able to write safe code, at compile-time (done using `$ cargo check`), rather than run-time failures in C++
+- Fast
+- High level compared to C++
+
+> NOTE: Any language can be chosen for Substrate. Parity, Web3 foundation is inclined towards Rust.
+
 ## Architecture
 
 ![](../img/substrate_arch.png)
+
+Substrate is modular & extensive. Each module is called "Pallet".
 
 ## Tutorials
 
@@ -33,6 +43,10 @@ Try out the following tutorials:
 
 ## References
 
-- [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
+- [Documentation | By Parity](https://docs.substrate.io/main-docs/)
+- [Substrate StackExchange](https://substrate.stackexchange.com/)
 
+### Videos
+
+- [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
 - [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)

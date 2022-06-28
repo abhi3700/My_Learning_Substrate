@@ -16,6 +16,12 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
     - parachain bridge slot
     - parathread slot
 
+## Installation
+
+## Quickstart
+
+- Follow [this](https://docs.substrate.io/quick-start/)
+
 ## Development
 
 - Substrate allows the different features of Polkadot as it allows a modular design with pallets. Using different pallets like balance, account, transaction, block, consensus one can create own parachain.
