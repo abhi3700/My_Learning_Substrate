@@ -16,16 +16,32 @@
 
 ## Installation
 
+> Below guide is for macOS (M1)
+
 ### 1. Cargo, Rust
 
 - Follow from Solana [here](https://github.com/abhi3700/sol-playground/blob/main/README.md#rustup-rustc-cargo-rustfmt)
 
-### 2.
+### 2. CLI tool: `cargo-contract`
+
+```
+❯ cargo install cargo-contract --force
+```
+
+> NOTE: You might get prompt to install `dylint-link` before this. Do this using `❯ cargo install dylint-link`
+
+Verify installation
+
+```console
+❯ cargo-contract -V                                                                                                                         ⏎
+cargo-contract 1.4.0-unknown-x86_64-apple-darwin
+```
 
 ## References
 
-- [Github repo](https://github.com/paritytech/ink)
+- [Ink Github repo](https://github.com/paritytech/ink)
 - [Documentation](https://ink.substrate.io/)
+- [CLI tool](https://github.com/paritytech/cargo-contract)
 - Tutorials
   - https://docs.substrate.io/tutorials/smart-contracts/
   - [Substrate contract Web App interactor template - for stock Flipper SC](https://github.com/polk4-net/flipper-app)
