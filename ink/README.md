@@ -39,8 +39,9 @@ cargo-contract 1.4.0-unknown-x86_64-apple-darwin
 
 ## References
 
-- [Ink Github repo](https://github.com/paritytech/ink)
-- [Documentation](https://ink.substrate.io/)
+- [ink! Github repo](https://github.com/paritytech/ink)
+- [ink! CLI repo](https://github.com/paritytech/cargo-contract)
+- [ink! Documentation](https://ink.substrate.io/)
 - [CLI tool](https://github.com/paritytech/cargo-contract)
 - Tutorials
   - https://docs.substrate.io/tutorials/smart-contracts/
