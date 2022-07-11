@@ -22,6 +22,12 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
 
 - Follow [this](https://docs.substrate.io/quick-start/)
 
+## Wallet
+
+These are the wallets (like Metamask):
+
+URL: https://wiki.polkadot.network/docs/build-wallets
+
 ## Development
 
 - Substrate allows the different features of Polkadot as it allows a modular design with pallets. Using different pallets like balance, account, transaction, block, consensus one can create own parachain.
