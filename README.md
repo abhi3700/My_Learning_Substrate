@@ -28,6 +28,8 @@ These are the wallets (like Metamask):
 
 URL: https://wiki.polkadot.network/docs/build-wallets
 
+Browser extension: https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd/related
+
 ## Development
 
 - Substrate allows the different features of Polkadot as it allows a modular design with pallets. Using different pallets like balance, account, transaction, block, consensus one can create own parachain.
