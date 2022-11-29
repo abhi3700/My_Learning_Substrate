@@ -1,4 +1,4 @@
-# Ink
+# ink!
 
 ## About
 
@@ -37,6 +37,8 @@ Verify installation
 cargo-contract 1.4.0-unknown-x86_64-apple-darwin
 ```
 
+## [Standards](./standards.md)
+
 ## References
 
 - [ink! Github repo](https://github.com/paritytech/ink)
@@ -47,3 +49,5 @@ cargo-contract 1.4.0-unknown-x86_64-apple-darwin
   - https://docs.substrate.io/tutorials/smart-contracts/
   - [Substrate contract Web App interactor template - for stock Flipper SC](https://github.com/polk4-net/flipper-app)
   - [By Figment](https://learn.figment.io/protocols/polkadot)
+- [Rust before Substrate Ink](https://rust-unofficial.github.io/patterns/intro.html)
+- [OpenBrush](https://github.com/Supercolony-net/openbrush-contracts) like OpenZeppelin. It is a library of SCs.

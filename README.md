@@ -4,17 +4,73 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
 
 ## About
 
-- Layer-0
-- chains:
+- Layer-0 i.e. L0
+- chains (mainnet or testnet):
 
   - Relay chain
-    - validators (297 approx.)
-  - Parachains
+    - main/central chain
+    - validators (297 approx.) ensuring the security of the network i.e. Polkadot
+  - Parachains (100 max.)
     - collators (5 approx.)
+    - they need to stake some auction fee in DOT (held every 6 months) to register a parachain on the relay chain. So, it's a weighted-fee.
   - slots
-    - parachain slot
+    - parachain slot (limited)
     - parachain bridge slot
     - parathread slot
+
+- **Mainnet**:
+  - Kusama (new feature launched here 1st),
+  - Polkadot (at stable stage after feature launched on Kusama)
+- **Testnet**: Rococo
+- There are 2 ways to develop dApp on a substrate chain:
+
+  - M-1: write SC on native parachain/parathread using `ink!` (ink! is a Rust-based eDSL for writing Wasm smart contracts)
+  - M-2: write SC on EVM supported parachain/parathread using `solidity` (solidity is a high-level language for implementing smart contracts)
+
+- pay fee with DOT for 2 different types of chains:
+
+  - Parachain: weighted fee.
+  - Parathread: participate on per use i.e. block basis or essentially `pay-as-you-go`.
+
+- **Parachain vs Parathread**:
+
+| Parachain                             | Parathread                                                    |
+| ------------------------------------- | ------------------------------------------------------------- |
+| 1. Parachain is always connected.     | 1. Parathread is not always connected.                        |
+| 2. DOT staked, hence weight-fee model | 2. pay per block basis or pay-as-you-go or gas-metering model |
+| 3. supports SC                        | 3. supports SC                                                |
+
+- If you think about **Polkadot** as a giant computer, **parachains** are like applications that are in physical memory and highly available. **Parathreads** are like applications that are on disk and can be copied into memory when needed. For those already familiar with how **Bitcoin** and **Ethereum** work, users bid to enter a **parathread** block into the relay chain similar to how users bid to include a transaction in a **Bitcoin** or **Ethereum** block.
+
+- Parathreads are ideal for three types of applications:
+
+  - applications seeking an on-ramp to Polkadot,
+  - applications worried about losing parachain slots, and
+  - applications that have more reads than writes.
+
+- Parathreads increases the number of applications that can operate on Polkadot by pooling them to share parachain slots. This will allow more infrastructure chains and improve composability."
+
+![](img/parachain_vs_parathread.png)
+
+> Parachains require `20,000 DOT` tokens to be staked in order to secure a slot. And these projects don't have enough budget can use Parathreads so that they can come back to the parachain slot auction later.
+
+```mermaid
+graph LR
+Parachain --when less budget--> ParaThread --when more budget--> Parachain
+```
+
+- **Polkadot vs SC**:
+  "Polkadot does not use a gas-metering model, but a weight-fee model, meaning Parachains do not have a gas-metered model in their logic. Parachains can implement powerful programming languages. Better put, parachains try to be proactive, while smart contract platforms are event-driven."
+
+- **EVM vs WASM**:
+
+| EVM                                                                      | WASM                                                                                                                        |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| it isn’t as fast as it should be and directly impact network efficiency  | it expands the supported languages that a developer can write a smart contract in, such as Rust, C/C++, C#, and Typescript. |
+| it uses opcodes that are not optimized for different hardware platforms. | it is is highly performant.                                                                                                 |
+| The support and reach for developing smart contracts are limited.        | it is optimized for different hardware platforms.                                                                           |
+
+- **Pallet**: module that trigger functionality on a parachain. Typically like system contracts on a L1 Blockchain.
 
 ## Installation
 
@@ -147,6 +203,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 ### Blogs
 
+- [Polkadot Blockchain Terms](https://learn.figment.io/tutorials/polkadot-blockchain-terms)
 - [HOW TO BUILD PARACHAIN ON POLKADOT](https://www.leewayhertz.com/build-parachain-on-polkadot/)
 - [Polkadot Messaging Scheme (XCMP)](https://deeprnd.medium.com/polkadot-messaging-scheme-xcmp-afcdb9b52616)
 
@@ -155,3 +212,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 - [Gavin Wood: Explaining the Polkadot Launch Process](https://www.youtube.com/watch?v=TpcCeo-ZkDY)
 - [Chainlink | Introduction to Polkadot, Parachains, and Substrate](https://www.youtube.com/watch?v=gT-9r1bcVHY)
 - [The Path of a Parachain Block on Polkadot and Kusama Network](https://www.youtube.com/watch?v=m0vxqWwFfDs)
+
+```
+
+```
