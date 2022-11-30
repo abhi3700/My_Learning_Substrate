@@ -3,7 +3,7 @@
 ## Terminology
 
 - **Relay chain**: The Polkadot super chain which is connected to different parachains.
-- **Parachain**: The side-chains which are connected to the main Polkadot relay chain.
+- **Parachain**: The side-chains which are connected to the main Polkadot relay chain. They are more like shards in ETH 2.0.
 - **Collator**: Validator for Polkadot parachain
 - **Substrate runtime**: It's like `wasm`, `bytecode` for other blockchain networks.
 
@@ -36,6 +36,8 @@
 Substrate is modular & extensive. Each module is called "Pallet".
 
 ## Coding
+
+FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.
 
 ### Pallet
 
