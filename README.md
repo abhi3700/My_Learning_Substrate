@@ -18,10 +18,39 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
     - parachain bridge slot
     - parathread slot
 
+- Token details:
+  - symbol: DOT
+  - decimal: 10 (now, earlier 12 before 21-aug-2020)
+- Consensus Algorithm (NPoS):
+
+  - **voter/nominator**:
+    - Anyone who has min. `10` DOT on Polkadot (0.1 KSM on Kusama).
+    - Max. `50,000` nominators allowed for electing the validators.
+    - Max. `16` validators on Polkadot (`24` on Kusama) can be nominated by a nominator.
+    - The staked amount `100 DOT` (say) is divided among the selected validators (say `16` or `6`) equally i.e. `6.25 DOT` each.
+    - A voter can nominate less than `16` validators as well. But, the chances of validators getting selected are less. Also, the rewards are less.
+    - Only the top `256` nominators for a specific validator get paid.
+    - **Cons**:
+      - One might loose their DOT in case of electing a malicious validator.
+      - One might not gain any rewards
+        - if none of the selected validator is elected.
+        - if very few validators are elected. So, it's recommended to nominate max. `16` validators. Hence, one needs to do proper research.
+  - **validator**:
+    - Anyone who has min. 'x' (dynamic, changes over time) DOT on Polkadot to become active validator.
+    - They need to stake their DOTs to get elected as a validator.
+    - They can lose their staked DOTs, if they turn out to be malicious.
+    - One has to verify their decentralized identity on Polkadot. Hence, would get ✅ mark on their profile. The ones whose identity is under verification would get ☑️ (grey color) mark.
+    - One can be very popular if they are oversubscribed by the nominators.
+
+  [Best Practices for Nominating](https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-)
+
 - **Mainnet**:
-  - Kusama (new feature launched here 1st),
-  - Polkadot (at stable stage after feature launched on Kusama)
-- **Testnet**: Rococo
+  - relaychains:
+    - Kusama (new feature launched here 1st),
+    - Polkadot (at stable stage after feature launched on Kusama)
+- **Testnet**:
+  - relaychain: Rococo
+    - parachain: Canvas
 - There are 2 ways to develop dApp on a substrate chain:
 
   - M-1: write SC on native parachain/parathread using `ink!` (ink! is a Rust-based eDSL for writing Wasm smart contracts)
