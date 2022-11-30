@@ -44,6 +44,8 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
 
   [Best Practices for Nominating](https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-)
 
+  [How do I know which validators to choose?](https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-)
+
 - **Mainnet**:
   - relaychains:
     - Kusama (new feature launched here 1st),
@@ -235,13 +237,11 @@ It shows comparo b/w legacy & polkadot blockchains.
 - [Polkadot Blockchain Terms](https://learn.figment.io/tutorials/polkadot-blockchain-terms)
 - [HOW TO BUILD PARACHAIN ON POLKADOT](https://www.leewayhertz.com/build-parachain-on-polkadot/)
 - [Polkadot Messaging Scheme (XCMP)](https://deeprnd.medium.com/polkadot-messaging-scheme-xcmp-afcdb9b52616)
+- [Support: Ask any Q.s here](https://support.polkadot.network/support/home)
 
 ### Videos
 
 - [Gavin Wood: Explaining the Polkadot Launch Process](https://www.youtube.com/watch?v=TpcCeo-ZkDY)
 - [Chainlink | Introduction to Polkadot, Parachains, and Substrate](https://www.youtube.com/watch?v=gT-9r1bcVHY)
 - [The Path of a Parachain Block on Polkadot and Kusama Network](https://www.youtube.com/watch?v=m0vxqWwFfDs)
-
-```
-
-```
+- [Intro to Substrate codebase and FRAME pallet deep-dive with Joe Petrowski and Shawn Tabrizi](https://www.youtube.com/watch?v=5PSllaWbYag) ✅

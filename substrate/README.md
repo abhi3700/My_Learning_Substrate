@@ -35,6 +35,38 @@
 
 Substrate is modular & extensive. Each module is called "Pallet".
 
+## Coding
+
+### Pallet
+
+**Start a chain with given/custom runtime**:
+
+- If needs to create a substrate node, then go to `substrate::bin/node/runtime/` & use the codebase. All pallets are used.
+- If needs to use a substrate node template, then go to `substrate::bin/node-template/runtime/` & use the codebase. Here, limited pallets are used.
+- If needs to create a chain with your own runtime, then just go to `runtime/src/lib.rs` & write your own code.
+
+---
+
+**pallets**: `sudo`, `system`
+
+- `sudo` pallet gives the root permission. It's like `sudo` in Linux. It's more like a on-chain governance.
+- `system` pallet is the most important pallet without which no other pallet would work. Infact, it's the core pallet.
+- `origin` is the account which is sending the transaction i.e. the caller of the transaction. These are the possible origin values:
+  - `None`: For unsigned transactions
+  - `Signed`: For signed transactions
+  - `Root`: For transactions which are sent by the root
+    ![](../img/origin_values.png)
+
+Get who is making the call here:
+
+```rs
+let who = ensure_signed(origin)?;
+```
+
+---
+
+**Recovery pallet**
+
 ## Tutorials
 
 Try out the following tutorials:
