@@ -109,13 +109,46 @@ Parachain --when less budget--> ParaThread --when more budget--> Parachain
 
 - Follow [this](https://docs.substrate.io/quick-start/)
 
+## Parachains
+
+### Acala
+
+Hub for DeFi in Polkadot, Kusama.
+
+- Acala is on **Polkadot**
+- Karura is on **Kusama**
+
+### Moonbeam
+
+EVM ✅
+
+- [Developer docs](https://docs.moonbeam.network/builders/)
+- [Collators](https://moonbeam.moonscan.io/collators)
+- [Block explorers](https://docs.moonbeam.network/builders/get-started/explorers/)
+- [Wallets](https://docs.moonbeam.network/builders/integrations/wallets/)
+- [Pallets](https://docs.moonbeam.network/builders/pallets-precompiles/pallets/)
+
+## Block Explorer
+
+Switch to any L0, parachain, parathread network.
+
+- [Subscan](https://polkadot.subscan.io/)
+- [Polkadot.js](https://polkadot.js.org/apps/#/explorer)
+- [Polkascan](https://explorer.polkascan.io/)
+
 ## Wallet
 
 These are the wallets (like Metamask):
 
 URL: https://wiki.polkadot.network/docs/build-wallets
 
+---
+
 Browser extension: https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd/related
+
+---
+
+Mobile wallets: https://polkawallet.io/
 
 ## Development
 
@@ -173,6 +206,14 @@ There is also a feature of crowdloan where anyone holding DOT can lend to projec
   - polkascan: https://explorer.polkascan.io/kusama
   - https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama.api.onfinality.io%2Fpublic-ws#/explorer
 
+## Packages
+
+All web3 packages here:
+
+- [`polkadot-js` | JS](https://polkadot.js.org/docs/)
+- [Python Substrate Interface | Python](https://github.com/polkascan/py-substrate-interface)
+- [REST service for substrate blockchains | TS](https://github.com/paritytech/substrate-api-sidecar)
+
 ## Polkadot vs Kusama
 
 - All the new features are deployed on Kusama 1st & then it gets deployed on Polkadot.
@@ -229,6 +270,8 @@ There is a `set_code` function which allows to upgrade the network.
 ![](img/forkless_upgrades_2.png.png)
 
 It shows comparo b/w legacy & polkadot blockchains.
+
+## T
 
 ## References
 
