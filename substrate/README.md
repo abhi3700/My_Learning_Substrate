@@ -80,6 +80,64 @@ type AccountId = [u8; 20];  // 20 bytes for Ethereum
 type AccountId = [u8; 32];  // 32 bytes for a chain
 ```
 
+In order to make things generic, we define `Config` like this for defining AccountId, Event, Blocksize, etc.:
+
+```rs
+// `frame_system` has already defined the `Config` trait
+trait Config {
+  type AccountId;
+  type BlockNumber;
+  // etc...
+}
+```
+
+And therefore, we get to see `<T>`, `T::`. This is because we are using the `Config` trait.
+
+---
+
+**Gas** in Substrate is called **Weight** (max. value). It's a unit of measurement for the amount of computation required to execute a transaction. It's a measure of the time it takes to execute a transaction.
+
+---
+
+Storage (data persistence) has 2 types in blockchain:
+
+- **StorageValue**: Storing a single type in storage.
+- **StorageMap**: Storing a map from key to value in storage.
+
+More complex storage types are also possible.
+
+- `StorageDoubleMap`: Storing a map from key to map in storage.
+- `StorageCountMap`: Storing a map from key to counter in storage.
+
+Manipulating `StorageValue`:
+
+```rs
+// Put a value in storage
+CountForItems::<T>::put(10);
+
+// Get the value from storage
+CountForItems::<T>::get();
+
+// kill a value in storage
+CountForItems::<T>::kill();
+```
+
+Manipulating `StorageMap`:
+
+```rs
+// Check if a value exists in storage
+let is_false = Items::<T>::contains_key(user);
+
+// put a value in storage
+Items::<T>::insert(user, new_item);
+
+// Get the value from storage
+Items::<T>::get(user);
+
+// kill a value in storage
+Items::<T>::remove(user);
+```
+
 ## Tutorials
 
 Try out the following tutorials:
@@ -100,3 +158,7 @@ Try out the following tutorials:
 
 - [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
 - [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
+
+```
+
+```
