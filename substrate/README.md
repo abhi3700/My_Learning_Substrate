@@ -69,6 +69,17 @@ let who = ensure_signed(origin)?;
 
 **Recovery pallet**
 
+This is mainly to recover your account based on validation given by a set of users.
+
+### Others
+
+In Substrate, one can create a blockchain which supports any length of account id. Like in Ethereum, it's 20 bytes. In Substrate, it can be any length. That's why we need to use `AccountId` instead of `Address`. And the `AccountId` type can be defined as:
+
+```rs
+type AccountId = [u8; 20];  // 20 bytes for Ethereum
+type AccountId = [u8; 32];  // 32 bytes for a chain
+```
+
 ## Tutorials
 
 Try out the following tutorials:

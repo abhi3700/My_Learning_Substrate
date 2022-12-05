@@ -271,8 +271,6 @@ There is a `set_code` function which allows to upgrade the network.
 
 It shows comparo b/w legacy & polkadot blockchains.
 
-## T
-
 ## References
 
 ### Blogs
