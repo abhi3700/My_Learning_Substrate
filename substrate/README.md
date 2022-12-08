@@ -35,6 +35,32 @@
 
 Substrate is modular & extensive. Each module is called "Pallet".
 
+## Blockchain Framework
+
+If someone wants to create a blockchain, then they can use Substrate. It's a framework for creating different blockchain modules. The image below shows the different layers of a blockchain framework:
+
+![](../img/substrate_blockchain_building_block.png)
+
+Here, `Database Layer`, `Networking Layer`, `Consensus Layer` is provided by Substrate.
+
+---
+
+Development wise, here is the diagram which shows the easy to difficult way of using Substrate for your own blockchain:
+
+`Substrate Node` --> `Substrate FRAME` --> `Substrate CORE`
+
+![](../img/substrate_easy_to_core.png)
+
+---
+
+Here is what it looks like before & after creating blockchain using Substrate:
+
+**Before**:
+![](../img/substrate_runtime_before_bc.png)
+
+**After**:
+![](../img/substrate_runtime_after_bc.png)
+
 ## Coding
 
 FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.
@@ -44,7 +70,7 @@ FRAME is itself a programming language. It's a DSL (Domain Specific Language) fo
 **Start a chain with given/custom runtime**:
 
 - If needs to create a substrate node, then go to `substrate::bin/node/runtime/` & use the codebase. All pallets are used.
-- If needs to use a substrate node template, then go to `substrate::bin/node-template/runtime/` & use the codebase. Here, limited pallets are used.
+- If needs to use a substrate node template, then go to `substrate::bin/node-template/runtime/` & use the codebase. Here, limited pallets are used. You can add more pallets here.
 - If needs to create a chain with your own runtime, then just go to `runtime/src/lib.rs` & write your own code.
 
 ---
@@ -59,7 +85,7 @@ FRAME is itself a programming language. It's a DSL (Domain Specific Language) fo
   - `Root`: For transactions which are sent by the root
     ![](../img/origin_values.png)
 
-Get who is making the call here:
+`get` who is making the call here:
 
 ```rs
 let who = ensure_signed(origin)?;
@@ -69,7 +95,7 @@ let who = ensure_signed(origin)?;
 
 **Recovery pallet**
 
-This is mainly to recover your account based on validation given by a set of users.
+This is mainly to recover your account based on validation given by a set of users (no. defined in the pallet).
 
 ### Others
 
@@ -158,7 +184,3 @@ Try out the following tutorials:
 
 - [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
 - [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
-
-```
-
-```

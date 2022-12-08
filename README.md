@@ -52,7 +52,8 @@ Learn everything about Polkadot, Kusama, Substrate, etc.
     - Polkadot (at stable stage after feature launched on Kusama)
 - **Testnet**:
   - relaychain: Rococo
-    - parachain: Canvas
+    - faucet: Rococo Faucet
+    - parachain: Canvas, Contracts (by Parity)
 - There are 2 ways to develop dApp on a substrate chain:
 
   - M-1: write SC on native parachain/parathread using `ink!` (ink! is a Rust-based eDSL for writing Wasm smart contracts)

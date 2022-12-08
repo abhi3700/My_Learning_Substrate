@@ -20,24 +20,41 @@
 
 ### 1. Cargo, Rust
 
-- Follow from Solana [here](https://github.com/abhi3700/sol-playground/blob/main/README.md#rustup-rustc-cargo-rustfmt)
+- Follow this [guide](https://github.com/abhi3700/My_Learning-Rust/blob/main/README.md#installation)
 
-### 2. CLI tool: `cargo-contract`
+### 2. Linting, Compiler
 
-```
-❯ cargo install cargo-contract --force
-```
+1. `$ rustup component add rust-src` (add rust standard library)
+2. `$ cargo install cargo-dylint dylint-link` [lint `ink!` code]
+3. `$ cargo install cargo-contract --force --locked` [**install**/**update** compiler]
+   > 1, 2, is for `cargo-contract` to work with `cargo-dylint` & `dylint-link` respectively.
 
-> NOTE: You might get prompt to install `dylint-link` before this. Do this using `❯ cargo install dylint-link`
-
-Verify installation
+**Verify installation**
 
 ```console
-❯ cargo-contract -V                                                                                                                         ⏎
-cargo-contract 1.4.0-unknown-x86_64-apple-darwin
+❯ cargo-contract --version
+cargo-contract 1.5.0-unknown-aarch64-apple-darwin
 ```
 
+### 3. Substrate Framework Pre-requisites
+
+1. `$ rustup toolchain install nightly`
+2. `$ rustup target add wasm32-unknown-unknown --toolchain nightly`
+
+### 4. The Substrate SC Node
+
+**Install**/**Update** the substrate node from source code:
+
+`$ cargo install contracts-node --git https://github.com/paritytech/substrate-contracts-node.git --force --locked`
+
+#### probable issues
+
+- Error: missing protobuf
+  - _solution_: `brew install protobuf`
+
 ## [Standards](./standards.md)
+
+## Troubleshooting
 
 ## References
 
