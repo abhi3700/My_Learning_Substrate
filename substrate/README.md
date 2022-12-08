@@ -1,5 +1,9 @@
 # Substrate
 
+## Installation
+
+Refer [this](../ink/README.md#installation) for installation.
+
 ## Terminology
 
 - **Relay chain**: The Polkadot super chain which is connected to different parachains.

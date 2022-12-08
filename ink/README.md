@@ -47,6 +47,8 @@ cargo-contract 1.5.0-unknown-aarch64-apple-darwin
 
 `$ cargo install contracts-node --git https://github.com/paritytech/substrate-contracts-node.git --force --locked`
 
+![](../img/substrate-contracts-node-install.png)
+
 #### probable issues
 
 - Error: missing protobuf
