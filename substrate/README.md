@@ -129,44 +129,70 @@ And therefore, we get to see `<T>`, `T::`. This is because we are using the `Con
 
 ---
 
-Storage (data persistence) has 2 types in blockchain:
+#### Storage Layers
 
-- **StorageValue**: Storing a single type in storage.
-- **StorageMap**: Storing a map from key to value in storage.
+![](../img/substrate_storage_abstraction_layers.png)
+
+#### **APIs**
+
+The following Storage APIs (data persistence) are available for storage on a substrate blockchain:
+
+- `StorageValue`: Storing a single type in storage.
+
+  - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
+  - can accept any type i.e. `u8`, `String`, etc.
+  - `T` is the runtime.
+
+  ![](../img/substrate_storage_value.png)
+
+  - Manipulating `StorageValue`:
+
+  ```rs
+  // Put a value in storage
+  CountForItems::<T>::put(10);
+
+  // Get the value from storage
+  CountForItems::<T>::get();
+
+  // kill a value in storage
+  CountForItems::<T>::kill();
+  ```
+
+- `StorageMap`: Storing a map from key to value in storage.
+
+  - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
+  - can accept any type as key or val i.e. `u8`, `String`, etc.
+  - Here, **[Blake2_128Concat](https://paritytech.github.io/substrate/master/frame_support/struct.Blake2_128Concat.html)** is used as the hashing algorithm. It's a hashing algorithm which is used to hash the key to get the storage key. It's a 128 bit hash.
+  - `T::AccountId` is used as the key type.
+  - `T` is the runtime.
+
+  ![](../img/substrate_storage_map.png)
+
+  - Manipulating `StorageMap`:
+
+  ```rs
+  // Check if a value exists in storage
+  let is_false = Items::<T>::contains_key(user);
+
+  // put a value in storage
+  Items::<T>::insert(user, new_item);
+
+  // Get the value from storage
+  Items::<T>::get(user);
+
+  // kill a value in storage
+  Items::<T>::remove(user);
+  ```
 
 More complex storage types are also possible.
 
-- `StorageDoubleMap`: Storing a map from key to map in storage.
-- `StorageCountMap`: Storing a map from key to counter in storage.
+- `StorageDoubleMap`: Storing a map from 2 keys to single value in storage on a substrate chain.
 
-Manipulating `StorageValue`:
+  ![](../img/substrate_storage_double_map.png)
 
-```rs
-// Put a value in storage
-CountForItems::<T>::put(10);
+- `StorageCountMap`: Storing a map from n keys to single value in storage on a substrate chain.
 
-// Get the value from storage
-CountForItems::<T>::get();
-
-// kill a value in storage
-CountForItems::<T>::kill();
-```
-
-Manipulating `StorageMap`:
-
-```rs
-// Check if a value exists in storage
-let is_false = Items::<T>::contains_key(user);
-
-// put a value in storage
-Items::<T>::insert(user, new_item);
-
-// Get the value from storage
-Items::<T>::get(user);
-
-// kill a value in storage
-Items::<T>::remove(user);
-```
+  ![](../img/substrate_storage_n_map.png)
 
 ## Tutorials
 
@@ -188,3 +214,5 @@ Try out the following tutorials:
 
 - [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
 - [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
+- [Sub0 Online: Storage on a Substrate chain](https://www.youtube.com/watch?v=ek8SzCCk59o)
+- [Sub0.1: Storage on Substrate - Shawn Tabrizi, Developer experience at Parity](https://www.youtube.com/watch?v=kKKOL20FdII)

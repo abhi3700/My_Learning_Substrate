@@ -181,7 +181,7 @@ Substrate pallets:
 The development workflow to pallet:
 ![](img/workflow_to_pallet.png)
 
-where, sp: substrate pallet, sc: substrate client
+where, `sp: substrate primitive`, `sc: substrate client`
 
 ## Auction
 
@@ -284,7 +284,8 @@ It shows comparo b/w legacy & polkadot blockchains.
 ### Videos
 
 - [Gavin Wood: Explaining the Polkadot Launch Process](https://www.youtube.com/watch?v=TpcCeo-ZkDY)
-- [Chainlink | Introduction to Polkadot, Parachains, and Substrate](https://www.youtube.com/watch?v=gT-9r1bcVHY)
+- [Chainlink | Introduction to Polkadot, Parachains, and Substrate](https://www.youtube.com/watch?v=gT-9r1bcVHY) ✅
 - [The Path of a Parachain Block on Polkadot and Kusama Network](https://www.youtube.com/watch?v=m0vxqWwFfDs)
 - [Intro to Substrate codebase and FRAME pallet deep-dive with Joe Petrowski and Shawn Tabrizi](https://www.youtube.com/watch?v=5PSllaWbYag) ✅
 - [Learn Rust syntax for Substrate | Substrate Seminar](https://www.youtube.com/watch?v=VVU3Io2dACY) ✅
+- [Polkadot and Substrate – Build Custom Blockchains that can Evolve](https://www.youtube.com/watch?v=HrTSpIqhyc0)
