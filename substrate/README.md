@@ -129,11 +129,11 @@ And therefore, we get to see `<T>`, `T::`. This is because we are using the `Con
 
 ---
 
-#### Storage Layers
+### SC Storage
 
 ![](../img/substrate_storage_abstraction_layers.png)
 
-#### **APIs**
+#### A. APIs
 
 The following Storage APIs (data persistence) are available for storage on a substrate blockchain:
 
@@ -193,6 +193,14 @@ More complex storage types are also possible.
 - `StorageCountMap`: Storing a map from n keys to single value in storage on a substrate chain.
 
   ![](../img/substrate_storage_n_map.png)
+
+#### B. Overlay Change Set
+
+#### C. Merkle Trie
+
+#### D. KVDB
+
+Key Value Database
 
 ## Tutorials
 
