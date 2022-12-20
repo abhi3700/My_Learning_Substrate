@@ -22,26 +22,12 @@
 
 - Follow this [guide](https://github.com/abhi3700/My_Learning-Rust/blob/main/README.md#installation)
 
-### 2. Linting, Compiler
-
-1. `$ rustup component add rust-src` (add rust standard library)
-2. `$ cargo install cargo-dylint dylint-link` [lint `ink!` code]
-3. `$ cargo install cargo-contract --force --locked` [**install**/**update** compiler]
-   > 1, 2, is for `cargo-contract` to work with `cargo-dylint` & `dylint-link` respectively.
-
-**Verify installation**
-
-```console
-❯ cargo-contract --version
-cargo-contract 1.5.0-unknown-aarch64-apple-darwin
-```
-
-### 3. Substrate Framework Pre-requisites
+### 2. Substrate Framework Pre-requisites
 
 1. `$ rustup toolchain install nightly`
 2. `$ rustup target add wasm32-unknown-unknown --toolchain nightly`
 
-### 4. The Substrate SC Node
+### 3. The Substrate SC Node
 
 **Install**/**Update** the substrate node from source code:
 
@@ -54,15 +40,156 @@ cargo-contract 1.5.0-unknown-aarch64-apple-darwin
 - Error: missing protobuf
   - _solution_: `brew install protobuf`
 
-## [Standards](./standards.md)
+### 4. Install `binaryen` WASM optimizer
+
+- `$ brew install binaryen`
+
+### 5. Linting, Compiler
+
+1. `$ rustup component add rust-src --toolchain nightly-aarch64-apple-darwin` (add rust standard library)
+2. `$ cargo install cargo-dylint dylint-link` [lint `ink!` code] i.e. check `ink!` contracts and warn you about issues that might lead to security vulnerabilities.
+3. `$ cargo install cargo-contract --force --locked` [**install**/**update** compiler]
+   > 1, 2, is for `cargo-contract` to work with `cargo-dylint` & `dylint-link` respectively.
+
+**Verify installation**
+
+```console
+❯ cargo-contract --version
+cargo-contract 1.5.0-unknown-aarch64-apple-darwin
+```
+
+## Getting Started
+
+1. Create a new project
+
+   ```console
+   ❯ cargo contract new flipper
+   ```
+
+2. Build the project
+
+   ```console
+   ❯ cd flipper
+   ❯ cargo +nightly contract build
+
+   Your contract artifacts are ready. You can find them in:
+   ....../flipper/target/ink
+
+     - flipper.contract (code + metadata)
+     - flipper.wasm (the contract's code)
+     - metadata.json (the contract's metadata)
+   ```
+
+3. Test the project
+
+   ```console
+   ❯ cargo test
+   ```
+
+## [SC Standards](./standards.md)
+
+## Smart Contract Development
+
+### Contract
+
+```rust, ignore
+// Import the ink! module
+use ink_lang as ink;
+
+// Define the contract module
+#[ink::contract]
+mod erc20 {
+  // Define the storage struct.
+
+  // Define the events.
+
+  // Define the constructor.
+
+  // Define the public functions.
+
+  // Define the private functions.
+
+}
+```
+
+### Struct
+
+```rust, ignore
+#[ink(storage)]
+pub struct Erc20 {
+  total_supply: Balance,
+  balances: ink_storage::collections::HashMap<AccountId, Balance>,
+}
+```
+
+### Constructor
+
+Assuming this: **The most basic ERC20 token contract is a fixed supply token**. So is the case here.
+
+A contract can have multiple constructors. The one with no arguments is the `default` one.
+
+```rust, ignore
+#[ink(constructor)]
+pub fn new(initial_supply: Balance) -> Self {
+  let caller = Self::env().caller();
+  let mut balances = ink_storage::collections::HashMap::new();
+  balances.insert(caller, initial_supply);
+  Self {
+    total_supply: initial_supply,
+    balances,
+  }
+}
+```
+
+### Global env
+
+- || to `address` (in Solidity): `self.env().caller()` or `Self::env().caller()`
+- get the balance of the executed contract: `self.env().balance()` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.balance)
+- || to `msg.sender` (in Solidity): `self.env().caller()` or `Self::env().caller()`
+- || to `msg.value` (in Solidity):`self.env().transferred_balance()`or`Self::env().transferred_balance()`
+- || to `block.timestamp` (in Solidity): `self.env().block_timestamp()` or `Self::env().block_timestamp()`
+- || to `block.number` (in Solidity): `self.env().block_number()` or `Self::env().block_number()`
+- || to `block.timestamp` (in Solidity): `self.env().block_timestamp()` or `Self::env().block_timestamp()`
+- || to `tx.origin` (in Solidity): `self.env().caller_is_origin()` or `Self::env().caller_is_origin()` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.caller_is_origin)
+- || get the code hash at a given account id: `self.env().code_hash(&account_id).ok()`
+- || to get own code hash: `self.env().own_code_hash().expect("contract should have a code hash")`
+- || to check if the contract is called by a contract: `self.env().is_contract(&account_id)`
+- returns gas left: `self.env().gas_left()`
+- min. balance required for creating an account: `self.env().minimum_balance()`
+- || to destroy the contract: `self.env().terminate_contract(&beneficiary)` E.g. `self.env().terminate_contract(&self.env().caller())`
+- || to recover the public key of the signer from `signature`, `message_hash`: `self.env().ecdsa_recover(&signature, &message_hash)` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.ecdsa_recover)
+- get ETH address from ECDSA compressed public key: `self.env().ecdsa_to_eth_address(&pub_key).expect("must return an Ethereum address for the compressed public key")` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.ecdsa_to_eth_address)
+
+Read [more](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html)
+
+### Data types
+
+- `AccountId`
+  - e.g. `user: AccountId`
+- `Balance`: `u128`
+  - e.g. `total_supply: Balance`
+- `HashMap`:
+  - e.g. `ink_storage::collections::HashMap<AccountId, Balance>`
+
+### Debugging
+
+This is to debug the contract via using `ink_env::debug_println!` function. E.g:
+
+```rust
+ink_env::debug_println!("thanks for the funding of {:?} from {:?}", value, caller)
+```
 
 ## Troubleshooting
+
+### 1. missing `binaryen`: `$ brew install binaryen`
 
 ## References
 
 - [ink! Github repo](https://github.com/paritytech/ink)
-- [ink! CLI repo](https://github.com/paritytech/cargo-contract)
+- [ink! CLI Github repo](https://github.com/paritytech/cargo-contract)
 - [ink! Documentation](https://ink.substrate.io/)
+- [ink! playground](https://playground.substrate.dev/)
+- [ink! Rust official doc](https://docs.rs/ink_lang/latest/ink_lang/index.html)
 - [CLI tool](https://github.com/paritytech/cargo-contract)
 - Tutorials
   - https://docs.substrate.io/tutorials/smart-contracts/

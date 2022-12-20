@@ -1,6 +1,6 @@
 # My_Learning_Polkadot
 
-Learn everything about Polkadot, Kusama, Substrate, etc.
+Learn everything about Polkadot, Kusama, [Substrate](./substrate/), etc.
 
 ## About
 
@@ -274,6 +274,14 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 ## References
 
+- [Parity Homepage](https://www.parity.io/)
+- [Substrate Homepage](https://substrate.io/)
+- [Parity Tech Rust Doc](https://paritytech.github.io/)
+  - [Substrate Rust doc](https://paritytech.github.io/substrate/)
+  - [Polkadot Rust doc](https://paritytech.github.io/polkadot/)
+  - [Cumulus Rust doc](https://paritytech.github.io/cumulus)
+  - [Wasmi Rust doc](https://paritytech.github.io/wasmi)
+
 ### Blogs
 
 - [Polkadot Blockchain Terms](https://learn.figment.io/tutorials/polkadot-blockchain-terms)
@@ -289,3 +297,4 @@ It shows comparo b/w legacy & polkadot blockchains.
 - [Intro to Substrate codebase and FRAME pallet deep-dive with Joe Petrowski and Shawn Tabrizi](https://www.youtube.com/watch?v=5PSllaWbYag) ✅
 - [Learn Rust syntax for Substrate | Substrate Seminar](https://www.youtube.com/watch?v=VVU3Io2dACY) ✅
 - [Polkadot and Substrate – Build Custom Blockchains that can Evolve](https://www.youtube.com/watch?v=HrTSpIqhyc0)
+- [Sub0 Online: ink! 3.0: A Rust & Smart Contracts Love Story](https://www.youtube.com/watch?v=WNNJzK3dGGQ)

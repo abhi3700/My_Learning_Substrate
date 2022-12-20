@@ -217,6 +217,7 @@ Try out the following tutorials:
 - [Documentation | By Parity](https://docs.substrate.io/main-docs/)
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
 - [Substrate Recipes](https://substrate.recipes/introduction.html)
+- [Substrate Rust doc](https://paritytech.github.io/substrate/)
 
 ### Videos
 
