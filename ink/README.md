@@ -5,6 +5,8 @@
 - Substrate's Contract Pallet (out of all library of pallets) allows Substrate-based chains to run SC on top of it.
 - SC language: A eDSL based `rust` language
 - SC binary: `wasm` format
+- SC compiler: `cargo-contract`
+- SC ABI: `metadata`
 - Testnet (local): Kickstart your own substrate parachain with [substrate-contracts-node](https://github.com/paritytech/substrate-contracts-node) & to view on block explorer:
 - Testnet (public):
   - Rococo (Relay chain)
@@ -92,7 +94,7 @@ cargo-contract 1.5.0-unknown-aarch64-apple-darwin
 
 ### Contract
 
-```rust, ignore
+```rust
 // Import the ink! module
 use ink_lang as ink;
 
@@ -109,12 +111,13 @@ mod erc20 {
 
   // Define the private functions.
 
+  // Define the tests.
 }
 ```
 
 ### Struct
 
-```rust, ignore
+```rust
 #[ink(storage)]
 pub struct Erc20 {
   total_supply: Balance,
@@ -128,7 +131,7 @@ Assuming this: **The most basic ERC20 token contract is a fixed supply token**. 
 
 A contract can have multiple constructors. The one with no arguments is the `default` one.
 
-```rust, ignore
+```rust
 #[ink(constructor)]
 pub fn new(initial_supply: Balance) -> Self {
   let caller = Self::env().caller();
@@ -143,7 +146,7 @@ pub fn new(initial_supply: Balance) -> Self {
 
 ### Global env
 
-- || to `address` (in Solidity): `self.env().caller()` or `Self::env().caller()`
+- || to `address` (in Solidity): `AccountId` (formerly it was defined `Address`)
 - get the balance of the executed contract: `self.env().balance()` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.balance)
 - || to `msg.sender` (in Solidity): `self.env().caller()` or `Self::env().caller()`
 - || to `msg.value` (in Solidity):`self.env().transferred_balance()`or`Self::env().transferred_balance()`
@@ -159,6 +162,7 @@ pub fn new(initial_supply: Balance) -> Self {
 - || to destroy the contract: `self.env().terminate_contract(&beneficiary)` E.g. `self.env().terminate_contract(&self.env().caller())`
 - || to recover the public key of the signer from `signature`, `message_hash`: `self.env().ecdsa_recover(&signature, &message_hash)` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.ecdsa_recover)
 - get ETH address from ECDSA compressed public key: `self.env().ecdsa_to_eth_address(&pub_key).expect("must return an Ethereum address for the compressed public key")` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.ecdsa_to_eth_address)
+- transfer native coin from SC to an account: `self.env().transfer(&recipient, value).expect("transfer failed")` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.transfer)
 
 Read [more](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html)
 
