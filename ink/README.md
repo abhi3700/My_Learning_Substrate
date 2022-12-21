@@ -70,9 +70,15 @@ cargo-contract 1.5.0-unknown-aarch64-apple-darwin
 
 2. Build the project
 
-   ```console
+   ```bash
    ❯ cd flipper
+   # dev mode
    ❯ cargo +nightly contract build
+   # release mode
+   ❯ cargo +nightly contract build --release
+   ```
+
+   ```console
 
    Your contract artifacts are ready. You can find them in:
    ....../flipper/target/ink
@@ -82,11 +88,22 @@ cargo-contract 1.5.0-unknown-aarch64-apple-darwin
      - metadata.json (the contract's metadata)
    ```
 
+   > From debug to release mode, there can be a change in the size of the `wasm` file from `17.5 KB` to `2.6 KB`.
+
 3. Test the project
 
    ```console
    ❯ cargo test
    ```
+
+4. Deploy the project
+
+   These are the files to be deployed:
+
+   - `flipper.wasm`
+   - `metadata.json`
+
+   <!-- TODO: How to deploy? -->
 
 ## [SC Standards](./standards.md)
 
@@ -165,6 +182,28 @@ pub fn new(initial_supply: Balance) -> Self {
 - transfer native coin from SC to an account: `self.env().transfer(&recipient, value).expect("transfer failed")` [Source](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html#method.transfer)
 
 Read [more](https://docs.rs/ink_lang/latest/ink_lang/struct.EnvAccess.html)
+
+### Error
+
+We define like as enum:
+
+```rust
+mod flipper {
+  ...
+  ...
+
+  #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+  #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+  pub enum Error {
+    /// Returned if non-owner is trying to call.
+      OnlyOwnerCanFlip,
+  }
+  ...
+  ...
+}
+```
+
+### Event
 
 ### Data types
 

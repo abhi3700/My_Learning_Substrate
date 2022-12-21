@@ -11,3 +11,4 @@
 | Wallet CLI       | `substrate-contracts-node`                                                                             | `keosd` (also accessed via `cleos`)  | Metamask, Nifty, Trust                         |
 | Testnet          | Local, Rococo (relay chain) Canvas (parachain),                                                        | Local, Public (Jungle)               | Local, Public (Goerli)                         |
 | Mainnet          | Local, Polkadot, Kusama (canary release)                                                               | Local, Public (EOS, TELOS, WAX, FIO) | Local, Public (Ethereum, Polygon, Fantom, BSC) |
+| Assertion        | assert!()                                                                                              | eosio_assert()                       | require()                                      |
