@@ -129,6 +129,11 @@ EVM ✅
 - [Wallets](https://docs.moonbeam.network/builders/integrations/wallets/)
 - [Pallets](https://docs.moonbeam.network/builders/pallets-precompiles/pallets/)
 
+### Centrifuge
+
+- [Website](https://centrifuge.io/)
+- [Github](https://github.com/centrifuge/centrifuge-chain)
+
 ## Block Explorer
 
 Switch to any L0, parachain, parathread network.
