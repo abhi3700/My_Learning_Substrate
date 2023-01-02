@@ -215,6 +215,18 @@ Try out the following tutorials:
 ## References
 
 - [Documentation | By Parity](https://docs.substrate.io/main-docs/)
+  - [Fundamentals](https://docs.substrate.io/fundamentals/)
+    - [Transaction & Block Basics](https://docs.substrate.io/fundamentals/transaction-types/)
+    - [Runtime Development](https://docs.substrate.io/fundamentals/runtime-development/)
+    - [Accounts, Addresses and Keys](https://docs.substrate.io/fundamentals/accounts-addresses-keys/)
+    - [Polkadot JS Client](https://docs.substrate.io/fundamentals/light-clients-in-substrate-connect/)
+    - [Rust for Substrate](https://docs.substrate.io/fundamentals/rust-basics/)
+  - [Tutorials](https://docs.substrate.io/tutorials/)
+    - [SC](https://docs.substrate.io/tutorials/smart-contracts/)
+      - [Build a Token SC](https://docs.substrate.io/tutorials/smart-contracts/build-a-token-contract/)
+  - [Reference](https://docs.substrate.io/reference/)
+    - [FRAME macros](https://docs.substrate.io/reference/frame-macros/)
+    - [Cryptography](https://docs.substrate.io/reference/cryptography/)
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
 - [Substrate Recipes](https://substrate.recipes/introduction.html)
 - [Substrate Rust doc](https://paritytech.github.io/substrate/)
