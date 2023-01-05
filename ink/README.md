@@ -132,7 +132,22 @@ mod erc20 {
 }
 ```
 
+### Import
+
+Importing libs in ink! is similar to Solidity.
+
+```rs
+use ink_lang as ink;  // casting ink_lang as ink
+```
+
+### Macros
+
+- [Comparo](https://github.com/paritytech/ink#ink-macros--attributes-overview) among different macros
+- All are defined [here](https://use.ink/macros-attributes/contract)
+
 ### Struct
+
+> `#[ink(storage)]` is a macro to be used once in a contract.
 
 ```rust
 #[ink(storage)]
