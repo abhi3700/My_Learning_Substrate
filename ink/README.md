@@ -207,12 +207,21 @@ mod flipper {
 
 ### Data types
 
-- `AccountId`
+- `AccountId`: `u64`
   - e.g. `user: AccountId`
 - `Balance`: `u128`
   - e.g. `total_supply: Balance`
-- `HashMap`:
-  - e.g. `ink_storage::collections::HashMap<AccountId, Balance>`
+- `BlockNumber`: `u32`
+  - e.g. `block_num: BlockNumber`
+- `ChainExtension`: `::ink_env::NoChainExtension`
+  - e.g. `chain_extension: ChainExtension`
+- `Hash`: `[u8; 32]`
+  - A 32 byte array representing a hash. Here, each element is of `u8` (8-bit) or 1 byte.
+  - e.g. `hash: Hash`
+- `Mapping`:
+  - e.g. `ink_storage::Mapping<AccountId, Balance>`
+- `Timestamp`: `u64`
+  - e.g. `timestamp: Timestamp`
 
 ### Debugging
 
@@ -230,11 +239,11 @@ ink_env::debug_println!("thanks for the funding of {:?} from {:?}", value, calle
 
 - [ink! Github repo](https://github.com/paritytech/ink)
 - [ink! CLI Github repo](https://github.com/paritytech/cargo-contract)
-- [ink! Documentation](https://ink.substrate.io/)
+- [ink! Comprehensive Documentation](https://use.ink/)
 - [ink! playground](https://playground.substrate.dev/)
 - [ink! Rust official doc](https://docs.rs/ink_lang/latest/ink_lang/index.html)
 - [CLI tool](https://github.com/paritytech/cargo-contract)
-- Tutorials
+- [Tutorials](https://docs.substrate.io/tutorials/)
   - https://docs.substrate.io/tutorials/smart-contracts/
   - [Substrate contract Web App interactor template - for stock Flipper SC](https://github.com/polk4-net/flipper-app)
   - [By Figment](https://learn.figment.io/protocols/polkadot)
