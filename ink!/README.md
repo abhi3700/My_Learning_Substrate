@@ -15,6 +15,11 @@
   - Polkadot
   - Kusama (for canary release): The newer features are first integrated here & then launched on Polkadot as stable version like LTS vs Latest in NodeJS.
     > Unlike other blockchains, where there are 1 mainnet, here there are 2 relay chains. They did this to ensure test happening on Kusama with real tokens, not with the faucet ones.
+- [Why Rust for SC](https://use.ink/why-rust-for-smart-contracts)
+- [Why Wasm for SC binary](https://use.ink/why-webassembly-for-smart-contracts)
+- [lifecycle](https://use.ink/how-it-works)
+- [contracts module (in FRAME) for substrate chain](https://github.com/paritytech/substrate/blob/master/frame/contracts/README.md)
+  - contract code gets stored in `code_cache` & later retrievable using `code_hash`
 
 ## Installation
 
@@ -62,48 +67,90 @@ cargo-contract 1.5.0-unknown-aarch64-apple-darwin
 
 ## Getting Started
 
-1. Create a new project
+### 1. Create a new project
 
-   ```console
-   ❯ cargo contract new flipper
-   ```
+```console
+❯ cargo contract new flipper
+```
 
-2. Build the project
+### 2. Build the project
 
-   ```bash
-   ❯ cd flipper
-   # dev mode
-   ❯ cargo +nightly contract build
-   # release mode
-   ❯ cargo +nightly contract build --release
-   ```
+```bash
+❯ cd flipper
+# dev mode
+❯ cargo +nightly contract build
+# release mode
+❯ cargo +nightly contract build --release
+```
 
-   ```console
+```console
 
-   Your contract artifacts are ready. You can find them in:
-   ....../flipper/target/ink
+Your contract artifacts are ready. You can find them in:
+....../flipper/target/ink
 
-     - flipper.contract (code + metadata)
-     - flipper.wasm (the contract's code)
-     - metadata.json (the contract's metadata)
-   ```
+  - flipper.contract (code + metadata)
+  - flipper.wasm (the contract's code)
+  - metadata.json (the contract's metadata)
+```
 
-   > From debug to release mode, there can be a change in the size of the `wasm` file from `17.5 KB` to `2.6 KB`.
+> From debug to release mode, there can be a change in the size of the `wasm` file from `17.5 KB` to `2.6 KB`.
 
-3. Test the project
+### 3. Test the project
 
-   ```console
-   ❯ cargo test
-   ```
+```console
+❯ cargo test
+```
 
-4. Deploy the project
+### 4. Deploy the Contract
 
-   These are the files to be deployed:
+These are the files to be deployed:
 
-   - `flipper.wasm`
-   - `metadata.json`
+- `flipper.wasm`
+- `metadata.json`
+- OR `flipper.contract`
 
-   <!-- TODO: How to deploy? -->
+> `flipper.contract` is a binary file containing both `flipper.wasm` & `metadata.json` in it.
+
+Run `$ substrate-contract-node --dev` on CLI to start the node.
+
+Then, open the [Contract Explorer](https://contracts-ui.substrate.io/) & deploy the contract.
+
+> If using Brave Browser, disable the `Brave Shields` for the site to get loaded.
+
+**Ensure the local node is selected in the UI**
+![](../img/contracts-ui-network.png)
+
+**Upload and Instantiate Contract**
+![](../img/contracts-ui-upload-instantiate.png)
+
+**Select deployer account**
+![](../img/contracts-ui-deployer-account.png)
+
+**Now, give the contract a name & upload the `flipper.contract` file from the `target/ink` folder & then press <kbd>Next</kbd> button**
+![](../img/contracts-ui-upload-contract.png)
+
+**Preview the deployment details with the option of giving constructor param(s)**
+![](../img/contracts-ui-deploy-preview.png)
+
+**Get to see the final confirmation page before submitting the transaction**
+![](../img/contracts-ui-deploy-confirmation.png)
+
+**After the transaction is mined, you can see the contract deployed & it looks like this:**
+![](../img/contracts-ui-deployed-contract.png)
+
+**Now, you can interact with the contract by clicking on the <kbd>Call contract</kbd> button after selecting the function from drop-down menu**
+
+### 5. Interact with the SC
+
+Called the `flip` function to flip the value of the `bool` variable `value` from `false` to `true` & vice-versa like this:
+
+![](../img/contracts-ui-flip.png)
+
+---
+
+`get()` function called to get the value of the `bool` variable `value`:
+
+![](../img/contracts-ui-get.png)
 
 ## [SC Standards](./standards.md)
 
@@ -174,6 +221,11 @@ pub fn new(initial_supply: Balance) -> Self {
     balances,
   }
 }
+
+#[ink(constructor)]
+pub fn default() -> Self {
+  Self::new(Default::default(), Default::default())
+}
 ```
 
 ### Global env
@@ -222,6 +274,8 @@ mod flipper {
 
 ### Data types
 
+- Substrate smart contracts support most Rust common data types, including booleans, unsigned and signed integers, strings, tuples, and arrays. These data types are encoded and decoded using the [Parity scale codec](https://github.com/paritytech/parity-scale-codec) for efficient transmission over the network.
+- In addition to common Rust types that can be encoded and decoded using the scale codec, the `ink!` language supports Substrate-specific types—like `AccountId`, `Balance`, and `Hash` — as if they were primitive types.
 - `AccountId`: `u64`
   - e.g. `user: AccountId`
 - `Balance`: `u128`

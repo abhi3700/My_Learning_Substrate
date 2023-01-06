@@ -142,6 +142,10 @@ Switch to any L0, parachain, parathread network.
 - [Polkadot.js](https://polkadot.js.org/apps/#/explorer)
 - [Polkascan](https://explorer.polkascan.io/)
 
+---
+
+- [Contract Explorer](https://contracts-ui.substrate.io/)
+
 ## Wallet
 
 These are the wallets (like Metamask):
