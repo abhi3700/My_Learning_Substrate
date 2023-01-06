@@ -4,6 +4,10 @@
 
 Refer [this](../ink/README.md#installation) for installation.
 
+## `substrate-contracts-node` vs `node-template`
+
+Follow [this](../ink!/README.md#3-the-substrate-sc-node)
+
 ## Terminology
 
 - **Relay chain**: The Polkadot super chain which is connected to different parachains.

@@ -42,6 +42,14 @@
 
 ![](../img/substrate-contracts-node-install.png)
 
+> "Substrate Contracts Node" is different from "Substrate Node Template" which is used to create a custom chain. Hence, `$ substrate-contracts-node --dev` is different from `$ ./target/release/node-template --dev` (inside `substrate-node-template` directory) which looks like this:
+
+![](../img/substrate-node-template.png)
+
+Here, we get to see the blocks getting produced because of a pallets called `Aura` & `Grandpa` which are used to produce & finalize blocks. This pallets are not present in the `substrate-contracts-node` chain.
+
+By default both `...-contracts-node` & `...-node-template` would go for this port no. `9944`, but if taken by one, then the other would go for some other port no. e.g. `30333`.
+
 #### probable issues
 
 - Error: missing protobuf
@@ -116,6 +124,10 @@ Run `$ substrate-contract-node --dev` on CLI to start the node.
 Then, open the [Contract Explorer](https://contracts-ui.substrate.io/) & deploy the contract.
 
 > If using Brave Browser, disable the `Brave Shields` for the site to get loaded.
+>
+> The deployment chain's name is "Substrate Contracts Node"
+> chain-type: `Development`
+> Token: `Unit`
 
 **Ensure the local node is selected in the UI**
 ![](../img/contracts-ui-network.png)
