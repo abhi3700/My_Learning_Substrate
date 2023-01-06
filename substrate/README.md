@@ -206,6 +206,52 @@ More complex storage types are also possible.
 
 Key Value Database
 
+### Chain
+
+Here are the steps to create different chains: relay, parachain, parathread, etc.
+
+In order to create a L0 network, we need to create a relay chain. And then, we can create a parachain on top of it. And then, we can create a parathread on top of it. There is a provision of switching b/w parachain & parathread based on their economic viability.
+
+#### Build a local blockchain
+
+[Source](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/)
+
+The `node-template` command-line options specify how you want the running node to operate.
+
+`--dev`:
+
+- chain running in `development` mode & also erases all active data - keys, blockchain database, networking info when <kbd>ctrl+c</kbd> is pressed.
+- ensures you have a fresh node every time you run it.
+
+```sh
+$ git clone https://github.com/substrate-developer-hub/substrate-node-template
+$ cd substrate-node-template
+$ git switch -c my-branch-v0.9.29
+$ cargo build --release
+$ ./target/release/node-template --dev
+```
+
+> check for the latest version [here](https://github.com/substrate-developer-hub/substrate-node-template/tags)
+
+![](../img/substrate-node-template.png)
+
+So, here the node is running & producing blocks.
+
+---
+
+View the blocks via `front-end-template`:
+
+```sh
+$ git clone https://github.com/substrate-developer-hub/substrate-front-end-template
+$ cd substrate-front-end-template
+$ gco latest
+$ yarn install  // v1.22.1 was not able to download semantic-ui dependency, so chose npm
+$ npm i
+$ npm run start
+```
+
+It opens [this](http://localhost:8000/substrate-front-end-template)
+
 ## Tutorials
 
 Try out the following tutorials:
