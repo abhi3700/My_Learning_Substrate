@@ -286,6 +286,104 @@ View the transaction hash details:
 
 Press <kbd>ctrl+c</kbd> to shutdown the node on the `node-template` terminal.
 
+#### Simulate a network
+
+We can start a private blockchain network with an **authority set** of private **validators** like `Alice`, `Bob`, `Charlie`, etc.
+
+> In this simulated network, the two nodes are started using different accounts and keys but run on a single computer. In a real network, each node would run on a separate computer.
+
+---
+
+First clear the data from the node `alice`:
+
+```sh
+$ ./target/release/node-template purge-chain --base-path /tmp/alice --chain local
+```
+
+![](../img/simulate-network-clear-data-alice.png)
+
+Run the `alice` node:
+
+```sh
+$ ./target/release/node-template \
+--base-path /tmp/alice \
+--chain local \
+--alice \
+--port 30333 \
+--ws-port 9945 \
+--rpc-port 9933 \
+--node-key 0000000000000000000000000000000000000000000000000000000000000001 \
+--telemetry-url "wss://telemetry.polkadot.io/submit/ 0" \
+--validator
+```
+
+![](../img/simulate-network-run-alice.png)
+
+<u>Observations</u>:
+
+- 🏷 Local first node identity is: `12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp`
+- The node is running on `30333` p2p port.
+- The node is running on `9945` websocket port.
+- The node is running on `9933` rpc port.
+- `2023-01-07 10:26:16 💤 Idle (0 peers), best: #0 (0x852c…7eb1), finalized #0 (0x852c…7eb1), ⬇ 0 ⬆ 0` indicates that there are no other nodes in the network and that no blocks are being produced. Another node must join the network before blocks can start to be produced.
+- To know more about the commands, refer this [link](https://docs.substrate.io/tutorials/get-started/simulate-network/) section "Review the command-line options".
+
+---
+
+First clear the data from the node `bob`:
+
+```sh
+$ ./target/release/node-template purge-chain --base-path /tmp/bob --chain local
+```
+
+![](../img/simulate-network-clear-data-bob.png)
+
+Run the `bob` node:
+
+```sh
+./target/release/node-template \
+--base-path /tmp/bob \
+--chain local \
+--bob \
+--port 30334 \
+--ws-port 9946 \
+--rpc-port 9934 \
+--telemetry-url "wss://telemetry.polkadot.io/submit/ 0" \
+--validator \
+--bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+```
+
+![](../img/simulate-network-run-bob.png)
+
+<u>Observations</u>:
+
+- 🏷 Local second node identity is: `12D3KooWE93SHn6vtHbuKN7Ao52UVwSHoubojjfHipKxVk9U2e2J`
+- The node is running on `30334` p2p port.
+- The node is running on `9946` websocket port.
+- The node is running on `9934` rpc port.
+
+---
+
+**Close one of the validator nodes**
+
+Now, if you close the `alice` node, then the `bob` node will stop producing blocks. It shows like this on the `bob` terminal:
+
+![](../img/simulate-network-stop-bob.png)
+
+And on `alice` terminal:
+
+![](../img/simulate-network-stop-alice.png)
+
+---
+
+Resume the `alice` node:
+
+![](../img/simulate-network-resume-alice.png)
+
+and this shows on the `bob` terminal:
+
+![](../img/simulate-network-resume-alice-status-on-bob-terminal.png)
+
 ## Tutorials
 
 Try out the following tutorials:
