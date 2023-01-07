@@ -239,7 +239,7 @@ So, here the node is running & producing blocks.
 
 ---
 
-View the blocks via `front-end-template`:
+**View the blocks** via `front-end-template`:
 
 ```sh
 $ git clone https://github.com/substrate-developer-hub/substrate-front-end-template
@@ -251,6 +251,40 @@ $ npm run start
 ```
 
 It opens [this](http://localhost:8000/substrate-front-end-template)
+
+- Here, we can see the blocks being produced & confirmed.
+- User's details like `address`, `balance` (in MegaUnits), etc. can also be seen.
+
+One can also see the blocks via [PolkadotJS](https://polkadot.js.org/apps/#/explorer) explorer.
+
+---
+
+**Transfer funds**
+
+Using the `front-end-template`, we can transfer funds from one account to another like `45 Units` (45,000,000,000,000) from `Alice` to `Dave`:
+![](../img/substrate-transfer-funds-fe-template.png)
+
+Using the `polkadot-js-apps`, we can transfer funds from one account to another like `23 Units` (23,000,000,000,000) from `Alice` to `Ferdie`:
+
+![](../img/substrate-transfer-funds-polka-js-apps.png)
+
+---
+
+Events fired by the `node-template`:
+
+![](../img/substrate-node-template-events.png)
+
+---
+
+View the transaction hash details:
+
+![](../img/substrate-node-template-tx-hash.png)
+
+---
+
+**Shutdown the local blockchain**
+
+Press <kbd>ctrl+c</kbd> to shutdown the node on the `node-template` terminal.
 
 ## Tutorials
 
