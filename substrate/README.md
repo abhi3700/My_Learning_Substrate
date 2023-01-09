@@ -206,11 +206,11 @@ More complex storage types are also possible.
 
 Key Value Database
 
-### Chain
+### Substrate Chain
 
-Here are the steps to create different chains: relay, parachain, parathread, etc.
+Here are the steps to create different chains: **relay**, **parachain**, **parathread**, etc.
 
-In order to create a L0 network, we need to create a relay chain. And then, we can create a parachain on top of it. And then, we can create a parathread on top of it. There is a provision of switching b/w parachain & parathread based on their economic viability.
+In order to create a `L0` network, we need to create a relay chain. And then, we can create a parachain on top of it. And then, we can create a parathread on top of it. There is a provision of switching b/w parachain & parathread based on their economic viability.
 
 #### Build a local blockchain
 
@@ -245,9 +245,9 @@ So, here the node is running & producing blocks.
 $ git clone https://github.com/substrate-developer-hub/substrate-front-end-template
 $ cd substrate-front-end-template
 $ gco latest
-$ yarn install  // v1.22.1 was not able to download semantic-ui dependency, so chose npm
+$ yarn install  // `v1.22.1` was not able to download semantic-ui dependency, so chose npm
 $ npm i
-$ npm run start
+$ npm run start or yarn start
 ```
 
 It opens [this](http://localhost:8000/substrate-front-end-template)
@@ -333,7 +333,7 @@ $ ./target/release/node-template \
 First clear the data from the node `bob`:
 
 ```sh
-$ ./target/release/node-template purge-chain --base-path /tmp/bob --chain local
+$ ./target/release/node-template purge-chain --base-path /tmp/bob --chain local -y
 ```
 
 ![](../img/simulate-network-clear-data-bob.png)
@@ -380,6 +380,8 @@ Resume the `alice` node:
 
 ![](../img/simulate-network-resume-alice.png)
 
+> `discovered: 12D3KooWE93SHn6vtHbuKN7Ao52UVwSHoubojjfHipKxVk9U2e2J /ip4/192.168.0.108/tcp/30334` indicates that the `alice` node has discovered the `bob` node.
+
 and this shows on the `bob` terminal:
 
 ![](../img/simulate-network-resume-alice-status-on-bob-terminal.png)
@@ -404,6 +406,8 @@ Try out the following tutorials:
     - [Polkadot JS Client](https://docs.substrate.io/fundamentals/light-clients-in-substrate-connect/)
     - [Rust for Substrate](https://docs.substrate.io/fundamentals/rust-basics/)
   - [Tutorials](https://docs.substrate.io/tutorials/)
+    - [Build a local blockchain](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/) ✅
+    - [Simulate a network](https://docs.substrate.io/tutorials/get-started/simulate-network/) ✅
     - [SC](https://docs.substrate.io/tutorials/smart-contracts/)
       - [Build a Token SC](https://docs.substrate.io/tutorials/smart-contracts/build-a-token-contract/)
   - [Reference](https://docs.substrate.io/reference/)

@@ -324,9 +324,11 @@ ink_env::debug_println!("thanks for the funding of {:?} from {:?}", value, calle
 - [ink! playground](https://playground.substrate.dev/)
 - [ink! Rust official doc](https://docs.rs/ink_lang/latest/ink_lang/index.html)
 - [CLI tool](https://github.com/paritytech/cargo-contract)
-- [Tutorials](https://docs.substrate.io/tutorials/)
-  - https://docs.substrate.io/tutorials/smart-contracts/
-  - [Substrate contract Web App interactor template - for stock Flipper SC](https://github.com/polk4-net/flipper-app)
-  - [By Figment](https://learn.figment.io/protocols/polkadot)
+- [Tutorials](https://docs.substrate.io/tutorials/smart-contracts/)
+  - [Prepare your first contract](https://docs.substrate.io/tutorials/smart-contracts/prepare-your-first-contract/) ✅
+  - [Develop a smart contract](https://docs.substrate.io/tutorials/smart-contracts/develop-a-smart-contract/) ✅
+- [Substrate contract Web App interactor template - for stock Flipper SC](https://github.com/polk4-net/flipper-app)
+- [By Figment](https://learn.figment.io/protocols/polkadot)
+  > Most of the codebase is written as per FRAME v1. There is a major upgrade to FRAME v2. The codebase is not updated yet.
 - [Rust before Substrate Ink](https://rust-unofficial.github.io/patterns/intro.html)
 - [OpenBrush](https://github.com/Supercolony-net/openbrush-contracts) like OpenZeppelin. It is a library of SCs.
