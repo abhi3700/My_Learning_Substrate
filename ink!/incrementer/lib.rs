@@ -24,12 +24,12 @@ mod incrementer {
         /// Constructor that initializes the `bool` value to the given `init_value`.
         #[ink(constructor)]
         pub fn new(init_num: i32) -> Self {
-            Incrementer { value: init_num }
+            Self { value: init_num }
         }
 
         #[ink(constructor)]
         pub fn default() -> Self {
-            Incrementer::new(32)
+            Self::new(32)
         }
 
         #[ink(message)]
