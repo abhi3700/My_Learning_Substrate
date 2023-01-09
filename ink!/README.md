@@ -106,7 +106,7 @@ Your contract artifacts are ready. You can find them in:
 ### 3. Test the project
 
 ```console
-❯ cargo test
+❯ cargo +nightly test
 ```
 
 ### 4. Deploy the Contract
