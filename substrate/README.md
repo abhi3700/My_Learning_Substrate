@@ -364,7 +364,26 @@ Run the `bob` node:
 
 ---
 
-**Close one of the validator nodes**
+Run the `charlie` node:
+
+```sh
+./target/release/node-template \
+--base-path /tmp/charlie \
+--chain local \
+--charlie \
+--port 30335 \
+--ws-port 9947 \
+--rpc-port 9937 \
+--telemetry-url "wss://telemetry.polkadot.io/submit/ 0" \
+--validator \
+--bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp
+```
+
+![](../img/simulate-network-run-charlie.png)
+
+---
+
+**Close one of the validator nodes out of many (> 1)**
 
 Now, if you close the `alice` node, then the `bob` node will stop producing blocks. It shows like this on the `bob` terminal:
 
@@ -373,6 +392,26 @@ Now, if you close the `alice` node, then the `bob` node will stop producing bloc
 And on `alice` terminal:
 
 ![](../img/simulate-network-stop-alice.png)
+
+<u>Observations</u>:
+
+- 🏷 Local third node identity is: `12D3KooWD7T4ZcFzQzu5PGTXnBDZTns3m4Yt4p68THbtRnWC5iju`
+- Connected via discovering the p2p nodes:
+
+  ```sh
+  2023-01-10 10:12:10 discovered: 12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp /ip4/192.168.29.58/tcp/30333
+  2023-01-10 10:12:10 discovered: 12D3KooWE93SHn6vtHbuKN7Ao52UVwSHoubojjfHipKxVk9U2e2J /ip4/192.168.29.58/tcp/30334
+  ```
+
+- The node is running on `30335` p2p port.
+- The node is running on `9947` websocket port.
+- The node is running on `9937` rpc port.
+
+---
+
+If one (`charlie` say) of the 3 nodes is closed, then the other 2 nodes will continue to produce blocks. It shows like this on the `bob` terminal:
+
+![](../img/simulate-network-stop-charlie.png)
 
 ---
 
