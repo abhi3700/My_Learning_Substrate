@@ -112,6 +112,12 @@ Parachain --when less budget--> ParaThread --when more budget--> Parachain
 
 ## Parachains
 
+### Astar
+
+Has partnered with Alchemy
+
+- [With Alchemy](https://www.alchemy.com/astar)
+
 ### Acala
 
 Hub for DeFi in Polkadot, Kusama.
