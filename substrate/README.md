@@ -75,7 +75,7 @@ Here is what it looks like before & after creating blockchain using Substrate:
 
 FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.
 
-### Rust tokens
+### FRAME macros
 
 They essentially look like this, where the LHS code is converted into kind of like AST (Abstract Syntax Tree) on the RHS:
 
@@ -133,6 +133,14 @@ Here is an example:
 extern crate my_subcrate;   // declared subcrate
 use my_subcrate::show_tokens; // used subcrate's function
 ```
+
+Macros generally have 15 lines of code, but actually it abstracts around 300-3000 (small/large) lines of code. So, macros are that powerful.
+
+The outer vs inner macros are explained in the image below:
+
+![](../img/substrate_frame_outer_vs_inner_macros_rust.png)
+
+Without the outer macros, inner macros doesn't make any sense. Never use `dev_mode` in production mode. The compiler wouldn't show any error if you use `dev_mode`.
 
 ### Pallet
 
@@ -267,13 +275,15 @@ More complex storage types are also possible.
 
 Key Value Database
 
-### Substrate Chain
+## Substrate Chain Setup
 
 Here are the steps to create different chains: **relay**, **parachain**, **parathread**, etc.
 
 In order to create a `L0` network, we need to create a relay chain. And then, we can create a parachain on top of it. And then, we can create a parathread on top of it. There is a provision of switching b/w parachain & parathread based on their economic viability.
 
-#### Build a local blockchain
+### 1. Build a local blockchain
+
+Basically, we are going to create a single node network. This is the simplest way to create a blockchain. We are going to use the `node-template` binary (generated after build process) to create a local blockchain & can view the blocks, transactions, etc. in both CLI & GUI (front-end-template or Polkadot.js explorer).
 
 [Source](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/)
 
@@ -284,7 +294,9 @@ The `node-template` command-line options specify how you want the running node t
 - chain running in `development` mode & also erases all active data - keys, blockchain database, networking info when <kbd>ctrl+c</kbd> is pressed.
 - ensures you have a fresh node every time you run it.
 
-```sh
+**1st time**:
+
+```console
 $ git clone https://github.com/substrate-developer-hub/substrate-node-template
 $ cd substrate-node-template
 $ git switch -c my-branch-v0.9.29
@@ -294,21 +306,42 @@ $ ./target/release/node-template --dev
 
 > check for the latest version [here](https://github.com/substrate-developer-hub/substrate-node-template/tags)
 
-![](../img/substrate-node-template.png)
+**next time onwards**:
 
-So, here the node is running & producing blocks.
+```console
+// go to the directory where you cloned the repo
+$ gco main
+$ git switch -c polkadot-v0.9.35
+$ cargo build --release
+$ ./target/release/node-template --dev
+```
+
+So, here the node is running & producing blocks & view on CLI:
+![](../img/substrate-node-template.png)
 
 ---
 
-**View the blocks** via `front-end-template`:
+**View the blocks on GUI** via `front-end-template`:
 
-```sh
+**1st time**:
+
+```console
 $ git clone https://github.com/substrate-developer-hub/substrate-front-end-template
 $ cd substrate-front-end-template
 $ gco latest
-$ yarn install  // `v1.22.1` was not able to download semantic-ui dependency, so chose npm
+$ yarn install  // `v1.22.1` was not able to download semantic-ui dependency, so chose npm instead
 $ npm i
 $ npm run start or yarn start
+```
+
+**next time onwards**:
+
+```console
+$ gco main
+$ git pull origin main
+$ gco latest
+$ npm i
+$ npm run start
 ```
 
 It opens [this](http://localhost:8000/substrate-front-end-template)
@@ -325,7 +358,9 @@ One can also see the blocks via [PolkadotJS](https://polkadot.js.org/apps/#/expl
 Using the `front-end-template`, we can transfer funds from one account to another like `45 Units` (45,000,000,000,000) from `Alice` to `Dave`:
 ![](../img/substrate-transfer-funds-fe-template.png)
 
-Using the `polkadot-js-apps`, we can transfer funds from one account to another like `23 Units` (23,000,000,000,000) from `Alice` to `Ferdie`:
+Using the `PolkadotJS` explorer, we can transfer funds from one account to another like `23 Units` (23,000,000,000,000) from `Alice` to `Ferdie`:
+
+> Accounts >> Transfer
 
 ![](../img/substrate-transfer-funds-polka-js-apps.png)
 
@@ -334,6 +369,11 @@ Using the `polkadot-js-apps`, we can transfer funds from one account to another 
 Events fired by the `node-template`:
 
 ![](../img/substrate-node-template-events.png)
+
+---
+
+View the recent events in the "Chain info" tab:
+![](../img/substrate-node-template-chain-info.png)
 
 ---
 
@@ -347,9 +387,11 @@ View the transaction hash details:
 
 Press <kbd>ctrl+c</kbd> to shutdown the node on the `node-template` terminal.
 
-#### Simulate a network
+### 2. Simulate a network
 
-We can start a private blockchain network with an **authority set** of private **validators** like `Alice`, `Bob`, `Charlie`, etc.
+[Source](https://docs.substrate.io/tutorials/get-started/simulate-network/)
+
+We can start a private blockchain network with an **authority set** of private **validators** like `Alice`, `Bob`, `Charlie`, etc. Basically, we are going to create a **multi node network** as multiple validators are involved.
 
 > In this simulated network, the two nodes are started using different accounts and keys but run on a single computer. In a real network, each node would run on a separate computer.
 
@@ -383,11 +425,16 @@ $ ./target/release/node-template \
 <u>Observations</u>:
 
 - 🏷 Local first node identity is: `12D3KooWEyoppNCUx8Yx66oV9fJnriXwCcXwDDUA2kj6vnc6iDEp`
+- Database (type: RocksDb developed by Facebook) is maintained at `/tmp/alice/chains/local_testnet/db/full`
 - The node is running on `30333` p2p port.
-- The node is running on `9945` websocket port.
-- The node is running on `9933` rpc port.
+- The node is running on `9945` JSON-RPC websocket server port.
+- The node is running on `9933` JSON-RPC http server port.
 - `2023-01-07 10:26:16 💤 Idle (0 peers), best: #0 (0x852c…7eb1), finalized #0 (0x852c…7eb1), ⬇ 0 ⬆ 0` indicates that there are no other nodes in the network and that no blocks are being produced. Another node must join the network before blocks can start to be produced.
 - To know more about the commands, refer this [link](https://docs.substrate.io/tutorials/get-started/simulate-network/) section "Review the command-line options".
+
+You can view the block explorer [here](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9946#/explorer)
+
+> Just need to edit the ws rpc port to `9945` in the URL like this: `ws://127.0.0.1:9945`. And then you will be able to view the block explorer.
 
 ---
 
@@ -419,9 +466,14 @@ Run the `bob` node:
 <u>Observations</u>:
 
 - 🏷 Local second node identity is: `12D3KooWE93SHn6vtHbuKN7Ao52UVwSHoubojjfHipKxVk9U2e2J`
+- Database (type: RocksDb developed by Facebook) is maintained at `/tmp/bob/chains/local_testnet/db/full`
 - The node is running on `30334` p2p port.
-- The node is running on `9946` websocket port.
-- The node is running on `9934` rpc port.
+- The node is running on `9946` JSON-RPC websocket server port.
+- The node is running on `9934` JSON-RPC http server port.
+
+You can view the block explorer [here](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9946#/explorer)
+
+> Just need to edit the ws rpc port to alice or bob's ws rpc port in the URL like this: `ws://127.0.0.1:9945` or bob's ws-port. And then you will be able to view the block explorer.
 
 ---
 
@@ -464,9 +516,14 @@ And on `alice` terminal:
   2023-01-10 10:12:10 discovered: 12D3KooWE93SHn6vtHbuKN7Ao52UVwSHoubojjfHipKxVk9U2e2J /ip4/192.168.29.58/tcp/30334
   ```
 
+- Database (type: RocksDb developed by Facebook) is maintained at `/tmp/charlie/chains/local_testnet/db/full`
 - The node is running on `30335` p2p port.
-- The node is running on `9947` websocket port.
-- The node is running on `9937` rpc port.
+- The node is running on `9947` JSON-RPC websocket server port.
+- The node is running on `9937` JSON-RPC http server port.
+
+You can view the block explorer [here](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9946#/explorer)
+
+> Just need to edit the ws rpc port to alice or bob's ws rpc port in the URL like this: `ws://127.0.0.1:9945` or bob's ws-port. And then you will be able to view the block explorer.
 
 ---
 
@@ -512,6 +569,7 @@ Try out the following tutorials:
       - [Build a Token SC](https://docs.substrate.io/tutorials/smart-contracts/build-a-token-contract/)
   - [Reference](https://docs.substrate.io/reference/)
     - [FRAME macros](https://docs.substrate.io/reference/frame-macros/)
+    - [How-to quick reference guides](https://docs.substrate.io/reference/how-to-guides/)
     - [Cryptography](https://docs.substrate.io/reference/cryptography/)
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
 - [Substrate Recipes](https://substrate.recipes/introduction.html)
@@ -520,7 +578,7 @@ Try out the following tutorials:
 ### Videos
 
 - [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
-- [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY)
+- [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY) ✅
 - [Sub0 Online: Storage on a Substrate chain](https://www.youtube.com/watch?v=ek8SzCCk59o)
 - [Sub0.1: Storage on Substrate - Shawn Tabrizi, Developer experience at Parity](https://www.youtube.com/watch?v=kKKOL20FdII)
-- [Demystifying FRAME Macro Magic | Substrate Seminar (full livestream)](https://www.youtube.com/watch?v=aEWbZxNCH0A)
+- [Demystifying FRAME Macro Magic | Substrate Seminar (full livestream)](https://www.youtube.com/watch?v=aEWbZxNCH0A) ☑️
