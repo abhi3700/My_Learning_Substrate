@@ -15,7 +15,10 @@ Follow [this](../ink!/README.md#3-the-substrate-sc-node)
 - **Collator**: Validator for Polkadot parachain
 - **Substrate runtime**: It's like `wasm`, `bytecode` for other blockchain networks.
 - **FRAME**: meta-program (code that writes & modifies other code) macros (used like meta-programming ) to define pallets, storage, events, errors, etc. E.g. `println!("Hello world!")`, `#[pallet::pallet]`, `#[pallet::storage]`, `#[pallet::event]`, `#[pallet::error]`, etc. In C/C++, there are macros like `#define`, `#include`, templates, etc.
+
   - macros are syntactical sugars or a way to improve the developer UX in the compiled languages.
+
+- **FRAME pallet**:
 
 ## ink!
 
@@ -143,6 +146,16 @@ The outer vs inner macros are explained in the image below:
 Without the outer macros, inner macros doesn't make any sense. Never use `dev_mode` in production mode. The compiler wouldn't show any error if you use `dev_mode`.
 
 ### Pallet
+
+A FRAME pallet has these components:
+
+- Storage
+- Dispatchables
+- Events
+- Errors
+- Config
+
+[Source](https://github.com/substrate-developer-hub/substrate-node-template#pallets)
 
 **Start a chain with given/custom runtime**:
 
@@ -281,9 +294,24 @@ Here are the steps to create different chains: **relay**, **parachain**, **parat
 
 In order to create a `L0` network, we need to create a relay chain. And then, we can create a parachain on top of it. And then, we can create a parathread on top of it. There is a provision of switching b/w parachain & parathread based on their economic viability.
 
+`substrate-node-template` binary requires 2 parts to run:
+
+1. The genesis state information is stored in the `node/src/chain_spec.rs` file. This file is used to create the genesis block of the chain.
+
+2. There is another part required for `substrate-node-template` binary to run i.e. `node/src/service.rs` file. This file is used to create the runtime of the chain.
+
+---
+
+**Runtime** is the core of the chain. It's the logic of the chain. It's the state transition function. It's the code which is executed when a transaction is sent to the chain. Different activity can be done using different pallets like block authoring, finalization, etc. And all the pallets are added in `pallets/` folder. It depends on 2 things:
+
+1. Each pallet has to be configured using `impl $PALLET_NAME::Config for Runtime`. All are done in this file - `runtime/src/lib.rs`.
+2. So, basically there are multiple pallets in a runtime (a blockchain). And each pallet has its own storage, logic, etc. And the runtime is the combination of all these pallets. And it's done using `construct_runtime!` macro.
+
+[More](https://github.com/substrate-developer-hub/substrate-node-template#runtime)
+
 ### 1. Build a local blockchain
 
-Basically, we are going to create a single node network. This is the simplest way to create a blockchain. We are going to use the `node-template` binary (generated after build process) to create a local blockchain & can view the blocks, transactions, etc. in both CLI & GUI (front-end-template or Polkadot.js explorer).
+Basically, we are going to create a single node development chain. This is the simplest way to create a blockchain. We are going to use the `node-template` binary (generated after build process) to create a local blockchain & can view the blocks, transactions, etc. in both CLI & GUI (front-end-template or Polkadot.js explorer).
 
 [Source](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/)
 
@@ -318,6 +346,28 @@ $ ./target/release/node-template --dev
 
 So, here the node is running & producing blocks & view on CLI:
 ![](../img/substrate-node-template.png)
+
+We can clear the DB using this:
+
+![](../img/substrate-node-template-clear-db.png)
+
+We can get more details as `DEBUG`:
+
+```console
+❯ RUST_BACKTRACE=1 ./target/release/node-template -ldebug --dev
+```
+
+![](../img/substrate-node-template-debug.png)
+
+We can also pass a custom folder as DB for the node.
+
+![](../img/substrate-node-template-custom-db.png)
+
+![](../img/substrate-node-template-view-chain-folder-details.png)
+
+We can see the full log stored in a file (on VSCode):
+
+![](../img/substrate-node-template-log-vscode.png)
 
 ---
 
@@ -391,7 +441,7 @@ Press <kbd>ctrl+c</kbd> to shutdown the node on the `node-template` terminal.
 
 [Source](https://docs.substrate.io/tutorials/get-started/simulate-network/)
 
-We can start a private blockchain network with an **authority set** of private **validators** like `Alice`, `Bob`, `Charlie`, etc. Basically, we are going to create a **multi node network** as multiple validators are involved.
+We can start a private blockchain network with an **authority set** of private **validators** like `Alice`, `Bob`, `Charlie`, etc. Basically, we are going to create a **multi node local testnet** as multiple validators are involved.
 
 > In this simulated network, the two nodes are started using different accounts and keys but run on a single computer. In a real network, each node would run on a separate computer.
 
@@ -574,6 +624,7 @@ Try out the following tutorials:
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
 - [Substrate Recipes](https://substrate.recipes/introduction.html)
 - [Substrate Rust doc](https://paritytech.github.io/substrate/)
+- [Rustlings like game for Substrate](https://github.com/rusty-crewmates/substrate-tutorials) [Funded by Web3 Foundation]
 
 ### Videos
 
