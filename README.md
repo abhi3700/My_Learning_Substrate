@@ -1,6 +1,6 @@
 # My_Learning_Polkadot
 
-Learn everything about Polkadot, Kusama, [Substrate](./substrate/), etc.
+Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./pallet/), [ink!](./ink!/) etc.
 
 ## About
 
@@ -286,6 +286,11 @@ There is a `set_code` function which allows to upgrade the network.
 ![](img/forkless_upgrades_2.png.png)
 
 It shows comparo b/w legacy & polkadot blockchains.
+
+## Repositories
+
+- zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate)
+- A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
 
 ## References
 

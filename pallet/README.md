@@ -1,4 +1,4 @@
-# Substrate
+# Pallets
 
 ## Installation
 
