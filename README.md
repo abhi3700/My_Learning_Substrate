@@ -1,9 +1,11 @@
-# My_Learning_Polkadot
+# My_Learning_Substrate
 
 Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./pallet/), [ink!](./ink!/) etc.
 
 ## About
 
+- Substrate FRAME version: <kbd>3.0.0</kbd>
+- Substrate ink! version: <kbd>4.0.0</kbd>
 - Layer-0 i.e. L0
 - chains (mainnet or testnet):
 
@@ -289,7 +291,13 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 ## Repositories
 
-- zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate)
+- Substrate (The platform for blockchain innovators): https://github.com/paritytech/substrate
+- Polkadot (Polkadot Node Implementation): https://github.com/paritytech/polkadot
+- Substrate node template: https://github.com/substrate-developer-hub/substrate-node-template
+- Substrate node FE template: https://github.com/substrate-developer-hub/substrate-front-end-template
+- cumulus (Write Parachains on Substrate): https://github.com/paritytech/cumulus
+- ink! (Smart Contract Language for Substrate): https://github.com/paritytech/ink
+- zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
 
 ## References
@@ -318,3 +326,5 @@ It shows comparo b/w legacy & polkadot blockchains.
 - [Learn Rust syntax for Substrate | Substrate Seminar](https://www.youtube.com/watch?v=VVU3Io2dACY) ✅
 - [Polkadot and Substrate – Build Custom Blockchains that can Evolve](https://www.youtube.com/watch?v=HrTSpIqhyc0)
 - [Sub0 Online: ink! 3.0: A Rust & Smart Contracts Love Story](https://www.youtube.com/watch?v=WNNJzK3dGGQ)
+- Polkadot Deep Dives
+  - [Pallet Timestamp and Inherents](https://www.youtube.com/watch?v=HjtxPcuR8a0) 🧑🏻‍💻

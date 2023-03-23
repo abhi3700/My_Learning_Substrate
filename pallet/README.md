@@ -8,6 +8,10 @@ Refer [this](../ink/README.md#installation) for installation.
 
 Follow [this](../ink!/README.md#3-the-substrate-sc-node)
 
+Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/substrate-node-template) repo, these folders are the main target to be modified:
+
+![](../img/substrate_node_template_dirs.png)
+
 ## Terminology
 
 - **Relay chain**: The Polkadot super chain which is connected to different parachains.
