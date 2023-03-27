@@ -4,6 +4,18 @@
 
 Refer [this](../ink/README.md#installation) for installation.
 
+## Changelog
+
+FRAME has transitioned from `v1` to `v2` to `v3`.
+
+> The changes were major especially from `v1` to `v2` i.e. from declarative to procedural (attribute) macros. The changes were not that major from `v2` to `v3`.
+
+<!-- TODO: -->
+
+Illustrates the old vs new code [here](https://github.com/paritytech/substrate/discussions/7788?sort=top#discussioncomment-482199).
+
+references: [1](https://github.com/paritytech/substrate/discussions/7788), [2](https://blog.knoldus.com/how-substrate-frame-v2-different-from-frame-v1/)
+
 ## `substrate-contracts-node` vs `node-template`
 
 Follow [this](../ink!/README.md#3-the-substrate-sc-node)

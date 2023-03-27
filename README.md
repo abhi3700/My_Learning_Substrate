@@ -302,6 +302,8 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 ## References
 
+### Official
+
 - [Parity Homepage](https://www.parity.io/)
 - [Substrate Homepage](https://substrate.io/)
 - [Parity Tech Rust Doc](https://paritytech.github.io/)
@@ -326,5 +328,11 @@ It shows comparo b/w legacy & polkadot blockchains.
 - [Learn Rust syntax for Substrate | Substrate Seminar](https://www.youtube.com/watch?v=VVU3Io2dACY) ✅
 - [Polkadot and Substrate – Build Custom Blockchains that can Evolve](https://www.youtube.com/watch?v=HrTSpIqhyc0)
 - [Sub0 Online: ink! 3.0: A Rust & Smart Contracts Love Story](https://www.youtube.com/watch?v=WNNJzK3dGGQ)
-- Polkadot Deep Dives
+- [Polkadot Deep Dives](https://www.youtube.com/playlist?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG)
   - [Pallet Timestamp and Inherents](https://www.youtube.com/watch?v=HjtxPcuR8a0) 🧑🏻‍💻
+- [Substrate Saturday by Polkadot India YT playlist](https://www.youtube.com/playlist?list=PLiKqYiZDRE4_CWnXgSgejl3bJUYibq0Gp)
+  - very down to earth & easy to understand videos. It is a must watch for beginners.
+- [The Future of the Network | Polkadot Blockchain Academy 2023](https://youtu.be/j6xEbgAiVvg) ✅
+- [What Will the Next Generation of Dapps Look Like? | ETHDenver '23](https://youtu.be/YxEK8EvVAAo) ✅
+- [🎮 Runtime Development](https://www.youtube.com/playlist?list=PLp0_ueXY_enU7jbm_A-3BrXiMbHPR0he0)
+  - It mainly focuses on the runtime development of substrate using FRAME v2. Especially for the beginners, it is a must watch. Also, it's going to give you a good idea about the runtime development of substrate in terms of journey that how it has evolved from FRAME v1 to FRAME v2.
