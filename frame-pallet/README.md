@@ -28,7 +28,7 @@ There is no change in the final source code if the macros are expanded. The chan
 
 ---
 
-`construct_runtime!` macro is used to define the runtime. It's a procedural macro which takes the pallets as input and generates the entire runtime code. So, this is same for both `v1` & `v2`.
+`construct_runtime!` macro is used to define the runtime. It's a declarative macro which takes the pallets as input and generates the entire runtime code. So, this is same for both `v1` & `v2`.
 
 ## `substrate-contracts-node` vs `node-template`
 
