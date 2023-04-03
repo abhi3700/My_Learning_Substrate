@@ -4,17 +4,31 @@
 
 Refer [this](../ink/README.md#installation) for installation.
 
-## Changelog
+## FRAME Version Transition
 
 FRAME has transitioned from `v1` to `v2` to `v3`.
 
 > The changes were major especially from `v1` to `v2` i.e. from declarative to procedural (attribute) macros. The changes were not that major from `v2` to `v3`.
 
-<!-- TODO: -->
-
 Illustrates the old vs new code [here](https://github.com/paritytech/substrate/discussions/7788?sort=top#discussioncomment-482199).
 
 references: [1](https://github.com/paritytech/substrate/discussions/7788), [2](https://blog.knoldus.com/how-substrate-frame-v2-different-from-frame-v1/)
+
+---
+
+**FRAME Pallet v1** code template looks like this:
+![](../img/frame_pallet_v1_code_template.png)
+
+---
+
+**FRAME Pallet v2** code template looks like this:
+![](../img/frame_pallet_v2_code_template.png)
+
+There is no change in the final source code if the macros are expanded. The change is major in the way the code is re-written using the new style of macros i.e. from declarative to procedural (attribute) macros.
+
+---
+
+`construct_runtime!` macro is used to define the runtime. It's a procedural macro which takes the pallets as input and generates the entire runtime code. So, this is same for both `v1` & `v2`.
 
 ## `substrate-contracts-node` vs `node-template`
 
@@ -34,7 +48,7 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 
   - macros are syntactical sugars or a way to improve the developer UX in the compiled languages.
 
-- **FRAME pallet**:
+- **FRAME pallet**: The runtime modules which are used to build the runtime. They are different from the typical smart contracts which are generally designed to be used by the end-users. FRAME pallets are designed to be used by the blockchain developers. They are like the building blocks of the blockchain runtime. Also, they are very important for the L0 network stakeholders like validators, collators, etc.
 
 ## ink!
 
@@ -171,6 +185,13 @@ A FRAME pallet has these components:
 - Errors
 - Config
 
+On crates:
+
+- More on [`frame_support::pallet`](https://paritytech.github.io/substrate/master/frame_support/attr.pallet.html#) on crates doc.
+- [`#[frame_support::pallet::*]` attributes](https://paritytech.github.io/substrate/master/frame_support/attr.pallet.html#pallet-attributes)
+
+![](../img/substrate_frame_support_pallet_attribute_macros.png)
+
 [Source](https://github.com/substrate-developer-hub/substrate-node-template#pallets)
 
 **Start a chain with given/custom runtime**:
@@ -231,7 +252,135 @@ And therefore, we get to see `<T>`, `T::`. This is because we are using the `Con
 
 ---
 
-### SC Storage
+### Pallet module (mandatory)
+
+> Here, mandatory indicates that this must be considered for a pallet.
+
+Note that various types can be automatically imported using `frame_support::pallet_prelude` and `frame_system::pallet_prelude`:
+![](../img/substrate_frame_pallet_module_code_snippet.png)
+
+One needs to define a pallet with this initial boilerplate code. This is the entry point for the pallet items detailed below.
+
+### Pallet config (mandatory)
+
+![](../img/substrate_frame_pallet_config_code_snippet.png)
+
+Here, the primary inheritance is from `Config` trait defined `frame_system` module inherently.
+
+```rs
+pub trait Config: frame_system::Config {
+  #[pallet::constant] // This is used to define a constant
+  type MyGetParam: Get<u32>;
+  type Balance: Parameter + From<u8>;
+  type MyEvent: From<Event<Self>> + Into<<Self as frame_system::Config>::Event>;
+}
+```
+
+Within the `Config` trait, there are several associated types defined using the `type` keyword:
+
+- `MyGetParam`: This is an associated type with the `Get` trait (bound), which returns a u32 value. An associated type defines a type that is associated with the trait.
+- `Balance`: This is an associated type that implements the `Parameter` trait and can be converted from a u8 value. In Rust, a parameter is a type that can be passed into a generic function or struct.
+- `MyEvent`: This is an associated type that implements both `From<Event<Self>>` and `Into<<Self as frame_system::Config>::Event>` traits. It is used to define events that this module emits. An event represents something interesting that happened in the system, which can then be subscribed to by other modules.
+
+Finally, there is a Rust macro called `#[pallet::constant]` used to define a constant in a pallet, which is a collection of types and functions that can be reused across multiple modules.
+
+### Pallet extra constants (optional)
+
+![](../img/substrate_frame_pallet_extra_constants_code_snippet.png)
+
+Refer the official doc [here](https://paritytech.github.io/substrate/master/frame_support/attr.pallet.html#extra-constants-palletextra_constants-optional).
+
+### Pallet placeholder (mandatory)
+
+The pallet struct placeholder `#[pallet::pallet]` is mandatory and allows you to specify pallet information.
+
+![](../img/substrate_frame_pallet_placeholder_code_snippet.png)
+
+This was the initial version of v2. Now, in v3 it's changed to:
+
+```rs
+#[pallet::pallet]
+pub struct Pallet<T>(_);
+```
+
+The abstracted meaning of the `PhantomData` (used in FRAME `v2`) is that it is a type that is used in generic code when the compiler needs to know that a type is used, but the code doesn't need to use the type itself. This is just to make the compiler happy. That's it!
+
+Here, the `PhantomData` is a zero-date size type.
+
+---
+
+`#[pallet::pallet]` attribute macro expands to these:
+
+- implement these traits:
+
+```rs
+#[derive(
+	frame_support::CloneNoBound,
+	frame_support::EqNoBound,
+	frame_support::PartialEqNoBound,
+	frame_support::RuntimeDebugNoBound,
+)]
+```
+
+- replaces the type `_` with the type `PhantomData<T>`
+- also implements [`GetStorageVersion` trait](https://paritytech.github.io/substrate/master/frame_support/dispatch/trait.GetStorageVersion.html)
+
+```rs
+pub trait GetStorageVersion {
+    fn current_storage_version() -> StorageVersion;
+    fn on_chain_storage_version() -> StorageVersion;
+}
+```
+
+- also implements [`OnGenesis` trait](https://paritytech.github.io/substrate/master/frame_support/traits/trait.OnGenesis.html#method.on_genesis):
+
+  ```rs
+  pub trait OnGenesis {
+    fn on_genesis() { ... }
+  }
+  ```
+
+---
+
+To generate a `Store` trait associating all storages, use the attribute `#[pallet::generate_store($vis trait Store)]`, e.g.:
+
+```rs
+#[pallet::pallet]
+#[pallet::generate_store(pub(super) trait Store)]
+pub struct Pallet<T>(_);
+```
+
+Here, `#[pallet::generate_store(pub(super) trait Store)]` is used to implement `Store` trait which has associated types for each storage.
+
+E.g. if there is a pallet storage defined as `Foo`, then it can be accessed from the `Pallet` via `<Pallet as Store>::Foo`.
+
+---
+
+To access the full storage:
+
+```rs
+#[pallet::pallet]
+#[pallet::set_storage_max_encoded_len]
+pub struct Pallet<T>(_);
+```
+
+---
+
+To inform the `current_storage_Version` to the macro, use the attribute `#[pallet::storage_version($version: expr)]`, e.g.:
+
+```rs
+const STORAGE_VERSION: StorageVersion = StorageVersion::new(5);
+
+#[pallet::pallet]
+#[pallet::storage_version(STORAGE_VERSION)]
+pub struct Pallet<T>(_);
+```
+
+---
+
+More on this topic [here](https://crates.parity.io/frame_support/attr.pallet.html#pallet-struct-placeholder-palletpallet-mandatory).
+
+### Pallet storage (mandatory)
 
 ![](../img/substrate_storage_abstraction_layers.png)
 
@@ -620,6 +769,12 @@ Try out the following tutorials:
 - [zhubaiyuan/awesome-substrate](https://github.com/zhubaiyuan/awesome-substrate)
 
 ## References
+
+- Rust Crates doc:
+  - [paritytech.github.io](https://paritytech.github.io/)
+  - [crates.parity.io/](https://crates.parity.io/)
+
+> Both have almost the same content except for some changes in some of the cases.
 
 - [Documentation | By Parity](https://docs.substrate.io/main-docs/)
   - [Fundamentals](https://docs.substrate.io/fundamentals/)
