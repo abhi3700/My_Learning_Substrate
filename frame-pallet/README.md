@@ -380,6 +380,42 @@ pub struct Pallet<T>(_);
 
 More on this topic [here](https://crates.parity.io/frame_support/attr.pallet.html#pallet-struct-placeholder-palletpallet-mandatory).
 
+### Pallet hooks (optional)
+
+It is mainly to define the runtime hooks associated with the pallet w.r.t different stages of the block execution.
+
+![](../img/substrate_frame_pallet_hooks_code_snippet.png)
+
+Normally, the hooks are defined as:
+
+```rs
+#[pallet::hooks]
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> $optional_where_clause {
+}
+```
+
+---
+
+If no hooks are defined, then it defaults to this code:
+
+```rs
+#[pallet::hooks]
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {}
+```
+
+---
+
+The macro implements the traits
+
+- `OnInitialize`,
+- `OnIdle`,
+- `OnFinalize`,
+- `OnRuntimeUpgrade`,
+- `OffchainWorker`,
+- `IntegrityTest`
+
+using Hooks implementation.
+
 ### Pallet storage (mandatory)
 
 ![](../img/substrate_storage_abstraction_layers.png)
