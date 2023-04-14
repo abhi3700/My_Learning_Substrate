@@ -81,7 +81,7 @@ mod incrementer {
             assert_eq!(incr.get(), 32);
             incr.increment(45);
             let emitted_events = ink_env::test::recorded_events().collect::<Vec<_>>();
-            println!("{:?}", &emitted_events[0]); // TODO: Debug trait not implemented. Issue raised & PR merged: https://github.com/paritytech/ink/issues/1577
+            println!("{:?}", &emitted_events[0]); // NOTE: Debug trait not implemented. Issue raised & PR merged: https://github.com/paritytech/ink/issues/1577
             assert_eq!(1, emitted_events.len());
 
             assert_eq!(incr.get(), 77);

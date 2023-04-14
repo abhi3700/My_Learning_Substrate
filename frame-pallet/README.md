@@ -4,6 +4,33 @@
 
 Refer [this](../ink/README.md#installation) for installation.
 
+## Runtime
+
+The substrate chain runtime is considered as state transition function. So, there are many pallets available that can be selected in order to select the desired functionality.
+
+![](../img/substrate_runtime_state_transistion_func.png)
+
+Most of the developers in substrate work as runtime developer. They are responsible for writing the runtime code. The runtime code is written in Rust. The runtime code is compiled to `wasm` and then it's deployed to the blockchain.
+
+Parity Technologies started building relay chain of Polkadot. But, then ended up releasing the substrate. So, now the relay chain is built using substrate.
+![](../img/polkadot_relay_chain.png)
+
+And now, anyone can create their own relay chain using substrate like this:
+![](../img/substrate_relay_chain.png)
+
+> Basically the reusable parts have been extracted out of Polkadot and made available as substrate.
+
+Not just the relay chain, but the parachains can be built using substrate as well. So, now the parachains are built using substrate like this:
+![](../img/substrate_parachain.png)
+
+And not just that you can have your own chain which are not connected to polkadot like this:
+![](../img/substrate_chain_any.png)
+
+We can have this at the end (in Venn diagram):
+![](../img/substrate_chain_any_venn_diagram.png)
+
+Whenever any issue is found regarding performance, block time. Then the `node-template` is build with release mode. And then it would generate optimized wasm. And then the optimized runtime wasm is deployed to the blockchain.
+
 ## FRAME Version Transition
 
 FRAME has transitioned from `v1` to `v2` to `v3`.
@@ -254,6 +281,8 @@ And therefore, we get to see `<T>`, `T::`. This is because we are using the `Con
 
 ### Pallet module (mandatory)
 
+[Source](https://crates.parity.io/frame_support/attr.pallet.html#)
+
 > Here, mandatory indicates that this must be considered for a pallet.
 
 Note that various types can be automatically imported using `frame_support::pallet_prelude` and `frame_system::pallet_prelude`:
@@ -262,6 +291,8 @@ Note that various types can be automatically imported using `frame_support::pall
 One needs to define a pallet with this initial boilerplate code. This is the entry point for the pallet items detailed below.
 
 ### Pallet config (mandatory)
+
+[Source](https://crates.parity.io/frame_support/attr.pallet.html#config-trait-palletconfig-mandatory)
 
 ![](../img/substrate_frame_pallet_config_code_snippet.png)
 
@@ -285,6 +316,8 @@ Within the `Config` trait, there are several associated types defined using the 
 Finally, there is a Rust macro called `#[pallet::constant]` used to define a constant in a pallet, which is a collection of types and functions that can be reused across multiple modules.
 
 ### Pallet extra constants (optional)
+
+[Source](https://crates.parity.io/frame_support/attr.pallet.html#pallet-struct-placeholder-palletpallet-mandatory)
 
 ![](../img/substrate_frame_pallet_extra_constants_code_snippet.png)
 
@@ -382,6 +415,8 @@ More on this topic [here](https://crates.parity.io/frame_support/attr.pallet.htm
 
 ### Pallet hooks (optional)
 
+[Source](https://crates.parity.io/frame_support/attr.pallet.html#hooks-pallethooks-optional)
+
 It is mainly to define the runtime hooks associated with the pallet w.r.t different stages of the block execution.
 
 ![](../img/substrate_frame_pallet_hooks_code_snippet.png)
@@ -415,6 +450,57 @@ The macro implements the traits
 - `IntegrityTest`
 
 using Hooks implementation.
+
+### Pallet dispatchables (mandatory)
+
+[Source](https://crates.parity.io/frame_support/attr.pallet.html#call-palletcall-optional)
+
+```rs
+#[pallet::call]
+impl<T: Config> for Pallet<T> {
+	/// $some_doc
+	#[pallet::weight($ExpressionResultingInWeight)]
+	pub fn $fn_name(
+		origin: OriginFor<T>, // NOTE: mandatory
+		$some_arg: $some_type,
+		// or with compact attribute: #[pallet::compact] $some_arg: $some_type,
+		...
+	) -> DispatchResultWithPostInfo { // or `-> DispatchResult`
+		...
+	}
+	...
+}
+```
+
+Here, each function is a dispatchable function or dispatchable call or simply dispatchable.
+
+The macro `#[pallet::macro]` implements:
+
+- `Call` enum for each dispatchable
+- The macro create an enum `Call` with one variant per dispatchable.
+
+  This **enum** implements:
+
+  - `Clone`
+  - `Eq`
+  - `PartialEq`
+  - `Debug` (with stripped implementation in `not("std")`, otherwise it will not include the debug information if the std library is not available.)
+  - `Encode`,
+  - `Decode`
+  - `GetDispatchInfo`
+  - `GetCallName`
+  - `UnfilteredDispatchable`
+
+  The macro implement on `Pallet`, the `Callable` trait and a function call_functions which returns the dispatchable metadatas.
+
+---
+
+If no #[pallet::call] exists, then a default implementation is automatically generated:
+
+```rs
+#[pallet::call]
+impl<T: Config> for Pallet<T> {}
+```
 
 ### Pallet storage (mandatory)
 
@@ -807,8 +893,8 @@ Try out the following tutorials:
 ## References
 
 - Rust Crates doc:
-  - [paritytech.github.io](https://paritytech.github.io/)
-  - [crates.parity.io/](https://crates.parity.io/)
+  - [paritytech.github.io](https://paritytech.github.io/) [OLD]
+  - [crates.parity.io/](https://crates.parity.io/) [Latest]
 
 > Both have almost the same content except for some changes in some of the cases.
 
@@ -829,7 +915,9 @@ Try out the following tutorials:
     - [How-to quick reference guides](https://docs.substrate.io/reference/how-to-guides/)
     - [Cryptography](https://docs.substrate.io/reference/cryptography/)
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
-- [Substrate Recipes](https://substrate.recipes/introduction.html)
+- [Substrate Recipes](https://github.com/JoshOrndorff/recipes)
+  - for opening the book, run `mdbook serve` in the root directory of the repo.
+  - [video](https://www.youtube.com/watch?v=KVJIWxZSNHQ)
 - [Substrate Rust doc](https://paritytech.github.io/substrate/)
 - [Rustlings like game for Substrate](https://github.com/rusty-crewmates/substrate-tutorials) [Funded by Web3 Foundation]
 
@@ -842,3 +930,7 @@ Try out the following tutorials:
 - [Demystifying FRAME Macro Magic | Substrate Seminar (full livestream)](https://www.youtube.com/watch?v=aEWbZxNCH0A) 🧑🏻‍💻
 - [A substrate developer journey (after 1 week of joining)](https://youtu.be/vAOQczmVcLU) ✅
 - [Deep dive into FRAME V2 pallet macros | Substrate Seminar 2021](https://www.youtube.com/watch?v=5pLHzKMCEtg&list=PLp0_ueXY_enU7jbm_A-3BrXiMbHPR0he0&index=3) 🧑🏻‍💻
+- [Substrate Recipes Workshop - Learn to Build a Custom Blockchain](https://www.youtube.com/watch?v=KVJIWxZSNHQ) 🧑🏻‍💻
+  > Although this is a 2020 workshop, it is still very relevant and useful. It is a good starting point for learning Substrate from v1.
+  > It uses FRAME v1. The corresponding recipes book is here: [substrate-recipes](https://substrate.dev/recipes/)
+- [Polkadot Deep Dives 2023](https://youtube.com/playlist?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG)

@@ -4,21 +4,26 @@ Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./pallet/), 
 
 ## About
 
-- Substrate FRAME version: <kbd>3.0.0</kbd>
-- Substrate ink! version: <kbd>4.0.0</kbd>
+- History:
+  - Started as Parity Technologies & now called as Polkadot Foundation.
+- Substrate FRAME version (current): <kbd>3.0.0</kbd>
+- Substrate ink! version (current): <kbd>4.0.0</kbd>
 - Layer-0 i.e. L0
 - chains (mainnet or testnet):
 
   - Relay chain
     - main/central chain
     - validators (297 approx.) ensuring the security of the network i.e. Polkadot
+    - does not support SC (smart contract). It needs to have at least 1 parachain.
   - Parachains (100 max.)
+    - the chains (L1 chains like Ethereum) that are connected to the relay chain. They can have SC.
+      - The max. number of parachains is 100 supposedly, although this number is not confirmed as not tested yet. But, then it can be worked upon. There can be more parachains if the relay chain is upgraded based on the runtime logic.
     - collators (5 approx.)
     - they need to stake some auction fee in DOT (held every 6 months) to register a parachain on the relay chain. So, it's a weighted-fee.
-  - slots
-    - parachain slot (limited)
-    - parachain bridge slot
-    - parathread slot
+    - slots
+      - parachain slot (limited)
+      - parachain bridge slot
+      - parathread slot
 
 - Token details:
   - symbol: DOT
@@ -181,6 +186,9 @@ There are different FRAME pallets to choose from in order to add into runtime.
 ![](img/substrate_frame.png)
 
 ![](img/anatomy_of_substrate_node.png)
+
+Another way to look at it:
+![](img/anatomy_of_substrate_node_2.png)
 
 For networking, substrate use `libp2p` protocol (developed by IPFS creators).
 
