@@ -29,7 +29,9 @@ And not just that you can have your own chain which are not connected to polkado
 We can have this at the end (in Venn diagram):
 ![](../img/substrate_chain_any_venn_diagram.png)
 
-Whenever any issue is found regarding performance, block time. Then the `node-template` is build with release mode. And then it would generate optimized wasm. And then the optimized runtime wasm is deployed to the blockchain.
+Whenever any issue is found regarding performance, block time, then the `node-template` is build with release mode. And then it would generate optimized `wasm`. And then the optimized runtime `wasm` is deployed to the blockchain.
+
+![](../img/substrate_runtime_bin_compilation.png)
 
 ## FRAME Version Transition
 
