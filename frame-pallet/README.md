@@ -577,6 +577,16 @@ More complex storage types are also possible.
 
 Key Value Database
 
+### Debug
+
+[Source](https://docs.substrate.io/test/debug/)
+
+Use `sp_runtime::print()` to print information on console w/o debug flag.
+
+Use `frame_support::log::info!()` to log information on console w/ debug flag.
+
+Use `frame_support::log::debug!()` to log debug information on console w/ debug flag.
+
 ## Substrate Chain Setup
 
 Here are the steps to create different chains: **relay**, **parachain**, **parathread**, etc.
