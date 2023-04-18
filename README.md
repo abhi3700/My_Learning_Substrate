@@ -9,6 +9,7 @@ Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./pallet/), 
 - Substrate FRAME version (current): <kbd>3.0.0</kbd>
 - Substrate ink! version (current): <kbd>4.0.0</kbd>
 - Layer-0 i.e. L0
+- Polkadot can have a TPS of 100k to 1M considering the parachains (around 100).
 - chains (mainnet or testnet):
 
   - Relay chain
@@ -118,6 +119,13 @@ Parachain --when less budget--> ParaThread --when more budget--> Parachain
 - Follow [this](https://docs.substrate.io/quick-start/)
 
 ## Parachains
+
+- People interacting with parachains via smart contracts won't have to have DOT tokens to pay for fees. Instead, they'll pay in the native token of the parachain. So, with this feature user would not need to have DOT tokens in order to make any transaction on parachain. This is a huge step towards mass adoption because it would be easier for the user to interact with the parachain rather than having to buy DOT tokens.
+- In order to reserve limited parachain slots, parachains must stake DOT tokens. The more DOT tokens staked, the higher the parachain's priority in the auction. Although their is a minimum DOT tokens (say 1M) to be staked.
+- Now, the concern is to how to arrange that much amount of DOT tokens.
+  1. One can buy DOT tokens from the market or already held DOT tokens.
+  2. Ask the investor to stake DOT tokens as loan on your behalf. There is a guarantee of getting the money back as it would happen on-chain via pallets.
+  3. Ask the community to stake DOT tokens via crowdloan on your behalf. There is a guarantee of getting the money back as it would happen on-chain via pallets.
 
 ### Astar
 
@@ -307,6 +315,17 @@ It shows comparo b/w legacy & polkadot blockchains.
 - ink! (Smart Contract Language for Substrate): https://github.com/paritytech/ink
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
+
+## Troubleshooting
+
+### 1. 1010: Invalid Transaction: Transaction has a bad signature
+
+Raised a question over [stackexchange](https://substrate.stackexchange.com/questions/8127/1010-invalid-transaction-transaction-has-a-bad-signature/8154#8154).
+
+- _Cause_:
+- _Solution_: Just reload the page.
+
+![](img/substrate_fe_template_reload_page.png)
 
 ## References
 
