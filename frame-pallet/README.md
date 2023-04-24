@@ -67,6 +67,14 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 
 ![](../img/substrate_node_template_dirs.png)
 
+## My Work
+
+I am maintaining frame pallet code (recipes) for substrate L0 chain in learning sequence (**EASY** to **DIFFICULT**). You can find them [here](https://github.com/abhi3700/substrate-playground).
+
+---
+
+All the related notes are maintained [here](./pallet-notes/) or in the `README` file of the individual pallets. For pallets that are already available, the code can be found in this [official repo](https://github.com/paritytech/substrate).
+
 ## Terminology
 
 - **Relay chain**: The Polkadot super chain which is connected to different parachains.
@@ -901,6 +909,14 @@ Try out the following tutorials:
 ## Repositories
 
 - [zhubaiyuan/awesome-substrate](https://github.com/zhubaiyuan/awesome-substrate)
+- [Substrate recipes by Ray](https://github.com/AuroraLantean/substrate-node-template)
+
+## TODO
+
+List of pallets that can be done:
+
+- [ ] Ballot pallet [Reference](https://docs.soliditylang.org/en/v0.8.19/solidity-by-example.html#voting)
+- [ ] Staking pallet
 
 ## References
 
@@ -918,8 +934,11 @@ Try out the following tutorials:
     - [Polkadot JS Client](https://docs.substrate.io/fundamentals/light-clients-in-substrate-connect/)
     - [Rust for Substrate](https://docs.substrate.io/fundamentals/rust-basics/)
   - [Tutorials](https://docs.substrate.io/tutorials/)
-    - [Build a local blockchain](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/) ✅
-    - [Simulate a network](https://docs.substrate.io/tutorials/get-started/simulate-network/) ✅
+    - Build a Blockchain
+      - [Build a local blockchain](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/) ✅
+      - [Simulate a network](https://docs.substrate.io/tutorials/get-started/simulate-network/) ✅
+    - Build application logic
+      - [Add pallet to runtime](https://docs.substrate.io/tutorials/build-application-logic/add-a-pallet/) ✅
     - [SC](https://docs.substrate.io/tutorials/smart-contracts/)
       - [Build a Token SC](https://docs.substrate.io/tutorials/smart-contracts/build-a-token-contract/)
   - [Reference](https://docs.substrate.io/reference/)
