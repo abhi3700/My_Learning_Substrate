@@ -212,7 +212,33 @@ The outer vs inner macros are explained in the image below:
 
 Without the outer macros, inner macros doesn't make any sense. Never use `dev_mode` in production mode. The compiler wouldn't show any error if you use `dev_mode`.
 
-### Pallet
+---
+
+In Substrate, one can create a blockchain which supports any length of account id. Like in Ethereum, it's 20 bytes. In Substrate, it can be any length. That's why we need to use `AccountId` instead of `Address`. And the `AccountId` type can be defined as:
+
+```rs
+type AccountId = [u8; 20];  // 20 bytes for Ethereum
+type AccountId = [u8; 32];  // 32 bytes for a chain
+```
+
+In order to make things generic, we define `Config` like this for defining AccountId, Event, Blocksize, etc.:
+
+```rs
+// `frame_system` has already defined the `Config` trait
+trait Config {
+  type AccountId;
+  type BlockNumber;
+  // etc...
+}
+```
+
+And therefore, we get to see `<T>`, `T::`. This is because we are using the `Config` trait.
+
+---
+
+**Gas** in Substrate is called **Weight** (max. value). It's a unit of measurement for the amount of computation required to execute a transaction. It's a measure of the time it takes to execute a transaction.
+
+### Pallet design
 
 A FRAME pallet has these components:
 
@@ -261,35 +287,7 @@ let who = ensure_signed(origin)?;
 
 This is mainly to recover your account based on validation given by a set of users (no. defined in the pallet).
 
-### Others
-
-In Substrate, one can create a blockchain which supports any length of account id. Like in Ethereum, it's 20 bytes. In Substrate, it can be any length. That's why we need to use `AccountId` instead of `Address`. And the `AccountId` type can be defined as:
-
-```rs
-type AccountId = [u8; 20];  // 20 bytes for Ethereum
-type AccountId = [u8; 32];  // 32 bytes for a chain
-```
-
-In order to make things generic, we define `Config` like this for defining AccountId, Event, Blocksize, etc.:
-
-```rs
-// `frame_system` has already defined the `Config` trait
-trait Config {
-  type AccountId;
-  type BlockNumber;
-  // etc...
-}
-```
-
-And therefore, we get to see `<T>`, `T::`. This is because we are using the `Config` trait.
-
----
-
-**Gas** in Substrate is called **Weight** (max. value). It's a unit of measurement for the amount of computation required to execute a transaction. It's a measure of the time it takes to execute a transaction.
-
----
-
-### Pallet module (mandatory)
+#### Pallet module (mandatory)
 
 [Source](https://crates.parity.io/frame_support/attr.pallet.html#)
 
@@ -300,7 +298,7 @@ Note that various types can be automatically imported using `frame_support::pall
 
 One needs to define a pallet with this initial boilerplate code. This is the entry point for the pallet items detailed below.
 
-### Pallet config (mandatory)
+#### Pallet config (mandatory)
 
 [Source](https://crates.parity.io/frame_support/attr.pallet.html#config-trait-palletconfig-mandatory)
 
@@ -325,7 +323,7 @@ Within the `Config` trait, there are several associated types defined using the 
 
 Finally, there is a Rust macro called `#[pallet::constant]` used to define a constant in a pallet, which is a collection of types and functions that can be reused across multiple modules.
 
-### Pallet extra constants (optional)
+#### Pallet extra constants (optional)
 
 [Source](https://crates.parity.io/frame_support/attr.pallet.html#pallet-struct-placeholder-palletpallet-mandatory)
 
@@ -333,7 +331,7 @@ Finally, there is a Rust macro called `#[pallet::constant]` used to define a con
 
 Refer the official doc [here](https://paritytech.github.io/substrate/master/frame_support/attr.pallet.html#extra-constants-palletextra_constants-optional).
 
-### Pallet placeholder (mandatory)
+#### Pallet placeholder (mandatory)
 
 The pallet struct placeholder `#[pallet::pallet]` is mandatory and allows you to specify pallet information.
 
@@ -423,7 +421,7 @@ pub struct Pallet<T>(_);
 
 More on this topic [here](https://crates.parity.io/frame_support/attr.pallet.html#pallet-struct-placeholder-palletpallet-mandatory).
 
-### Pallet hooks (optional)
+#### Pallet hooks (optional)
 
 [Source](https://crates.parity.io/frame_support/attr.pallet.html#hooks-pallethooks-optional)
 
@@ -461,7 +459,7 @@ The macro implements the traits
 
 using Hooks implementation.
 
-### Pallet dispatchables (mandatory)
+#### Pallet dispatchables (mandatory)
 
 [Source](https://crates.parity.io/frame_support/attr.pallet.html#call-palletcall-optional)
 
@@ -512,11 +510,11 @@ If no #[pallet::call] exists, then a default implementation is automatically gen
 impl<T: Config> for Pallet<T> {}
 ```
 
-### Pallet storage (mandatory)
+#### Pallet storage (optional)
 
 ![](../img/substrate_storage_abstraction_layers.png)
 
-#### A. APIs
+##### A. APIs
 
 The following Storage APIs (data persistence) are available for storage on a substrate blockchain:
 
@@ -524,7 +522,8 @@ The following Storage APIs (data persistence) are available for storage on a sub
 
   - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
   - can accept any type i.e. `u8`, `String`, etc.
-  - `T` is the runtime.
+  - `T` is the runtime configuration trait.
+  -
 
   ![](../img/substrate_storage_value.png)
 
@@ -577,15 +576,25 @@ More complex storage types are also possible.
 
   ![](../img/substrate_storage_n_map.png)
 
-#### B. Overlay Change Set
+##### B. Overlay Change Set
 
-#### C. Merkle Trie
+##### C. Merkle Trie
 
-#### D. KVDB
+##### D. KVDB
 
 Key Value Database
 
-### Debug
+### Pallet Test
+
+For unit test, use `$ cargo test` command for a pallet like this:
+![](../img/substrate_pallet_test_pallet.png)
+
+---
+
+And for all pallets like this:
+![](../img/substrate_pallet_test_all_pallets.png)
+
+### Pallet Debug
 
 [Source](https://docs.substrate.io/test/debug/)
 
@@ -597,7 +606,7 @@ Use `frame_support::log::debug!()` to log debug information on console w/ debug 
 
 ## Substrate Chain Setup
 
-Here are the steps to create different chains: **relay**, **parachain**, **parathread**, etc.
+Here are the steps to create different chains: **relaychain**, **parachain**, **parathread**, etc.
 
 In order to create a `L0` network, we need to create a relay chain. And then, we can create a parachain on top of it. And then, we can create a parathread on top of it. There is a provision of switching b/w parachain & parathread based on their economic viability.
 
@@ -951,6 +960,7 @@ List of pallets that can be done:
   - [video](https://www.youtube.com/watch?v=KVJIWxZSNHQ)
 - [Substrate Rust doc](https://paritytech.github.io/substrate/)
 - [Rustlings like game for Substrate](https://github.com/rusty-crewmates/substrate-tutorials) [Funded by Web3 Foundation]
+- [Understanding Generic type system of Substrate](https://github.com/shawntabrizi/substrate-trait-tutorial)
 
 ### Videos
 

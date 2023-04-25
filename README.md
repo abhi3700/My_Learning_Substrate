@@ -160,8 +160,12 @@ EVM ✅
 Switch to any L0, parachain, parathread network.
 
 - [Subscan](https://polkadot.subscan.io/)
+  - Beautiful looking UI/UX for viewing txns, blocks, accounts for Polkadot, Kusama, Rococo relaychain & parachains & testnets.
 - [Polkadot.js](https://polkadot.js.org/apps/#/explorer)
 - [Polkascan](https://explorer.polkascan.io/)
+  - available for only Polkadot, Kusama, no local node support
+- [IPFS based Polkadot.js](https://ipfs.io/ipns/dotapps.io/)
+  - relatively slow
 
 ---
 
