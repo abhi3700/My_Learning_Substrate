@@ -243,6 +243,7 @@ There is also a feature of crowdloan where anyone holding DOT can lend to projec
 - kusama explorer
   - polkascan: https://explorer.polkascan.io/kusama
   - https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama.api.onfinality.io%2Fpublic-ws#/explorer
+- [Substrate Utilities](https://www.shawntabrizi.com/substrate-js-utilities/)
 
 ## Packages
 
