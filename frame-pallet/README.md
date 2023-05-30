@@ -141,11 +141,86 @@ Here is what it looks like before & after creating blockchain using Substrate:
 **After**:
 ![](../img/substrate_runtime_after_bc.png)
 
+## Pallet usage on Block Explorer
+
+<details><summary><b>Show details:</b></summary>
+
+Access the network from here:
+![](../img/substrate_relaychain_network.png)
+
+---
+
+Access the chain storage from here:
+![](../img/substrate_chain_storage.png)
+
+Read the chain state i.e. pallet's getter functions shown here.
+
+---
+
+Access the extrinsics from here:
+![](../img/substrate_extrinsics.png)
+
+---
+
+Sign the transaction:
+![](../img/substrate_sign_transaction.png)
+
+---
+
+Signed transaction fails like this:
+![](../img/substrate_signed_transaction_failed.png)
+
+---
+
+Signed transaction pass like this:
+![](../img/substrate_signed_transaction_passed.png)
+
+---
+
+Events shown here:
+![](../img/substrate_events.png)
+
+---
+
+Viewing this transaction details on the block explorer like this:
+![](../img/substrate_transaction_details.png)
+
+Click on the `pink` color circle on the previous diagram to get to this page.
+
+---
+
+Clicking on the `pink` color rectangular link would take to this page, where it shows the decoded info with function signature, caller, transaction details including nonce:
+![](../img/substrate_transaction_decoded.png)
+
+> Here, observe the actual info which was encoded.
+
+---
+
+Even if there is no transaction added, the timestamp is updated per block (with a gap of min. 6 sec) like this:
+![](../img/substrate_timestamp_set.png)
+
+---
+
+Transfer DOTs from Alice to Bob ("Accounts >> Transfer"):
+![](../img/substrate_transfer_dots.png)
+
+---
+
+View added accounts:
+![](../img/substrate_view_accounts.png)
+
+---
+
+Add an account:
+![](../img/substrate_add_account.png)
+
+</details>
+
 ## Coding
 
 FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.
 
-#### Before jumping further, I would highly recommend to try this module - [Balance module](https://github.com/abhi3700/My_Learning-Rust/tree/main/pro/balance_module)
+#### Before jumping any further, I would highly recommend to try this small module - [Balance module](https://github.com/abhi3700/My_Learning-Rust/tree/main/pro/balance_module), to understand the jump from simple to complex rust code snippets.
 
 ### FRAME macros
 
@@ -958,8 +1033,9 @@ List of pallets that can be done:
     - [Cryptography](https://docs.substrate.io/reference/cryptography/)
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
 - [Substrate Recipes](https://github.com/JoshOrndorff/recipes)
-  - for opening the book, run `mdbook serve` in the root directory of the repo.
-  - [video](https://www.youtube.com/watch?v=KVJIWxZSNHQ)
+  - **Book**: FRAME v1. Open on localhost via `mdbook serve` at the root directory of the repo.
+  - **Code**: FRAME v3
+  - [**Video**](https://www.youtube.com/watch?v=KVJIWxZSNHQ) 🧑🏻‍💻
 - [Substrate Rust doc](https://paritytech.github.io/substrate/)
 - [Rustlings like game for Substrate](https://github.com/rusty-crewmates/substrate-tutorials) [Funded by Web3 Foundation]
 - [Understanding Generic type system of Substrate](https://github.com/shawntabrizi/substrate-trait-tutorial)
