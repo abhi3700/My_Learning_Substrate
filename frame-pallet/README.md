@@ -145,6 +145,8 @@ Here is what it looks like before & after creating blockchain using Substrate:
 
 FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.
 
+#### Before jumping further, I would highly recommend to try this module - [Balance module](https://github.com/abhi3700/My_Learning-Rust/tree/main/pro/balance_module)
+
 ### FRAME macros
 
 They essentially look like this, where the LHS code is converted into kind of like AST (Abstract Syntax Tree) on the RHS:
@@ -924,8 +926,8 @@ Try out the following tutorials:
 
 List of pallets that can be done:
 
-- [ ] Ballot pallet [Reference](https://docs.soliditylang.org/en/v0.8.19/solidity-by-example.html#voting)
-- [ ] Staking pallet
+- [x] Ballot pallet [Reference](https://docs.soliditylang.org/en/v0.8.19/solidity-by-example.html#voting)
+- [x] Staking pallet
 
 ## References
 
@@ -964,7 +966,7 @@ List of pallets that can be done:
 
 ### Videos
 
-- [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is)
+- [Substrate: A Rustic Vision for Polkadot by Gavin Wood at Web3 Summit 2018](https://www.youtube.com/watch?v=0IoUZdDi5Is) ✅
 - [Chainlink | Intro to Substrate](https://www.youtube.com/watch?v=o5ANk0sRxEY) ✅
 - [Sub0 Online: Storage on a Substrate chain](https://www.youtube.com/watch?v=ek8SzCCk59o)
 - [Sub0.1: Storage on Substrate - Shawn Tabrizi, Developer experience at Parity](https://www.youtube.com/watch?v=kKKOL20FdII)

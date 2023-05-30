@@ -313,10 +313,12 @@ It shows comparo b/w legacy & polkadot blockchains.
 ## Repositories
 
 - Substrate (The platform for blockchain innovators): https://github.com/paritytech/substrate
+- Cumulus (Write Parachains on Substrate): https://github.com/paritytech/cumulus
 - Polkadot (Polkadot Node Implementation): https://github.com/paritytech/polkadot
-- Substrate node template: https://github.com/substrate-developer-hub/substrate-node-template
+- Substrate node (relaychain) template: https://github.com/substrate-developer-hub/substrate-node-template
+- Substrate parachain template: https://github.com/substrate-developer-hub/substrate-parachain-template
 - Substrate node FE template: https://github.com/substrate-developer-hub/substrate-front-end-template
-- cumulus (Write Parachains on Substrate): https://github.com/paritytech/cumulus
+- Awesome Substrate (official): https://github.com/substrate-developer-hub/awesome-substrate
 - ink! (Smart Contract Language for Substrate): https://github.com/paritytech/ink
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
@@ -353,7 +355,7 @@ Raised a question over [stackexchange](https://substrate.stackexchange.com/quest
 
 ### Videos
 
-- [Gavin Wood: Explaining the Polkadot Launch Process](https://www.youtube.com/watch?v=TpcCeo-ZkDY)
+- [Gavin Wood: Explaining the Polkadot Launch Process](https://www.youtube.com/watch?v=TpcCeo-ZkDY) ✅
 - [Chainlink | Introduction to Polkadot, Parachains, and Substrate](https://www.youtube.com/watch?v=gT-9r1bcVHY) ✅
 - [The Path of a Parachain Block on Polkadot and Kusama Network](https://www.youtube.com/watch?v=m0vxqWwFfDs)
 - [Intro to Substrate codebase and FRAME pallet deep-dive with Joe Petrowski and Shawn Tabrizi](https://www.youtube.com/watch?v=5PSllaWbYag) ✅
@@ -362,8 +364,23 @@ Raised a question over [stackexchange](https://substrate.stackexchange.com/quest
 - [Sub0 Online: ink! 3.0: A Rust & Smart Contracts Love Story](https://www.youtube.com/watch?v=WNNJzK3dGGQ)
 - [Polkadot Deep Dives](https://www.youtube.com/playlist?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG)
   - [Pallet Timestamp and Inherents](https://www.youtube.com/watch?v=HjtxPcuR8a0) 🧑🏻‍💻
+- Substrate Seminars
+  - details in this [repo](https://github.com/substrate-developer-hub/substrate-seminar/tree/main)
 - [Substrate Saturday by Polkadot India YT playlist](https://www.youtube.com/playlist?list=PLiKqYiZDRE4_CWnXgSgejl3bJUYibq0Gp)
-  - very down to earth & easy to understand videos. It is a must watch for beginners.
+  > very down to earth & easy to understand videos. It is a must watch for beginners.
+  - [Substrate Saturday by Polkadot India | Bootcamp 1 | 22.12.21](https://www.youtube.com/watch?v=1WL6B2XPMjk) ✅
+  - [Substrate Saturday by Polkadot India | Bootcamp 2 | Session 1 | 22.01.22](https://www.youtube.com/watch?v=_Yxpqrdb_nM) ✅
+  - [Substrate Saturday by Polkadot India | Bootcamp 2 | Session 2 | 05.02.22](https://www.youtube.com/watch?v=eNyeCfurFwc) 🧑🏻‍💻
+  - [Substrate Saturday by Polkadot India | Bootcamp 3 | 26.02.22](https://www.youtube.com/watch?v=J126vvf24Lk)
+  - [Substrate Saturday - Bootcamp Series 2 | Workshop | Ivan Temchenko | 23.07.22](https://www.youtube.com/watch?v=QSpJmrS2x4c)
+  - [Substrate Saturday - Bootcamp Series 2 | Episode 5 | 13.07.22](https://www.youtube.com/watch?v=V3tTe8SHdd4)
+  - [Substrate Saturday - Bootcamp Series 2 | Episode 1 | 09.07.22](https://www.youtube.com/watch?v=pe2iYNsW6wE)
+  - [Substrate Saturday - Bootcamp Series 2 | Episode 2 | 16.07.22](https://www.youtube.com/watch?v=R-aYqqyD2Qo)
+  - [Substrate Saturday - Bootcamp Series 2 | Episode 4 | 30.07.22](https://www.youtube.com/watch?v=CtGLtGmkcqE)
+  - [Substrate Saturday - Bootcamp Series 2 | Workshop | Pierre Ossun | 20.08.22](https://www.youtube.com/watch?v=IrwpsMAysvk)
+  - [Substrate Saturday - Bootcamp Series 2 | Episode 7 | 27.08.22](https://www.youtube.com/watch?v=-96T5e9drIo)
+  - [Substrate Saturday - Bootcamp Series 2 | Episode 9 | 10.09.22](https://www.youtube.com/watch?v=9lPNkalGUcg)
+  - [Substrate Saturday - Bootcamp Series 2 | Workshop | Faisal Ahmed | 17.09.22 |](https://www.youtube.com/watch?v=0SYELfmT21E)
 - [The Future of the Network | Polkadot Blockchain Academy 2023](https://youtu.be/j6xEbgAiVvg) ✅
 - [What Will the Next Generation of Dapps Look Like? | ETHDenver '23](https://youtu.be/YxEK8EvVAAo) ✅
 - [🎮 Runtime Development](https://www.youtube.com/playlist?list=PLp0_ueXY_enU7jbm_A-3BrXiMbHPR0he0)
