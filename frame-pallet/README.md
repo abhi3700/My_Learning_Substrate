@@ -587,11 +587,19 @@ If no #[pallet::call] exists, then a default implementation is automatically gen
 impl<T: Config> for Pallet<T> {}
 ```
 
+#### Pallet Event (optional)
+
+> Events are not emitted on block 0. So any dispatchable calls made during genesis block formation will have no events emitted.
+
+[Scaffolding](./scaffoldings/runtime/event.rs)
+
 #### Pallet storage (optional)
 
 ![](../img/substrate_storage_abstraction_layers.png)
 
 ##### A. APIs
+
+[Scaffolding](./scaffoldings/runtime/storage.rs)
 
 The following Storage APIs (data persistence) are available for storage on a substrate blockchain:
 
@@ -600,22 +608,41 @@ The following Storage APIs (data persistence) are available for storage on a sub
   - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
   - can accept any type i.e. `u8`, `String`, etc.
   - `T` is the runtime configuration trait.
-  -
 
   ![](../img/substrate_storage_value.png)
 
-  - Manipulating `StorageValue`:
+  > ValueQuery is optional here.
 
-  ```rs
-  // Put a value in storage
-  CountForItems::<T>::put(10);
+  ```rust
+  #[pallet::storage]
+  type SomePrivateValue<T> = StorageValue<
+      _,
+      u32,
+      ValueQuery
+  >;
 
-  // Get the value from storage
-  CountForItems::<T>::get();
+  #[pallet::storage]
+  #[pallet::getter(fn some_primitive_value)]
+  pub(super) type SomePrimitiveValue<T> = StorageValue<_, u32, ValueQuery>;
 
-  // kill a value in storage
-  CountForItems::<T>::kill();
+  #[pallet::storage]
+  pub(super) type SomeComplexValue<T: Config> = StorageValue<_, T::AccountId, ValueQuery>;
   ```
+
+- Manipulating `StorageValue`:
+
+```rs
+// Put a value in storage
+<CountForItems<T>>::put(10);
+
+// Get the value from storage
+<CountForItems<T>>::get();
+
+// kill a value in storage
+<CountForItems<T>>::kill();
+```
+
+---
 
 - `StorageMap`: Storing a map from key to value in storage.
 
