@@ -2,7 +2,7 @@
 
 ## Installation
 
-Refer [this](../ink/README.md#installation) for installation.
+Just install Rust from my guide [here](https://github.com/abhi3700/My_Learning-Rust#installation).
 
 ## Runtime
 
@@ -86,8 +86,6 @@ All the related notes are maintained [here](./pallet-notes/) or in the `README` 
   - macros are syntactical sugars or a way to improve the developer UX in the compiled languages.
 
 - **FRAME pallet**: The runtime modules which are used to build the runtime. They are different from the typical smart contracts which are generally designed to be used by the end-users. FRAME pallets are designed to be used by the blockchain developers. They are like the building blocks of the blockchain runtime. Also, they are very important for the L0 network stakeholders like validators, collators, etc.
-
-## ink!
 
 ## Comparo with EVM
 

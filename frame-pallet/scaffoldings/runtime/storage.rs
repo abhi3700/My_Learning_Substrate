@@ -17,7 +17,7 @@ mod pallet {
     /// `<Value<T>>::kill();`: kill the storage i.e. remove the storage from the storage trie
     /// ------------------------------------
     /// 2. A list of item i.e. fixed size array
-    /// The one config trait which includes the max value of 
+    /// The one config trait which includes the max size of array 
 	#[pallet::config]
 	pub trait Config: frame_system::Config + Get<u32> {
 		/// A constant for the max size of owners
