@@ -214,6 +214,12 @@ Add an account:
 
 </details>
 
+---
+
+View an account's details:
+
+![](../img/substrate_view_account_details.png)
+
 ## Coding
 
 FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.

@@ -3,11 +3,11 @@
 //! There is another called `frame_support::debug::info` that can be used to print to the terminal along with
 //! the caller's account id
 
-use frame_support::{debug};
-use sp_runtime::print;
+use frame_support::log;
+use frame_support::sp_runtime::print;
 
 print("Hello, world!");
-debug::info("called by {:?}", caller);
+log::info("called by {:?}", who);
 
 // All the logs can be filtered using `-lmytarget=debug` flag.
 

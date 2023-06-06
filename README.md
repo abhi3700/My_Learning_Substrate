@@ -322,6 +322,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 - ink! (Smart Contract Language for Substrate): https://github.com/paritytech/ink
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
+- https://github.com/darwinia-network/darwinia
 
 ## Troubleshooting
 
@@ -329,7 +330,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 Raised a question over [stackexchange](https://substrate.stackexchange.com/questions/8127/1010-invalid-transaction-transaction-has-a-bad-signature/8154#8154).
 
-- _Cause_:
+- _Cause_: Doesn't perform as expected. Seen this error on Polkadot JS Apps UI.
 - _Solution_: Just reload the page.
 
 ![](img/substrate_fe_template_reload_page.png)
@@ -385,3 +386,4 @@ Raised a question over [stackexchange](https://substrate.stackexchange.com/quest
 - [What Will the Next Generation of Dapps Look Like? | ETHDenver '23](https://youtu.be/YxEK8EvVAAo) ✅
 - [🎮 Runtime Development](https://www.youtube.com/playlist?list=PLp0_ueXY_enU7jbm_A-3BrXiMbHPR0he0)
   - It mainly focuses on the runtime development of substrate using FRAME v2. Especially for the beginners, it is a must watch. Also, it's going to give you a good idea about the runtime development of substrate in terms of journey that how it has evolved from FRAME v1 to FRAME v2.
+- [Centrifuge: From Solidity To Substrate | Sub0 2022](https://www.youtube.com/watch?v=xVDDuop2Mvg) ✅
