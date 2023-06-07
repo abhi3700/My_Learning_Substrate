@@ -67,6 +67,20 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 
 ![](../img/substrate_node_template_dirs.png)
 
+## Pallet vs Contracts
+
+- Pallets are used to build the runtime of the relaychain whereas contracts are deployed on top of parachain connected to relaychain.
+- Pallet development require Rust native language with some no std library, whereas contract development requires an eDSL (embedded domain specific language) called ink! which is a Rust based language.
+- Pallets are part of the blockchain's runtime, so changing them requires a runtime upgrade, which is a significant operation that can affect the entire blockchain. Contracts, on the other hand, are more isolated: they can be updated or changed by their owner without affecting the rest of the blockchain.
+
+![](../img/substrate_pallets_vs_contracts.png)
+
+- The smart contracts are just binary that gets stored in the `pallet-contracts` storage alongside the contract's data. For instance, if you have a SC (written in ink!), then `pallet-contracts` is used to run the binary code & store the corresponding SC's data. If you have a SC (written in solidity), then just deploy the bytecode into parachain i.e. inherently, the `pallet-evm` takes care of executing the binary & ensuring data consistency for the SC's data (if any). [Source](https://t.me/substratedevs/7590)
+
+  There is another way to do this i.e. use `pallet-vm` extrinsic where we can parse the SC binary & data to process certain logic. [Source](https://t.me/substratedevs/7595)
+
+- SCs are isolated which are immutable code logic. Whereas pallets are mutable code logic.
+
 ## My Work
 
 I am maintaining frame pallet code (recipes) for substrate L0 chain in learning sequence (**EASY** to **DIFFICULT**). You can find them [here](https://github.com/abhi3700/substrate-playground).
@@ -200,7 +214,14 @@ Even if there is no transaction added, the timestamp is updated per block (with 
 ---
 
 Transfer DOTs from Alice to Bob ("Accounts >> Transfer"):
+
+M-1:
 ![](../img/substrate_transfer_dots.png)
+
+M-2:
+![](../img/substrate_transfer_dots_2.png)
+
+> There is a pallet called `Balances` which is used to transfer DOTs.
 
 ---
 
@@ -219,6 +240,10 @@ Add an account:
 View an account's details:
 
 ![](../img/substrate_view_account_details.png)
+
+---
+
+One can transfer
 
 ## Coding
 
@@ -597,9 +622,13 @@ impl<T: Config> for Pallet<T> {}
 
 [Scaffolding](./scaffoldings/runtime/event.rs)
 
-#### Pallet storage (optional)
+#### Runtime storage (optional)
 
 ![](../img/substrate_storage_abstraction_layers.png)
+
+> Always try to use fixed size collection. Try to avoid `Vec<u32>`. Instead use `BoundedVec<u32, MaxLen>`. The dynamic collection (as allowed in solidity because it's a sandboxed VM) is not allowed in substrate pallet because pallets are native runtime code and cannot have dynamically allocated types. [Source](https://t.me/substratedevs/7622)
+>
+> Basically the conflict here is that items in chain storage have to be bound so that the chain knows how long the byte representation of that data will be in order to run calculations on it and to allocate for it. Vec is a dynamically allocated type, it can grow indefinitely, so it cannot be used in storages [Source](https://t.me/substratedevs/7618)
 
 ##### A. APIs
 

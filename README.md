@@ -323,6 +323,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
 - https://github.com/darwinia-network/darwinia
+- Substrate Open Runtime Module Library: https://github.com/open-web3-stack/open-runtime-module-library
 
 ## Troubleshooting
 
@@ -331,7 +332,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 Raised a question over [stackexchange](https://substrate.stackexchange.com/questions/8127/1010-invalid-transaction-transaction-has-a-bad-signature/8154#8154).
 
 - _Cause_: Doesn't perform as expected. Seen this error on Polkadot JS Apps UI.
-- _Solution_: Just reload the page.
+- _Solution_: Just reload the page. Use <kbd>cmd + r</kbd> to reload the App.
 
 ![](img/substrate_fe_template_reload_page.png)
 
