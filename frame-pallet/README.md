@@ -72,6 +72,7 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 - Pallets are used to build the runtime of the relaychain whereas contracts are deployed on top of parachain connected to relaychain.
 - Pallet development require Rust native language with some no std library, whereas contract development requires an eDSL (embedded domain specific language) called ink! which is a Rust based language.
 - Pallets are part of the blockchain's runtime, so changing them requires a runtime upgrade, which is a significant operation that can affect the entire blockchain. Contracts, on the other hand, are more isolated: they can be updated or changed by their owner without affecting the rest of the blockchain.
+- Pallets storages can be set with some default value (not stored, just shown when queried for) using `ValueQuery` query kind, whereas the contracts storage can be initialized during deployment & also by default they have the minimum possible value of the data type like with `bool` type, it's `false` by default. But, in case of pallet, it's `Some`/`None`, `Ok`/`Err` based on query kind opted `OptionQuery`, `ResultQuery`.
 
 ![](../img/substrate_pallets_vs_contracts.png)
 
@@ -329,8 +330,9 @@ type AccountId = [u8; 32];  // 32 bytes for a chain
 
 In order to make things generic, we define `Config` like this for defining AccountId, Event, Blocksize, etc.:
 
-```rs
+```rust
 // `frame_system` has already defined the `Config` trait
+// frame_system::Config
 trait Config {
   type AccountId;
   type BlockNumber;
@@ -338,11 +340,83 @@ trait Config {
 }
 ```
 
-And therefore, we get to see `<T>`, `T::`. This is because we are using the `Config` trait.
+And therefore, we get to see `<T>`, `T::` like `T::AccountId`, `T::BlockNumber`. This is because each pallet has its own `Config` trait. And the `T` which is the runtime (composed of all pallets considered for a relaychain) has each of `Config` trait of pallet inheriting from `frame_system::Config`. The `frame_system::Config` trait has multiple associated types that are defined when implementing each pallet's `Config` trait in `runtime/src/lib.rs` file.
 
 ---
 
 **Gas** in Substrate is called **Weight** (max. value). It's a unit of measurement for the amount of computation required to execute a transaction. It's a measure of the time it takes to execute a transaction.
+
+### Pallet Coupling
+
+[Source](https://docs.substrate.io/build/pallet-coupling/)
+
+More than one pallets when dependent on each other, they are said to be coupled. There are two types of coupling:
+
+- Tight coupling
+- Loose coupling
+
+#### Tight coupling
+
+[Source](https://docs.substrate.io/reference/how-to-guides/pallet-design/use-tight-coupling/)
+
+All FRAME pallets are tightly coupled to the `frame_system` pallet. This is more like inheritance as followed in OOP.
+
+1. `some_pallet` is specified to pallet's `Cargo.toml` file.
+
+   ```toml
+   [dependencies]
+
+   # external dependencies
+   pallet-some = { default-features = false, version = '2.0.0',  git = "https://github.com/pallet_some/pallet-some.git" }
+
+   # internal dependencies
+   pallet-some = { default-features = false, version = '2.0.0',  path = "../pallet-some" }
+   ```
+
+2. `some_pallet` is tightly coupled with `frame_system::Config`.
+
+   ```rust
+   pub trait Config: frame_system::Config + some_pallet::Config {
+       // --snip--
+   }
+   ```
+
+**Cons**:
+
+- **Maintainability**: If `some_pallet` is updated, then `current_pallet` needs to be updated as well.
+- **Reusability**: both modules are to be used together, if they are dependent on each other.
+
+#### Loose coupling
+
+[Source](https://docs.substrate.io/reference/how-to-guides/pallet-design/use-loose-coupling/)
+
+### Pallet Types
+
+Primitive types:
+
+- Aura
+- Balances
+- Grandpa
+- System
+- Sudo
+- Timestamp
+
+These pallets are added by default in the substrate node-template.
+
+---
+
+The **Balances** pallet provides implementations for the following traits. If these traits provide the functionality that you need, then you can avoid coupling with the Balances pallet.
+
+If you want to create a Currency (like ERC20 in SC world), then define like [this](./scaffoldings/runtime/config_type_currency.rs). There are multiple types of Balance:
+
+- Free Balance
+- Reservable Balance
+- Locked Balance
+- Vesting Balance
+
+[Source](https://substrate.stackexchange.com/questions/24/what-is-the-difference-between-free-balance-reserved-balance-locked-balance-v?rq=1)
+
+Watch this video on [Balances Pallet | Polkadot Deep Dives](https://www.youtube.com/watch?v=_FwqB4FwWXk) for more details.
 
 ### Pallet design
 
@@ -414,7 +488,10 @@ Here, the primary inheritance is from `Config` trait defined `frame_system` modu
 
 ```rs
 pub trait Config: frame_system::Config {
-  #[pallet::constant] // This is used to define a constant
+  // M-1: `#[pallet::constant]` macros is used to define a constant.
+  //      Then, you have to define inside `parameter_types!` macro just above the `impl` block.
+  // M-2: We can also hardcode the value inside pallet like `ConstU32<500>`
+  #[pallet::constant]
   type MyGetParam: Get<u32>;
   type Balance: Parameter + From<u8>;
   type MyEvent: From<Event<Self>> + Into<<Self as frame_system::Config>::Event>;
@@ -624,6 +701,8 @@ impl<T: Config> for Pallet<T> {}
 
 #### Runtime storage (optional)
 
+[Official source](https://docs.substrate.io/build/runtime-storage/)
+
 ![](../img/substrate_storage_abstraction_layers.png)
 
 > Always try to use fixed size collection. Try to avoid `Vec<u32>`. Instead use `BoundedVec<u32, MaxLen>`. The dynamic collection (as allowed in solidity because it's a sandboxed VM) is not allowed in substrate pallet because pallets are native runtime code and cannot have dynamically allocated types. [Source](https://t.me/substratedevs/7622)
@@ -636,11 +715,12 @@ impl<T: Config> for Pallet<T> {}
 
 The following Storage APIs (data persistence) are available for storage on a substrate blockchain:
 
-- `StorageValue`: Storing a single type in storage.
+###### `StorageValue`
 
-  - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
-  - can accept any type i.e. `u8`, `String`, etc.
-  - `T` is the runtime configuration trait.
+- Storing a single type in storage.
+- `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
+- can accept any type i.e. `u8`, `String`, etc.
+- `T` is the runtime configuration trait.
 
   ![](../img/substrate_storage_value.png)
 
@@ -664,54 +744,92 @@ The following Storage APIs (data persistence) are available for storage on a sub
 
 - Manipulating `StorageValue`:
 
-```rs
-// Put a value in storage
-<CountForItems<T>>::put(10);
+  ```rs
+  // Put a value in storage
+  <CountForItems<T>>::put(10);
 
-// Get the value from storage
-<CountForItems<T>>::get();
+  // Get the value from storage
+  <CountForItems<T>>::get();
 
-// kill a value in storage
-<CountForItems<T>>::kill();
-```
+  // kill a value in storage
+  <CountForItems<T>>::kill();
+  ```
+
+For more associated methods of `StorageValue`, refer [this](https://crates.parity.io/frame_support/storage/trait.StorageValue.html).
 
 ---
 
-- `StorageMap`: Storing a map from key to value in storage.
+###### `StorageMap`
 
-  - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
-  - can accept any type as key or val i.e. `u8`, `String`, etc.
-  - Here, **[Blake2_128Concat](https://paritytech.github.io/substrate/master/frame_support/struct.Blake2_128Concat.html)** is used as the hashing algorithm. It's a hashing algorithm which is used to hash the key to get the storage key. It's a 128 bit hash.
-  - `T::AccountId` is used as the key type.
-  - `T` is the runtime.
+- Storing a map from key to value in storage.
+- `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
+- can accept any type as key or val i.e. `u8`, `String`, etc.
+- Here, **[Blake2_128Concat](https://paritytech.github.io/substrate/master/frame_support/struct.Blake2_128Concat.html)** is used as the hashing algorithm. It's a hashing algorithm which is used to hash the key to get the storage key. It's a 128 bit hash.
+- `T::AccountId` is used as the key type.
+- `T` is the runtime.
+- Containers such as `StorageMap`, do not have enforced size limits. For those containers, it is necessary to make a documented assumption about the maximum usage, and compute the max encoded length based on that assumption. In some cases, we have to implement `MaxEncodedLen` trait for the struct type used in the storage.
 
-  ![](../img/substrate_storage_map.png)
+![](../img/substrate_storage_map.png)
 
-  - Manipulating `StorageMap`:
+> ValueQuery is optional here.
 
-  ```rs
+- Manipulating `StorageMap`:
+
+  ```rust
   // Check if a value exists in storage
   let is_false = Items::<T>::contains_key(user);
 
   // put a value in storage
-  Items::<T>::insert(user, new_item);
+  <Items<T>>::insert(user, new_item);
 
   // Get the value from storage
-  Items::<T>::get(user);
+  <Items<T>>::get(user);
 
   // kill a value in storage
-  Items::<T>::remove(user);
+  <Items<T>>::remove(user);
   ```
 
-More complex storage types are also possible.
+> Please note that either of the representation is correct `Items::<T>` or `<Items<T>>`. But, prefer the later one as used mostly in the substrate codebase.
 
-- `StorageDoubleMap`: Storing a map from 2 keys to single value in storage on a substrate chain.
+For more associated methods of `StorageMap`, refer [this](https://crates.parity.io/frame_support/storage/trait.StorageMap.html).
 
-  ![](../img/substrate_storage_double_map.png)
+###### `StorageDoubleMap`
 
-- `StorageCountMap`: Storing a map from n keys to single value in storage on a substrate chain.
+- Storing a map from 2 keys to single value in storage on a substrate chain.
 
-  ![](../img/substrate_storage_n_map.png)
+![](../img/substrate_storage_double_map.png)
+
+> ValueQuery is optional here.
+
+For more associated methods of `StorageDoubleMap`, refer [this](https://crates.parity.io/frame_support/storage/trait.StorageDoubleMap.html).
+
+###### `StorageNMap`
+
+- Storing a map from n keys to single value in storage on a substrate chain.
+- It's a multi-key storage map (to a value).
+
+![](../img/substrate_storage_n_map.png)
+
+> ValueQuery is optional here. [More]()
+
+For more associated methods of `StorageNMap`, refer [this](https://crates.parity.io/frame_support/storage/trait.StorageNMap.html).
+
+---
+
+For all types of storage:
+
+- there are 3 kinds of query: `OptionQuery`, `ResultQuery`, `ValueQuery` to use when there is no value. Normally, if nothing is stored, then it is handled in `OptionQuery` way i.e. `Some(val)` or `None`. One can read through "Handling query return values" section in this [page](https://docs.substrate.io/build/runtime-storage/#declaring-storage-items).
+- if you want to set a **default** value, use like this:
+
+  ```rust
+  #[pallet::type_value]
+  pub(super) fn MyDefault<T: Config>() -> T::Balance { 3.into() }
+  #[pallet::storage]
+  pub(super) type MyStorageValue<T: Config> =
+      StorageValue<Value = T::Balance, QueryKind = ValueQuery, OnEmpty = MyDefault<T>>;
+  ```
+
+  > Remember, here you can also add a getter function, although it is optional. And also the visibility like `super`, `crate` can be changed as per the requirement of the pallet. The default values are not stored in the storage. They are just used to show the value at runtime when nothing is stored in the storage.
 
 ##### B. Overlay Change Set
 

@@ -6,7 +6,7 @@
 - 2 ways to store balance of account:
   - Inside `System` pallet's `AccountData`, precisely inside frame_system's `AccountInfo`.
   - Inside `Balances` pallet under pallet_balances's `Account` storage.
-- Abstraction layers of the pallet in form of traits, useful for loose pallet coupling with pallets (your pallet which might require the currency methods):
+- Abstraction layers of the pallet in form of traits, useful for loose pallet coupling with pallets (your pallet which might require the currency methods). And these abstractions combined with storing the balance on the Frame System level, enables balances to be really "useful" at the runtime level. For example, we **lock** balances for democracy and staking, allowing the same balance to be used twice across two services. On the other hand, we use **reserved** balances for a lot of things like storage deposits making sure that this kind of balance CANNOT be used twice. The traits used by the Balances pallet are:
 
   - [Currency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.Currency.html)
     - has additionally `issue`, `burn` major methods in addition to `Balances` pallet.
@@ -28,7 +28,13 @@
 
 ![](../../img/pallet-balances-1.png)
 
+- `Balances` vs `Asset` pallet
+  - It's relaychain native currency whereas the later is for custom tokens (like ERC20) on
+  - It's a single token, whereas the later is multi-token in a single pallet (asset). Hence, the later is kind of like a ERC20 factory.
+  - So in essence, you can create your underlying native currency using the balances pallet and if you need additional currencies you can leverage the assets pallet.
+
 ## References
 
 - [Balances Pallet | Polkadot Deep Dives](https://www.youtube.com/watch?v=_FwqB4FwWXk)
 - [Balances pallet in `crates.parity.io`](https://crates.parity.io/pallet_balances/index.html)
+- [substrate stackexchange](https://substrate.stackexchange.com/a/712/2795)

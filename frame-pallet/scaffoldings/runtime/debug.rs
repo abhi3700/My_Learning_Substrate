@@ -8,6 +8,7 @@ use frame_support::sp_runtime::print;
 
 print("Hello, world!");
 log::info("called by {:?}", who);
+log::debug!("called by {:?}", who); // ❌ didn't work for me
 
 // All the logs can be filtered using `-lmytarget=debug` flag.
 

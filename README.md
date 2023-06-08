@@ -27,8 +27,14 @@ Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./pallet/), 
       - parathread slot
 
 - Token details:
+
   - symbol: DOT
-  - decimal: 10 (now, earlier 12 before 21-aug-2020)
+  - decimal: 10 (formerly it was 12 before 21-aug-2020)
+    > The DOT redenomination took place on 21 August 2020, known as Denomination Day, at block number 1_248_328. [Source](https://wiki.polkadot.network/docs/learn-redenomination)
+  - lowest unit: Plancks. 1 DOT = 1e10 Plancks
+
+  So, in block explorer, if the balance of an account is `1.1529 MUNIT`, then it's `1.1529 * 1e6 UNIT` i.e. `1.1529 * 1e6 DOT` i.e. `1.1529 * 1e6 * 1e10 Plancks` (including decimals).
+
 - Consensus Algorithm (NPoS):
 
   - **voter/nominator**:
@@ -341,6 +347,7 @@ Raised a question over [stackexchange](https://substrate.stackexchange.com/quest
 ### Official
 
 - [Parity Homepage](https://www.parity.io/)
+- [Polkadot Wiki](https://wiki.polkadot.network/)
 - [Substrate Homepage](https://substrate.io/)
 - [Parity Tech Rust Doc](https://paritytech.github.io/)
   - [Substrate Rust doc](https://paritytech.github.io/substrate/)
