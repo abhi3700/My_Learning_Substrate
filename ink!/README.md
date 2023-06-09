@@ -1,9 +1,12 @@
 # ink!
 
+This document focuses on the ink! smart contract development for substrate-based parachains.
+
 ## About
 
-- Substrate's Contract Pallet (out of all library of pallets) allows Substrate-based chains to run SC on top of it.
-- SC language: A eDSL based `rust` language
+- Substrate's `Contract` Pallet (out of all library of pallets) allows Substrate-based chains to run SC with Wasm binary on top of it. If someone wants to run `EVM` contracts, then need to add `EVM` pallet into their relaychain runtime (L0). With Polkadot, Kusama, both the pallets - `Contract` & `EVM` are already added in order to support SC (written using `ink!` & `Solidity` respectively).
+- <u>State transition rule for when as SCs calling each other</u>: If the gas limit is reached, then all calls and state changes—including balance transfers—are only reverted at the current call’s contract level. For example, if contract A calls contract B and contract B runs out of gas mid-call, then all of the contract B calls and state changes are reverted. If contract A has correct error handling, any other calls and state changes make by contract A persist.
+- SC language: A eDSL based `rust` language called `ink!`
 - SC binary: `wasm` format
 - SC compiler: `cargo-contract`
 - SC ABI: `metadata`

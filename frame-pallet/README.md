@@ -70,6 +70,7 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 ## Pallet vs Contracts
 
 - Pallets are used to build the runtime of the relaychain whereas contracts are deployed on top of parachain connected to relaychain.
+- Pallets don't have an address, whereas contracts have an address & can be instantiated with some initial data. For pallet, we do have a provision of adding `Default` values for any struct type storage (not stored, just shown when queried for) using `ValueQuery` query kind.
 - Pallet development require Rust native language with some no std library, whereas contract development requires an eDSL (embedded domain specific language) called ink! which is a Rust based language.
 - Pallets are part of the blockchain's runtime, so changing them requires a runtime upgrade, which is a significant operation that can affect the entire blockchain. Contracts, on the other hand, are more isolated: they can be updated or changed by their owner without affecting the rest of the blockchain.
 - Pallets storages can be set with some default value (not stored, just shown when queried for) using `ValueQuery` query kind, whereas the contracts storage can be initialized during deployment & also by default they have the minimum possible value of the data type like with `bool` type, it's `false` by default. But, in case of pallet, it's `Some`/`None`, `Ok`/`Err` based on query kind opted `OptionQuery`, `ResultQuery`.
@@ -81,6 +82,9 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
   There is another way to do this i.e. use `pallet-vm` extrinsic where we can parse the SC binary & data to process certain logic. [Source](https://t.me/substratedevs/7595)
 
 - SCs are isolated which are immutable code logic. Whereas pallets are mutable code logic.
+- For example, if you are building a chain with most of the logic defined using other Substrate pallets, you can expose some parts of the chain logic to users through smart contracts. Smart contracts are ideal for this type of use case because they treat all user input as untrusted and potentially adversarial. [Source](https://docs.substrate.io/build/smart-contracts-strategy/)
+- As an example, assume you are building a decentralized exchange. Most of the logic is defined in pallets, but you want to allow users to upload their own trading algorithms through a smart contract. With the gas fees associated with executing a smart contract, users have to pay for the execution time of their trading algorithms. [Source](https://docs.substrate.io/build/smart-contracts-strategy/)
+- SC don't have control over setting the estimated gas cost for their functions unlike setting the weights for pallet dispatchables. Senders must specify a gas limit for every call. Unused gas is refunded after the call, regardless of the execution outcome. [Source](https://docs.substrate.io/build/smart-contracts-strategy/#contract-execution-and-gas).
 
 ## My Work
 
@@ -465,7 +469,23 @@ All FRAME pallets are tightly coupled to the `frame_system` pallet. This is more
    }
    ```
 
-6. And then we are all set to build the node runtime.
+6. The Balances type is specified in `construct_runtime!` macro as part of the pallet_balances that implements the `Currency` trait.
+
+   ```rust
+   construct_runtime!(
+       pub struct Runtime
+       where
+           Block = Block,
+           NodeBlock = opaque::Block,
+           UncheckedExtrinsic = UncheckedExtrinsic,
+       {
+
+           Balances: pallet_balances,
+       }
+   );
+   ```
+
+7. And then we are all set to build the node runtime.
 
 ### Pallet Types
 
@@ -477,6 +497,17 @@ Primitive types:
 - System
 - Sudo
 - Timestamp
+- TransactionPayment
+
+```rust
+System: frame_system,
+Timestamp: pallet_timestamp,
+Aura: pallet_aura,
+Grandpa: pallet_grandpa,
+Balances: pallet_balances,
+TransactionPayment: pallet_transaction_payment,
+Sudo: pallet_sudo,
+```
 
 These pallets are added by default in the substrate node-template.
 
@@ -543,6 +574,10 @@ let who = ensure_signed(origin)?;
 **Recovery pallet**
 
 This is mainly to recover your account based on validation given by a set of users (no. defined in the pallet).
+
+---
+
+We can create own types like `AccountOf` & `BalanceOf` in our pallet. These are called `type alias`. [Scaffolding code](./scaffoldings/runtime/create_pallet_type_aliases.rs).
 
 #### Pallet module (mandatory)
 
@@ -1262,18 +1297,24 @@ List of pallets that can be done:
 ## References
 
 - Rust Crates doc:
-  - [paritytech.github.io](https://paritytech.github.io/) [OLD]
   - [crates.parity.io/](https://crates.parity.io/) [Latest]
+  - [paritytech.github.io](https://paritytech.github.io/) [OLD]
 
 > Both have almost the same content except for some changes in some of the cases.
 
 - [Documentation | By Parity](https://docs.substrate.io/main-docs/)
-  - [Fundamentals](https://docs.substrate.io/fundamentals/)
-    - [Transaction & Block Basics](https://docs.substrate.io/fundamentals/transaction-types/)
-    - [Runtime Development](https://docs.substrate.io/fundamentals/runtime-development/)
-    - [Accounts, Addresses and Keys](https://docs.substrate.io/fundamentals/accounts-addresses-keys/)
-    - [Polkadot JS Client](https://docs.substrate.io/fundamentals/light-clients-in-substrate-connect/)
-    - [Rust for Substrate](https://docs.substrate.io/fundamentals/rust-basics/)
+  - [Learn](https://docs.substrate.io/learn/)
+    - [Transaction & Block Basics](https://docs.substrate.io/learn/transaction-types/)
+    - [Runtime Development](https://docs.substrate.io/learn/runtime-development/)
+    - [Accounts, Addresses and Keys](https://docs.substrate.io/learn/accounts-addresses-keys/)
+    - [Polkadot JS Client](https://docs.substrate.io/learn/light-clients-in-substrate-connect/)
+    - [Rust for Substrate](https://docs.substrate.io/learn/rust-basics/)
+  - [Build](https://docs.substrate.io/build/)
+    - [Smart contracts](https://docs.substrate.io/build/smart-contracts-strategy/) ✅
+    - [Custom pallets](https://docs.substrate.io/build/custom-pallets/) ✅
+    - [Runtime storage structures](https://docs.substrate.io/build/runtime-storage/) ✅
+    - [Transactions, weights, and fees](https://docs.substrate.io/build/tx-weights-fees/)
+    - [Pallet coupling](https://docs.substrate.io/build/pallet-coupling/) ✅
   - [Tutorials](https://docs.substrate.io/tutorials/)
     - Build a Blockchain
       - [Build a local blockchain](https://docs.substrate.io/tutorials/get-started/build-local-blockchain/) ✅
@@ -1285,12 +1326,18 @@ List of pallets that can be done:
   - [Reference](https://docs.substrate.io/reference/)
     - [FRAME macros](https://docs.substrate.io/reference/frame-macros/)
     - [How-to quick reference guides](https://docs.substrate.io/reference/how-to-guides/)
+      - [Basics](https://docs.substrate.io/reference/how-to-guides/basics)
+        - [Use helper functions](https://docs.substrate.io/reference/how-to-guides/basics/use-helper-functions/) ✅
+      - [Pallet Design](https://docs.substrate.io/reference/how-to-guides/pallet-design/)
+        - [Create a storage structure (struct)](https://docs.substrate.io/reference/how-to-guides/pallet-design/create-a-storage-structure/) 🧑🏻‍💻
     - [Cryptography](https://docs.substrate.io/reference/cryptography/)
 - [Substrate StackExchange](https://substrate.stackexchange.com/)
 - [Substrate Recipes](https://github.com/JoshOrndorff/recipes)
   - **Book**: FRAME v1. Open on localhost via `mdbook serve` at the root directory of the repo.
   - **Code**: FRAME v3
   - [**Video**](https://www.youtube.com/watch?v=KVJIWxZSNHQ) 🧑🏻‍💻
+    > Although this is a 2020 workshop, it is still very relevant and useful. It is a good starting point for learning Substrate from v1.
+    > It uses FRAME v1. The corresponding recipes book is here: [substrate-recipes](https://substrate.dev/recipes/)
 - [Substrate Rust doc](https://paritytech.github.io/substrate/)
 - [Rustlings like game for Substrate](https://github.com/rusty-crewmates/substrate-tutorials) [Funded by Web3 Foundation]
 - [Understanding Generic type system of Substrate](https://github.com/shawntabrizi/substrate-trait-tutorial)
@@ -1304,7 +1351,4 @@ List of pallets that can be done:
 - [Demystifying FRAME Macro Magic | Substrate Seminar (full livestream)](https://www.youtube.com/watch?v=aEWbZxNCH0A) 🧑🏻‍💻
 - [A substrate developer journey (after 1 week of joining)](https://youtu.be/vAOQczmVcLU) ✅
 - [Deep dive into FRAME V2 pallet macros | Substrate Seminar 2021](https://www.youtube.com/watch?v=5pLHzKMCEtg&list=PLp0_ueXY_enU7jbm_A-3BrXiMbHPR0he0&index=3) 🧑🏻‍💻
-- [Substrate Recipes Workshop - Learn to Build a Custom Blockchain](https://www.youtube.com/watch?v=KVJIWxZSNHQ) 🧑🏻‍💻
-  > Although this is a 2020 workshop, it is still very relevant and useful. It is a good starting point for learning Substrate from v1.
-  > It uses FRAME v1. The corresponding recipes book is here: [substrate-recipes](https://substrate.dev/recipes/)
 - [Polkadot Deep Dives 2023](https://youtube.com/playlist?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG)
