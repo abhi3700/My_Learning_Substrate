@@ -5,10 +5,13 @@
 //! 3. In `runtime/src/lib.rs` file, inside the `impl` block, set the type `Currency` as `Balances`
 //! 
 //! Source (answered by Shawn): https://substrate.stackexchange.com/questions/954/tbalance-associated-type-balance-not-found-for-t
+//! 
+//! My notes (comprehensive): https://github.com/abhi3700/My_Learning_Substrate/blob/main/frame-pallet/README.md#loose-coupling
 
 // ===== inside pallet `src/lib.rs` file
 
-/// 2. Define types - `AccountOf<T>` & `BalanceOf<T>` outside the `Config` trait
+/// 2. Define types - `AccountOf<T>` & `BalanceOf<T>` outside the `Config` trait for using 
+/// it inside the storage keyvalue pair type
 type AccountOf<T> = <T as frame_system::Config>::AccountId;
 type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
 

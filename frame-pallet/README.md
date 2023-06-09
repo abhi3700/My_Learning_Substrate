@@ -355,6 +355,14 @@ More than one pallets when dependent on each other, they are said to be coupled.
 - Tight coupling
 - Loose coupling
 
+---
+
+In general, loose coupling provides more flexibility than tight coupling and is considered a better practice from a system design perspective. It guarantees better maintainability, reusability, and extensibility of your code. However, tight coupling can be useful for pallets that are less complex or that have more overlap in methods and types than differences.
+
+As a general rule, the more complex a pallet is, the less desirable it is to tightly couple it. This evokes a concept in computer science called cohesion, a metric used to examine the overall quality of a software system.
+
+[Source](https://docs.substrate.io/build/pallet-coupling/#choosing-a-pallet-coupling-strategy)
+
 #### Tight coupling
 
 [Source](https://docs.substrate.io/reference/how-to-guides/pallet-design/use-tight-coupling/)
@@ -389,6 +397,75 @@ All FRAME pallets are tightly coupled to the `frame_system` pallet. This is more
 #### Loose coupling
 
 [Source](https://docs.substrate.io/reference/how-to-guides/pallet-design/use-loose-coupling/)
+
+1. Your pallet (`pallet-eg`) need to define the `Currency` trait (for instance) in order to facilitate the transfer of tokens between accounts.
+
+   **M-1**:
+
+   ```rust
+   pub trait Currency<AccountId> {
+    // -- snip --
+    fn transfer(
+        source: &AccountId,
+        dest: &AccountId,
+        value: Self::Balance,
+        // don't worry about the last parameter for now
+        existence_requirement: ExistenceRequirement,
+    ) -> DispatchResult;
+   }
+   ```
+
+   **M-2** [RECOMMENDED]: You need to just import the trait (inside the `pallet-eg` module) like this:
+
+   ```rust
+   #[frame_support::pallet]
+   pub mod pallet {
+       use frame_support::traits::{Currency, ReservableCurrency};
+   }
+   ```
+
+2. Now, we need to create an associated type for your pallet: `pallet-eg`'s `Config` trait. And based on which method you want to use, you can use the trait like `Currency` trait used here which has `transfer` function, but not `reserved_balance` (for instance) which is present in `ReservableCurrency` trait rather. In that case you need to use `ReservableCurrency` trait. And you also have the flexibility of using any no. of traits for an associated type.
+
+   ```rust
+   pub trait Config: frame_system::Config {
+       // single trait usage
+       type MyCurrency: Currency<Self::AccountId>;
+       // multiple traits usage for incorporating multiple functions
+       type MyCurrency: ReservableCurrency<Self::AccountId> + LockableCurrency<Self::AccountId>;
+       // --snip--
+   }
+   ```
+
+3. You can use this `transfer` function in this way inside `pallet-eg`'s dispatchable:
+
+   ```rust
+   impl<T: Config> Pallet<T> {
+       pub fn my_function() {
+           T::MyCurrency::transfer(&buyer, &seller, price, ExistenceRequirement::KeepAlive)?;
+       }
+   }
+   ```
+
+4. Now, the `pallet-eg` pallet is loosely coupled with `MyCurrency` trait. This trait can be implemented in any pallet. For instance, `Balances` pallet can implement this trait.
+
+   > We need to parse the pallet which has this `transfer` function implemented. So, we need to add this pallet in `Cargo.toml` file of `runtime`.
+
+   So, inside `pallet-eg`'s `Cargo.toml` file, we need to add this:
+
+   ```toml
+    [dependencies]
+   pallet-balances = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.40" }
+   ```
+
+5. Now, we ned to set the `MyCurrency` type as `Balances` pallet inside the `impl` block of `pallet-eg`'s Config trait for `Runtime` in `runtime/src/lib.rs` file:
+
+   ```rust
+   impl pallet_eg::Config for Runtime {
+       type MyCurrency = Balances;
+   }
+   ```
+
+6. And then we are all set to build the node runtime.
 
 ### Pallet Types
 
