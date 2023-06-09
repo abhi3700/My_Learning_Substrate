@@ -15,3 +15,9 @@ log::debug!("called by {:?}", who); // ❌ didn't work for me
 // And that's how you print from the runtime in native
 
 // But, if you want to print from the runtime in WASM, you need to use the `debug::RuntimeLogger::init()`;
+
+// One usage in OCW codebase:
+match res {
+    Ok(()) => log::info!("[{:?}] Submitted price of {} cents", acc.id, price),
+    Err(e) => log::error!("[{:?}] Failed to submit transaction: {:?}", acc.id, e),
+}
