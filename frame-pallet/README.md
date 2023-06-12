@@ -836,32 +836,34 @@ The following Storage APIs (data persistence) are available for storage on a sub
 
   ![](../img/substrate_storage_value.png)
 
-  > ValueQuery is optional here.
+> ValueQuery is optional here. For [more](https://docs.substrate.io/build/runtime-storage/#declaring-storage-items), search this "Handling query return values".
 
-  ```rust
-  #[pallet::storage]
-  type SomePrivateValue<T> = StorageValue<
-      _,
-      u32,
-      ValueQuery
-  >;
+```rust
+#[pallet::storage]
+type SomePrivateValue<T> = StorageValue<
+    _,
+    u32,
+    ValueQuery
+>;
 
-  #[pallet::storage]
-  #[pallet::getter(fn some_primitive_value)]
-  pub(super) type SomePrimitiveValue<T> = StorageValue<_, u32, ValueQuery>;
+#[pallet::storage]
+#[pallet::getter(fn some_primitive_value)]
+pub(super) type SomePrimitiveValue<T> = StorageValue<_, u32, ValueQuery>;
 
-  #[pallet::storage]
-  pub(super) type SomeComplexValue<T: Config> = StorageValue<_, T::AccountId, ValueQuery>;
-  ```
+#[pallet::storage]
+pub(super) type SomeComplexValue<T: Config> = StorageValue<_, T::AccountId, ValueQuery>;
+```
 
 - Manipulating `StorageValue`:
 
-  ```rs
+  ```rust
   // Put a value in storage
   <CountForItems<T>>::put(10);
 
   // Get the value from storage
   <CountForItems<T>>::get();
+  // We can also use `Self::count_for_items()` to get the value from storage.
+  // The same is applicable for other storage types as well.
 
   // kill a value in storage
   <CountForItems<T>>::kill();
@@ -883,7 +885,7 @@ For more associated methods of `StorageValue`, refer [this](https://crates.parit
 
 ![](../img/substrate_storage_map.png)
 
-> ValueQuery is optional here.
+> ValueQuery is optional here. For [more](https://docs.substrate.io/build/runtime-storage/#declaring-storage-items), search this "Handling query return values".
 
 - Manipulating `StorageMap`:
 
@@ -911,7 +913,7 @@ For more associated methods of `StorageMap`, refer [this](https://crates.parity.
 
 ![](../img/substrate_storage_double_map.png)
 
-> ValueQuery is optional here.
+> ValueQuery is optional here. For [more](https://docs.substrate.io/build/runtime-storage/#declaring-storage-items), search this "Handling query return values".
 
 For more associated methods of `StorageDoubleMap`, refer [this](https://crates.parity.io/frame_support/storage/trait.StorageDoubleMap.html).
 
@@ -922,7 +924,7 @@ For more associated methods of `StorageDoubleMap`, refer [this](https://crates.p
 
 ![](../img/substrate_storage_n_map.png)
 
-> ValueQuery is optional here. [More]()
+> ValueQuery is optional here. For [more](https://docs.substrate.io/build/runtime-storage/#declaring-storage-items), search this "Handling query return values".
 
 For more associated methods of `StorageNMap`, refer [this](https://crates.parity.io/frame_support/storage/trait.StorageNMap.html).
 

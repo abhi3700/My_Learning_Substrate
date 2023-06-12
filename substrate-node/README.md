@@ -11,7 +11,7 @@ Things like OCW, Data indexing are laid out comprehensively with rust code examp
 
 ### Blockchain Node
 
-In case of blockchain node, the indexing is supposed to happen on per block basis.
+In case of blockchain node, the indexing is supposed to happen on per block basis. Now, in
 
 ### Blockchain DApp
 
@@ -24,3 +24,5 @@ There are 3 ways to do this:
 3. When the activity is sent from DApp, we take the data & send via API endpoint. And then inside the handler function we spawn a separate thread for the blockchain transaction validation & then receiving the transaction_id we index/store the data accordingly to have the best performance.
 
 3 > 2 > 1 (best performance)
+
+## References

@@ -342,6 +342,72 @@ Raised a question over [stackexchange](https://substrate.stackexchange.com/quest
 
 ![](img/substrate_fe_template_reload_page.png)
 
+### 2. error[E0275]: overflow evaluating the requirement `<Runtime as pallet_voting::Config>::MaxProposalLength == _`
+
+- _Cause_: This error is seen when we try to run the `cargo check -p node-template-runtime` command or `cargo build -r` command.
+- _Solution_: We need to remove `Self` in the code like this:
+
+**Before**:
+
+```rust
+parameter_types! {
+	pub const MaxProposalLength: u32 = 100;
+	pub const MinProposalLength: u32 = 5;
+}
+
+/// Configure the pallet-voting in pallets/voting.
+impl pallet_voting::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type MaxProposalLength = Self::MaxProposalLength;
+	type MinProposalLength = Self::MinProposalLength;
+}
+```
+
+**After**:
+
+```rust
+parameter_types! {
+	pub const MaxProposalLength: u32 = 100;
+	pub const MinProposalLength: u32 = 5;
+}
+
+/// Configure the pallet-voting in pallets/voting.
+impl pallet_voting::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type MaxProposalLength = MaxProposalLength;
+	type MinProposalLength = MinProposalLength;
+}
+```
+
+### 3. error: no rules expected the token `=`
+
+- _Cause_: This error is seen during runtime build as there is no type annotation used the variables.
+  ```sh
+  307 |     pub const MaxProposalLength = 100;
+        |                                 ^ no rules expected this token in macro call
+  ```
+- _Solution_: We need to add type annotation to the variables like this:
+
+**Before**:
+
+```rust
+// runtime/src/lib.rs
+parameter_types! {
+	pub const MaxProposalLength = 100;
+	pub const MinProposalLength = 5;
+}
+```
+
+**After**:
+
+```rust
+// runtime/src/lib.rs
+parameter_types! {
+	pub const MaxProposalLength: u32 = 100;
+	pub const MinProposalLength: u32 = 5;
+}
+```
+
 ## References
 
 ### Official
