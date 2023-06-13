@@ -1,10 +1,16 @@
 # Timestamp Pallet
 
+Timestamp pallet & inherents
+
 ## Overview
 
 - Timestamp Pallet provides functionality to get and set the on-chain time.
 - Repo code: https://github.com/paritytech/substrate/tree/master/frame/timestamp
-- They act as inherents which do not have to stand in transaction queue, as they are added by the validator.
+- **Inherents**:
+  - They are functions with some data parsed as parameters.
+  - They don't have to stand in transaction queue, as they are added by the validator (block author) itself.
+- **Min. time**: 6s
+- **Max. drift time**: 30s. Set inside the `check_inherent` function that is run by non-author nodes. The function contains logic - if any block has time > 30s from the last block, then the block is rejected by the non-author nodes for each block.
 
 ## Notes
 
@@ -30,6 +36,10 @@ When `substrate-node-template` binary is run on CLI, in the "Developer >> Storag
 
 In the recent codebase as per `polkadot-v0.9.39`, there are dispatch calls like `block` not available for the timestamp pallet. Hence, just pasting the screenshot. More can be seen in the video referenced down below.
 
+Here in this timestamp pallet, the time being set by block author is checked by other nodes in the network. If the time is not in sync with the other nodes, then the block is rejected. This is how the consensus is achieved in the network.
+
+The timestamp pallet's dispatchable - `set` function is called inherently by the block author. So, unlike normal dispatchable, it can't be called by any external account.
+
 ### Coding
 
 - Structure of the pallet.
@@ -48,7 +58,7 @@ In the recent codebase as per `polkadot-v0.9.39`, there are dispatch calls like 
   ```
 
 - Here, we are using 2 uncommon components - `Hooks`, `Inherent`.
-- The call `set` makes an inherent call.
+- The call `set` makes an inherent call. So, can't be called by any external accountId.
   ![](../../img/pallet-timestamp-8.png)
 - The `block` dispatchable is not available in the recent codebase as per `polkadot-v0.9.39`. Hence, just pasting the screenshot. More can be seen in the video [here](https://youtu.be/HjtxPcuR8a0?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG&t=656)
   ![](../../img/pallet-timestamp-9.png)
@@ -64,6 +74,7 @@ In the recent codebase as per `polkadot-v0.9.39`, there are dispatch calls like 
 
 - The timestamp whether set or not is checked during `finalization` using this code snippet inside `Hooks` trait.
   ![](../../img/pallet-timestamp-7.png)
+- Inside `on_finalize` function, the DidUpdate value is taken i.e. `true` & then reset to default value i.e. `false` afterwards.
 - We can also unblock this by `block` with value as `No`.
   ![](../../img/pallet-timestamp-13.png)
 
@@ -76,10 +87,38 @@ In the recent codebase as per `polkadot-v0.9.39`, there are dispatch calls like 
   As of today [(June-2023)](https://github.com/paritytech/substrate/releases/tag/monthly-2023-06), there is only 1 extrinsic - [`store`](https://github.com/paritytech/substrate/blob/85415fb3a452dba12ff564e6b093048eed4c5aad/frame/remark/src/lib.rs#L67-L78) in `remark` pallet, which is used to store offchain data. So, with the above code, you can find in the referenced video that the remark once set with a bytes value, can be seen in every block after timestamp set.
 
 - [assert!](https://github.com/paritytech/substrate/blob/85415fb3a452dba12ff564e6b093048eed4c5aad/frame/timestamp/src/lib.rs#L206-L210) here checks for the current time i.e. `now` (function param) to be either zero (in case of genesis block) or greater than the last block time by min. `6s`. This is to ensure that the time is always increasing.
-- `create_inherent` is run by the block author.
-- `check_inherent` is run by every other node except the block author.
-  > In this way, we can check for 2/3 majority of nodes to be in sync with the time. Hence, the consensus is achieved. This is how time synchronization in the distributed system is achieved.
-- In `check_inherent`, there are 2 params:
+- The type of data that is parsed in the `ProvideInherent` trait methods is `InherentData`.
+- This type is defined in [primitive/inherents/src/lib.rs](https://github.com/paritytech/substrate/blob/85415fb3a452dba12ff564e6b093048eed4c5aad/primitives/inherents/src/lib.rs#L203-L217).
+  ![](../../img/pallet-timestamp-16.png)
+
+  <details><summary><b>Explanation</b>: </summary>
+
+  The code above defines two Rust types: `InherentIdentifier` and `InherentData`.
+
+  `InherentIdentifier` is a type alias for an array of 8 bytes (`[u8; 8]`). It is used to represent an identifier for an inherent.
+
+  `InherentData` is a struct that represents the inherent data to include in a block. It contains a `BTreeMap` called `data` that maps `InherentIdentifier` keys to `Vec<u8>` values. The `data` field is used to store all inherent data encoded with parity-scale-codec and an identifier.
+
+  The `InherentData` struct also provides a `new()` method that creates a new instance of the struct with an empty `data` field.
+
+  Both types derive several traits, including `Clone`, `Default`, `Encode`, `Decode`, and `TypeInfo`. The `Encode` and `Decode` traits are provided by the `parity-scale-codec` crate, which is used to encode and decode the inherent data. The `TypeInfo` trait is provided by the `scale_info` crate, which is used to generate type information for the struct.
+
+  Overall, this code defines a data structure for storing inherent data in a block, which can be used in a Rust blockchain implementation like substrate.
+
+  </details>
+
+- The data of type `InherentData` is taken from the system of the block author in map format which has a key i.e. INHERENT_IDENTIFIER i.e. `timestamp` & value as the timestamp value (in bytes).
+  ![](../../img/pallet-timestamp-15.png)
+- This `InherentData` is constructed by the block author & given to the runtime.
+  > The same data type is also used in the `check_inherent` function (run by non-author node) when checking with the data (sent to runtime by author node).
+- _The data that is passed_ by the non-author node has to be compared with the _one imported by the non-author node_. In order to do this checking for a valid time, `check_inherent` function is called by the non-author node to make a comparo between the 2 function params - `call_data` & `inherent_data`.
+- We have `ProvideInherent` trait which has 2 functions:
+  - `create_inherent` - called by block author.
+  - `check_inherent` - called by every other node except block author.
+- `create_inherent` is supposed to be run by the block author.
+- `check_inherent` is supposed to be run by every other node except the block author.
+  > In this way, we can check for at least 2/3 majority of nodes to be in sync with the time. Hence, the consensus is achieved. This is how time synchronization in the distributed system is achieved.
+- Inside `check_inherent`, there are 2 params:
   - `call_data`: the data that is passed by the block author. This data comes from the block imported by the non-author node.
   - `inherent_data` - the data that is passed by this node (except block author).
   - The max. drift allowed is 30s. Hence, the block imported by non-author node if has set time more than 30s than the non-author's latest block timestamp, then the block is rejected.
