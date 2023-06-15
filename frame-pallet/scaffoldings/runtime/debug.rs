@@ -24,3 +24,10 @@ match res {
 
 // this is run in non-optimized build
 debug_assert!(ok, "`seconds` is below static limit; `try_insert` should succeed; qed");
+
+// with TARGET refined
+log::warn!(
+    target: LOG_TARGET,
+    "account with a non-zero reserve balance has no provider refs, account_id: '{:?}'.",
+    who
+);

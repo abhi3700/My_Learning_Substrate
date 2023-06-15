@@ -43,6 +43,7 @@ Here, if someone locks token for 28 days, they will get 1 as vote multiplier. If
 Here, collective means a group of people i.e. council. The council can be elected by the token holders. The council can also be a fixed set of people. The council can also be a single person. The council can also be a single person who is the owner of the chain.
 ![](../../img/pallet-democracy-6.png)
 
+- **Preimage pallet**: when any proposal is created, then its preimage hash is created & stored in this pallet. When the proposal is voted, then the preimage is checked to verify the proposal.
 - **Collective pallet**: for handling multiple types of Origin (caller) for different functionality related to proposal (blacklist, cancel, etc.)
 - **Scheduler pallet**: to schedule the enactment of the proposal (after Council's approval).
 - **Balances pallet**:
