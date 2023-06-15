@@ -21,3 +21,6 @@ match res {
     Ok(()) => log::info!("[{:?}] Submitted price of {} cents", acc.id, price),
     Err(e) => log::error!("[{:?}] Failed to submit transaction: {:?}", acc.id, e),
 }
+
+// this is run in non-optimized build
+debug_assert!(ok, "`seconds` is below static limit; `try_insert` should succeed; qed");

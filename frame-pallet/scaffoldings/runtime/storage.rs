@@ -17,7 +17,7 @@ mod pallet {
     /// `<Value<T>>::kill();`: kill the storage i.e. remove the storage from the storage trie
     /// For more such methods of `StorageValue`, refer this: https://crates.parity.io/frame_support/pallet_prelude/struct.StorageValue.html
     /// ------------------------------------
-    /// ### 2. A list of item i.e. fixed size array
+    /// 2. A list of item i.e. fixed size array
     /// The one config trait which includes the max size of array 
 	#[pallet::config]
 	pub trait Config: frame_system::Config + Get<u32> {
@@ -31,10 +31,18 @@ mod pallet {
 	#[pallet::getter(fn array)]
 	// NOTE: Had to add trait bound for T with `Config`
 	/// List of owners
-    /// `MaxOwners` needs to be defined in the `Config` trait as `type MaxOwners: Get<u32>;`
+    /// 3. `MaxOwners` needs to be defined in the `Config` trait as `type MaxOwners: Get<u32>;`
 	pub type SomeArray<T: Config> = StorageValue<_, BoundedVec<T::AccountId, T::MaxOwners>>;
     /// 
     /// For functions, refer this: https://docs.rs/sp-runtime/latest/sp_runtime/bounded_vec/struct.BoundedVec.html
+    /// ------------------------------------
+    /// 4. A value of type BoundedVec<Tuple, len>
+	#[pallet::getter(fn public_props)]
+	pub type PublicProps<T: Config> = StorageValue<
+		_,
+		BoundedVec<(PropIndex, BoundedCallOf<T>, T::AccountId), T::MaxProposals>,
+		ValueQuery,
+	>;
     /// ------------------------------------
     /// ### 3. A vector of item i.e. dynamic size array. Although NOT recommended
 	#[pallet::storage]
@@ -58,9 +66,49 @@ mod pallet {
     /// For methods of `StorageMap`, refer this: https://crates.parity.io/frame_support/pallet_prelude/struct.StorageMap.html
     /// ------------------------------------
     /// 2. A map of key -> fixed sized array
-    /// TODO: add your notes here
-    /// 3. A map of key -> dynamic sized array
-    /// TODO: add your notes here
+    #[pallet::storage]
+	#[pallet::getter(fn public_props)]
+	pub type PublicProps<T: Config> = StorageValue<
+		_,
+		BoundedVec<u32, T::MaxLen>,
+		ValueQuery,
+	>;
+    /// ------------------------------------
+    /// 3. A map of key -> dynamic sized array (not recommended)
+    #[pallet::storage]
+	#[pallet::getter(fn public_props)]
+	pub type PublicProps<T: Config> = StorageValue<
+		_,
+		Vec<u32>,
+		ValueQuery,
+	>;
+    /// ------------------------------------
     /// 4. A map of key -> tuple
-    /// TODO: add your notes here
+    #[pallet::storage]
+	#[pallet::getter(fn public_props)]
+	pub type PublicProps<T: Config> = StorageValue<
+		_,
+		(PropIndex, BoundedCallOf<T>, T::AccountId)>,
+		ValueQuery,
+	>;
+    /// ------------------------------------
+    /// 5. A map of key -> BoundedVec<Tuple, len>
+    #[pallet::storage]
+	#[pallet::getter(fn public_props)]
+	pub type PublicProps<T: Config> = StorageValue<
+		_,
+        Blake2_128Concat,
+        T::AccountId,
+		BoundedVec<(PropIndex, BoundedCallOf<T>, T::AccountId), T::MaxProposals>
+	>;
+    /// ------------------------------------
+    /// 6. A map of key (without hash algorithm) -> value as tuple of 3 items
+    /// #[pallet::storage]
+	#[pallet::storage]
+	pub type Blacklist<T: Config> = StorageMap<
+		_,
+		Identity,
+		H256,
+		(T::BlockNumber, BoundedVec<T::AccountId, T::MaxBlacklisted>),
+	>;
 }

@@ -18,4 +18,12 @@ mod pallet {
     type _AccountOf<T> = <T as frame_system::Config>::AccountId; // optional
     type BalanceOf<T> =
         <<T as Config>::MyCurrency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+    type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<
+        <T as frame_system::Config>::AccountId,
+    >>::NegativeImbalance;
+
+    /// used in `democracy` pallet
+    pub type CallOf<T> = <T as frame_system::Config>::RuntimeCall;
+    pub type BoundedCallOf<T> = Bounded<CallOf<T>>;
+    type AccountIdLookupOf<T> = <<T as frame_system::Config>::Lookup as StaticLookup>::Source;
 }

@@ -879,6 +879,9 @@ For more associated methods of `StorageValue`, refer [this](https://crates.parit
 - `#[pallet::storage]]`, `#[pallet::getter()]` macros are used for this.
 - can accept any type as key or val i.e. `u8`, `String`, etc.
 - Here, **[Blake2_128Concat](https://paritytech.github.io/substrate/master/frame_support/struct.Blake2_128Concat.html)** is used as the hashing algorithm. It's a hashing algorithm which is used to hash the key to get the storage key. It's a 128 bit hash.
+- There are these hashing algorithms available in substrate:
+  ![](../img/substrate_storage_hashing_algorithms.png)
+- If we don't want to store the hash of the key (in cases where the key itself is a hash `H256`) directly, then we can use `Identity` in order to not use any hashing algorithm like Blake2_128Concat, Twox64Concat, etc.
 - `T::AccountId` is used as the key type.
 - `T` is the runtime.
 - Containers such as `StorageMap`, do not have enforced size limits. For those containers, it is necessary to make a documented assumption about the maximum usage, and compute the max encoded length based on that assumption. In some cases, we have to implement `MaxEncodedLen` trait for the struct type used in the storage.

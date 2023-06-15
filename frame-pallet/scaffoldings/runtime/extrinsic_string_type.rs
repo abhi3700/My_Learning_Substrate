@@ -1,7 +1,7 @@
 //! How to treat a string as a type inside dispatchable
 //! It's very uncommon in Substrate Rust here to use a string as a type.
 //!
-//! In substrate, we have to give the `name` variable as `Vec<u8>` type for:
+//! In substrate, we have to give the `name` variable as bytes i.e., `Vec<u8>` type for:
 //!   - dispatchable as local variable type
 //!
 //! We have to store the field `name` as `BoundedVec` type i.e. `BoundedVec<u8, T::MaxStringLength>`
