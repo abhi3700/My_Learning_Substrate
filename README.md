@@ -330,6 +330,8 @@ It shows comparo b/w legacy & polkadot blockchains.
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
 - https://github.com/darwinia-network/darwinia
 - Substrate Open Runtime Module Library: https://github.com/open-web3-stack/open-runtime-module-library
+- Lightweight client for Substrate-based chains, such as Polkadot and Kusama: https://github.com/smol-dot/smoldot
+- Subwasm is a cli utility to inside a Substrate WASM Runtime: https://github.com/chevdor/subwasm
 
 ## Troubleshooting
 
@@ -461,3 +463,8 @@ parameter_types! {
 - [🎮 Runtime Development](https://www.youtube.com/playlist?list=PLp0_ueXY_enU7jbm_A-3BrXiMbHPR0he0)
   - It mainly focuses on the runtime development of substrate using FRAME v2. Especially for the beginners, it is a must watch. Also, it's going to give you a good idea about the runtime development of substrate in terms of journey that how it has evolved from FRAME v1 to FRAME v2.
 - [Centrifuge: From Solidity To Substrate | Sub0 2022](https://www.youtube.com/watch?v=xVDDuop2Mvg) ✅
+- [Building blockchains the easy way | Substrate Seminar](https://www.youtube.com/live/YJwbpF6yROk) ✅
+- [Set-up tips, key concepts and how to build with them | Substrate Seminar](https://www.youtube.com/live/69uCTnvzL60)
+- [Starkware builds on Substrate w/ Louis Guthmann](https://www.youtube.com/live/ZQSTAI7hGVg)
+- [Madara, a new Substrate-based sequencer for Starknet appchains (with Abdelhamid Bakhta)](https://youtu.be/lL9W6PhCOTQ)
+- [Episode 229 - Going Cross-Chain with Polkadot’s XCM](https://youtu.be/DAsxa4_F7cU)
