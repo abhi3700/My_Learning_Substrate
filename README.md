@@ -417,6 +417,41 @@ parameter_types! {
 }
 ```
 
+### 4. How to fix `parity_scale_codec::MaxEncodedLen` is not implemented for `T`?
+
+- _Cause_: The compiler thinks that `T` must also be bounded by `MaxEncodedLen`, even though `T` itself is not being used in the actual types.
+- _Solution_:
+
+  - M-1: Add `#[codec(mel_bound())]` to the type definition:
+
+    ```rust
+    // Struct for holding Kitty information.
+    #[derive(Clone, Encode, Decode, PartialEq, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+    #[scale_info(skip_type_params(T))]
+    #[codec(mel_bound())] // <---------------- Here
+    pub struct Kitty<T: Config> {
+        pub dna: [u8; 16],   // Using 16 bytes to represent a kitty DNA
+        pub price: Option<BalanceOf<T>>,
+        pub gender: Gender,
+        pub owner: AccountOf<T>,
+    }
+    ```
+
+  - M-2: Add generic type to the type definition:
+
+    ```rust
+    // Struct for holding Kitty information.
+    #[derive(Clone, Encode, Decode, PartialEq, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+    pub struct Kitty<Account, Balance> {
+      pub dna: [u8; 16],   // Using 16 bytes to represent a kitty DNA
+      pub price: Option<Balance>,
+      pub gender: Gender,
+      pub owner: Account,
+    }
+    ```
+
+    Sources: [1](https://substrate.stackexchange.com/a/1428/2795), [2](https://substrate.stackexchange.com/a/620/2795)
+
 ## References
 
 ### Official

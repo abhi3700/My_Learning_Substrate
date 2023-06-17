@@ -3,52 +3,7 @@
 ## Overview
 
 - The balances pallet is designed to be used as the blockchain's underlying currency (where the different traits are implemented). It is extremely optimized for balance movements and transfers, which ensures that the fees that users pay to actually move balances are very low.
-- 2 ways to store balance of account:
-  - Inside `System` pallet's `AccountData`, precisely inside frame_system's `AccountInfo`.
-  - Inside `Balances` pallet under pallet_balances's `Account` storage.
-- Abstraction layers of the pallet in form of traits, useful for loose pallet coupling with pallets (your pallet which might require the currency methods). And these abstractions combined with storing the balance on the Frame System level, enables balances to be really "useful" at the runtime level. For example, we **lock** balances for democracy and staking, allowing the same balance to be used twice across two services. On the other hand, we use **reserved** balances for a lot of things like storage deposits making sure that this kind of balance CANNOT be used twice. The traits used by the Balances pallet are:
-
-  - [Currency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.Currency.html)
-    - has additionally `issue`, `burn` major methods in addition to `Balances` pallet.
-  - [ReservableCurrency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.ReservableCurrency.html)
-  - [NamedReservableCurrency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.NamedReservableCurrency.html)
-  - [LockableCurrency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.LockableCurrency.html)
-  - [Imbalance trait](https://crates.parity.io/frame_support/traits/tokens/imbalance/trait.Imbalance.html)
-
-  > It is recommended to use these traits as loose coupling whenever any methods or storage is to be used. I have implemented the same in `vault` pallet in my [`substrate-playground`](https://github.com/abhi3700/substrate-playground).
-
-- `Balance` is the amount of blockchain (relaychain) currency, the type of which is set inside the runtime `runtime/src/lib.rs` file.
-- [Dispatchables](https://github.com/abhi3700/substrate-playground)
-  - `transfer`
-  - `set_balance`
-  - `force_transfer`
-  - `transfer_keep_alive`
-  - `transfer_all`
-- This pallet depends on struct [`GenesisConfig`](https://crates.parity.io/pallet_balances/pallet/struct.GenesisConfig.html) defined inside it, to initialize the balances of the treasury accounts like `Alice`, `Alice_stash`, `Bob`, `Bob_stash`, etc. i.e., it can be used to configure the genesis state of this pallet.
-
-![](../../img/pallet-balances-1.png)
-
-- `Balances` vs `Asset` pallet
-
-  - It's relaychain native currency whereas the later is for custom tokens (like ERC20) on
-  - It's a single token, whereas the later is multi-token in a single pallet (asset). Hence, the later is kind of like a ERC20 factory.
-  - So in essence, you can create your underlying native currency using the balances pallet and if you need additional currencies you can leverage the assets pallet.
-
-- "Imbalance" represents a difference in the token balance (positive or negative) that is yet to be handled or "balanced".
-
-  - Imbalances are used to manage and keep track of changes in the balance of an account as a result of operations like transfers, rewards, and fees. They're part of Substrate's way of abstracting token handling and ensuring safety. Imbalances are created whenever tokens are minted (creating a positive imbalance) or burned/destroyed (creating a negative imbalance).
-
-  - These imbalances must be dealt with and balanced out, usually by the system. For example, when tokens are transferred from one account to another, a negative imbalance is created in the sender's account and a positive imbalance in the receiver's account. The system ensures that these imbalances cancel each other out so that the total supply of tokens remains constant.
-
-  - There are two primary types of imbalances:
-
-    - `PositiveImbalance<T>`: This type of imbalance represents an increase in the total supply of tokens. It's created when tokens are minted or introduced into the system.
-
-    - `NegativeImbalance<T>`: This type of imbalance represents a decrease in the total supply of tokens. It's created when tokens are burned or removed from the system.
-
-  - The `<T>` in `PositiveImbalance<T>` and `NegativeImbalance<T>` is a placeholder for the specific type of token being managed.
-
-  - Imbalances are automatically handled by the Substrate framework. When you're writing a pallet that involves token operations, you usually don't need to deal with imbalances directly, but you do need to be aware of them and understand how they work.
+- In terms of struct, there is a `AccountInfo` (defined in `frame_system` pallet), `AccountData` (defined in `balances` pallet). The `AccountInfo` is the struct that holds the `AccountData` and other information about the account. The `AccountData` is the struct that holds the balance of the account.
 
 ## Notes
 
@@ -248,8 +203,111 @@ type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Con
 
 ### Coding
 
+- 2 ways to store balance of account:
+  - Inside `System` pallet's `AccountData`, precisely inside frame_system's `AccountInfo`. This is nice because the balance is then stored on the Frame System level. But, this is not recommended, but rather the `AccountData` is moved over to the `Balances` pallet.
+  - Inside `Balances` pallet under pallet_balances's `Account` storage which is a map from `AccountId` to `AccountData`.
+- Abstraction layers of the pallet in form of traits, useful for loose pallet coupling with pallets (your pallet which might require the currency methods). And these abstractions combined with storing the balance on the Frame System level, enables balances to be really "useful" at the runtime level. For example, we **lock** balances for democracy and staking, allowing the same balance to be used twice across two services. On the other hand, we use **reserved** balances for a lot of things like storage deposits making sure that this kind of balance CANNOT be used twice. The traits used by the Balances pallet are:
+
+  - [Currency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.Currency.html)
+    - has additionally `issue`, `burn` major methods in addition to `Balances` pallet.
+  - [ReservableCurrency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.ReservableCurrency.html)
+  - [NamedReservableCurrency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.NamedReservableCurrency.html)
+  - [LockableCurrency trait](https://crates.parity.io/frame_support/traits/tokens/currency/trait.LockableCurrency.html)
+  - [Imbalance trait](https://crates.parity.io/frame_support/traits/tokens/imbalance/trait.Imbalance.html)
+
+  > It is recommended to use these traits as loose coupling whenever any methods or storage is to be used. I have implemented the same in `vault` pallet in my [`substrate-playground`](https://github.com/abhi3700/substrate-playground).
+
+- `Balance` is the amount of blockchain (relaychain) currency, the type of which is set inside the runtime `runtime/src/lib.rs` file.
+- [Dispatchables](https://github.com/abhi3700/substrate-playground)
+  - `transfer`
+  - `set_balance`
+  - `force_transfer`
+  - `transfer_keep_alive`
+  - `transfer_all`
+- This pallet depends on struct [`GenesisConfig`](https://crates.parity.io/pallet_balances/pallet/struct.GenesisConfig.html) defined inside it, to initialize the balances of the treasury accounts like `Alice`, `Alice_stash`, `Bob`, `Bob_stash`, etc. i.e., it can be used to configure the genesis state of this pallet.
+
+![](../../img/pallet-balances-1.png)
+
+- `Balances` vs `Asset` pallet
+
+  - It's relaychain native currency whereas the later is for custom tokens (like ERC20) on
+  - It's a single token, whereas the later is multi-token in a single pallet (asset). Hence, the later is kind of like a ERC20 factory.
+  - So in essence, you can create your underlying native currency using the balances pallet and if you need additional currencies you can leverage the assets pallet.
+
+- "Imbalance" represents a difference in the token balance (positive or negative) that is yet to be handled or "balanced".
+
+  - Imbalances are used to manage and keep track of changes in the balance of an account as a result of operations like transfers, rewards, and fees. They're part of Substrate's way of abstracting token handling and ensuring safety. Imbalances are created whenever tokens are minted (creating a positive imbalance) or burned/destroyed (creating a negative imbalance).
+
+  - These imbalances must be dealt with and balanced out, usually by the system. For example, when tokens are transferred from one account to another, a negative imbalance is created in the sender's account and a positive imbalance in the receiver's account. The system ensures that these imbalances cancel each other out so that the total supply of tokens remains constant.
+
+  - There are two primary types of imbalances:
+
+    - `PositiveImbalance<T>`: This type of imbalance represents an increase in the total supply of tokens. It's created when tokens are minted or introduced into the system.
+
+    - `NegativeImbalance<T>`: This type of imbalance represents a decrease in the total supply of tokens. It's created when tokens are burned or removed from the system.
+
+  - The `<T>` in `PositiveImbalance<T>` and `NegativeImbalance<T>` is a placeholder for the specific type of token being managed.
+
+  - Imbalances are automatically handled by the Substrate framework. When you're writing a pallet that involves token operations, you usually don't need to deal with imbalances directly, but you do need to be aware of them and understand how they work.
+
+In `frame_system` pallet:
+
+- The `AccountData` type is defined in `frame_system` pallet's Config. It is used to store the data associated with an account (other than nonce/transaction counter, which `frame_system` pallet does regardless):
+
+  ```rust
+  /// Data to be associated with an account (other than nonce/transaction counter, which this
+  /// pallet does regardless).
+  type AccountData: Member + FullCodec + Clone + Default + TypeInfo + MaxEncodedLen;
+  ```
+
+- The `AccountInfo` struct is defined in `frame_system` pallet. It includes `nonce` and `consumers` fields along with `data` (of type `AccountData`):
+  ![](../../img/pallet-balances-27.png)
+- And then, we map the individual `AccountId` with the `AccountInfo` struct here in `frame_system` pallet:
+  ![](../../img/pallet-balances-28.png)
+
+---
+
+In `Balances` pallet:
+
+- Now, the `AccountStore` associated type of Balances' `Config` trait is defined in `runtime/src/lib.rs` file where we are implementing the `Config` trait of `Balances` for `Runtime` (T in `Pallet<T>` is `Runtime` here):
+  ![](../../img/pallet-balances-30.png)
+- 🔝 the `AccountData` struct is defined as:
+  ![](../../img/pallet-balances-31.png)
+- `ExistentialDeposit` is defined in the runtime configuration of `Balances` pallet:
+  ![](../../img/pallet-balances-29.png)
+- There are multiple structs defined in `balances/src/types.rs` file:
+  ![](../../img/pallet-balances-33.png)
+- And the usage of these structs have been done for different types of balances storage - locks, reserves, etc in `balances/src/lib.rs` file:
+  ![](../../img/pallet-balances-32.png)
+- `ReserveIdentifier` is defined in `balances/src/lib.rs` file:
+  ![](../../img/pallet-balances-34.png)
+
+  Here, 🔝 we are considering 8 characters (each character of 1 byte in **UTF-8** ) of identifier like `b"staking"` or `b"vesting"`. These come under `NamedReservableCurrency` trait.
+
+---
+
+#### **`AccountInfo` vs `AccountData`**:
+
+<details><summary><b>View details:</b></summary>
+
+In the Substrate codebase, `AccountInfo` and `AccountData` are data structures related to accounts but serve different purposes:
+
+1. `AccountInfo`: This is a structure defined in the frame_system pallet, and it holds information about a specific account. It consists of the following fields:
+
+   - `nonce`: The number of transactions the account has sent.
+   - `consumers`: A reference counter indicating the number of other modules that currently depend on this account's existence. The account cannot be removed until this is zero.
+   - `providers`: A reference counter indicating the number of other modules that allow this account to exist. The account cannot be removed until this and `sufficients` are both zero.
+   - `sufficients`: A reference counter indicating the number of modules that allow this account to exist for their own purposes only. The account cannot be removed until this and `providers` are both zero.
+   - `data`: The `AccountData` structure that can be configured to hold different kinds of data.
+
+2. `AccountData`: The `AccountData` type is used within the `AccountInfo` struct and can be configured to hold different kinds of data. In the context of the Balances pallet, the `AccountData` struct is used to hold account balance information. This could be configured to use storage native to its own instance, as long as it satisfies the `AccountStore` type it's configuration expects. The Balances pallet is typically set to use the `System` pallet because `AccountData` from the Balances pallet is most commonly used alongside other data the System pallet keeps track of, such as `nonce`, `consumers`, `providers`, and `sufficients`【16†source】.
+
+The reference counters (`consumers`, `providers`, `sufficients`) in `AccountInfo` help manage account dependencies and life cycles in the runtime. For example, `consumers` is incremented when data is stored under an account's control and decremented when such data is removed. `providers` indicates if an account is ready to be depended upon, and `sufficients` indicates if an account can exist by itself, for example, when it holds a sufficient number of certain assets but without owning any native account balance. These counters can be manipulated using methods exposed by the `frame-system`. [source](https://github.com/substrate-developer-hub/substrate-docs/blob/main/content/md/en/docs/reference/account-data-structures.md)
+
+</details>
+
 ## References
 
-- [Balances Pallet | Polkadot Deep Dives](https://www.youtube.com/watch?v=_FwqB4FwWXk) 🧑🏻‍💻
+- [Balances Pallet | Polkadot Deep Dives](https://www.youtube.com/watch?v=_FwqB4FwWXk) ✅
 - [Balances pallet in `crates.parity.io`](https://crates.parity.io/pallet_balances/index.html)
 - [substrate stackexchange](https://substrate.stackexchange.com/a/712/2795)
