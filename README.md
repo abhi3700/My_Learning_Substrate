@@ -318,6 +318,8 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 ## Repositories
 
+**By ParityTech**:
+
 - Substrate (The platform for blockchain innovators): https://github.com/paritytech/substrate
 - Cumulus (Write Parachains on Substrate): https://github.com/paritytech/cumulus
 - Polkadot (Polkadot Node Implementation): https://github.com/paritytech/polkadot
@@ -326,6 +328,11 @@ It shows comparo b/w legacy & polkadot blockchains.
 - Substrate node FE template: https://github.com/substrate-developer-hub/substrate-front-end-template
 - Awesome Substrate (official): https://github.com/substrate-developer-hub/awesome-substrate
 - ink! (Smart Contract Language for Substrate): https://github.com/paritytech/ink
+- Lightweight, efficient, binary serialization and deserialization codec: https://github.com/paritytech/parity-scale-codec
+  > SCALE is a light-weight format which allows encoding (and decoding) which makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power, low-memory devices.
+
+**By others**:
+
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
 - https://github.com/darwinia-network/darwinia
@@ -439,15 +446,17 @@ parameter_types! {
 - [Learn Rust syntax for Substrate | Substrate Seminar](https://www.youtube.com/watch?v=VVU3Io2dACY) ✅
 - [Polkadot and Substrate – Build Custom Blockchains that can Evolve](https://www.youtube.com/watch?v=HrTSpIqhyc0)
 - [Sub0 Online: ink! 3.0: A Rust & Smart Contracts Love Story](https://www.youtube.com/watch?v=WNNJzK3dGGQ)
-- [Polkadot Deep Dives](https://www.youtube.com/playlist?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG)
-  - [Pallet Timestamp and Inherents](https://www.youtube.com/watch?v=HjtxPcuR8a0) 🧑🏻‍💻
-- Substrate Seminars
+- [**Polkadot Deep Dives**](https://www.youtube.com/playlist?list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG)
+  - [Pallet Timestamp and Inherents](https://www.youtube.com/watch?v=HjtxPcuR8a0) ✅
+  - [Democracy Pallet | Polkadot Deep Dives](https://www.youtube.com/watch?v=CgcUWK2E9Jo) ✅
+  - [Balances Pallet | Polkadot Deep Dives](https://www.youtube.com/watch?v=_FwqB4FwWXk) 🧑🏻‍💻
+- **Substrate Seminars**
   - details in this [repo](https://github.com/substrate-developer-hub/substrate-seminar/tree/main)
-- [Substrate Saturday by Polkadot India YT playlist](https://www.youtube.com/playlist?list=PLiKqYiZDRE4_CWnXgSgejl3bJUYibq0Gp)
+- [**Substrate Saturday by Polkadot India YT playlist**](https://www.youtube.com/playlist?list=PLiKqYiZDRE4_CWnXgSgejl3bJUYibq0Gp)
   > very down to earth & easy to understand videos. It is a must watch for beginners.
   - [Substrate Saturday by Polkadot India | Bootcamp 1 | 22.12.21](https://www.youtube.com/watch?v=1WL6B2XPMjk) ✅
   - [Substrate Saturday by Polkadot India | Bootcamp 2 | Session 1 | 22.01.22](https://www.youtube.com/watch?v=_Yxpqrdb_nM) ✅
-  - [Substrate Saturday by Polkadot India | Bootcamp 2 | Session 2 | 05.02.22](https://www.youtube.com/watch?v=eNyeCfurFwc) 🧑🏻‍💻
+  - [Substrate Saturday by Polkadot India | Bootcamp 2 | Session 2 | 05.02.22](https://www.youtube.com/watch?v=eNyeCfurFwc) ✅
   - [Substrate Saturday by Polkadot India | Bootcamp 3 | 26.02.22](https://www.youtube.com/watch?v=J126vvf24Lk)
   - [Substrate Saturday - Bootcamp Series 2 | Workshop | Ivan Temchenko | 23.07.22](https://www.youtube.com/watch?v=QSpJmrS2x4c)
   - [Substrate Saturday - Bootcamp Series 2 | Episode 5 | 13.07.22](https://www.youtube.com/watch?v=V3tTe8SHdd4)

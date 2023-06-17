@@ -128,11 +128,123 @@ The `AccountData` struct in the Substrate `Balances` pallet represents the accou
 
 ![](../../img/pallet-balances-15.png)
 
+**Reservable** vs **Lockable**:
+
 ![](../../img/pallet-balances-16.png)
 
-Here, in the above example 🔝, the reserve_balance keeps getting added whereas the locked_balance ensures the parsed value as min_lock balance. So, when `10` is locked, it gets locked, but then `5` is locked, then no update in locked_balance as it is already `10`. But, when `15` is locked, then the locked_balance gets updated to `15`.
+1. Here, in the above example 🔝, the `reserved_balance` keeps getting added whereas the `locked_balance` ensures the parsed value as min_lock balance. So, when `10` is locked, it gets locked, but then `5` is locked, then no update in locked_balance as it is already `10`. But, when `15` is locked, then the locked_balance gets updated to `15`. But, if the same case applied for reserved_balance, then the reserved_balance would have been `30` instead of `15` as all gets added.
 
-> So, lock_balance is the **max.** of all the locked balances whereas the reserve_balance is the **sum** of all the locked balances.
+   > So, lock_balance is the **max.** of all the locked balances whereas the reserve_balance is the **sum** of all the locked balances.
+
+2. `locks` are typically used for **time-based** operations, while `reserves` are used for operations that require a **deposit**.
+3. **One common feature**: Both reserved & locked tokens are not `free` to use. They need to be either unreseved or unlocked to be used.
+
+4. **Use case for understanding the difference between `Reservable` & `Lockable`**:
+
+   > At one point I was confused between `Reservable` & `Lockable`. But, then the following example helped me understand the difference between the two more vividly.
+
+   In case of multiple locks, it is best to create ids for different purposes although we have the option of going for both partial and multiple locks. For instance, I was thinking 🤔 like this:
+
+   <details>
+   <summary><b> Click 🖱️ for details:</b></summary>
+
+   **Q**. In lockable, if I have 10 tokens locked & I only want 5 tokens unlocked for my pallet, then I should not be unlocking that, because that 10 tokens might be a pre-requisite for another pallet. So, shouldn't I use the `Reservable` trait in this case?
+
+   **A**. In Substrate, `LockableCurrency` supports partial and multiple locks. This means you can lock 10 tokens in one context (like staking in one pallet), and lock 5 tokens in another context (like in your custom pallet), and they won't conflict. Each lock is identified by a lock identifier. If the same identifier is used in different places, then one lock could potentially overwrite another. But if different identifiers are used, multiple locks can coexist on the same account.
+
+   When you want to unlock tokens, you specify the lock identifier. This ensures you only unlock the tokens that are locked in that specific context.
+
+   Here's an example:
+
+   ```rust
+   let id1 = b"lock1";
+   let id2 = b"lock2";
+
+   // Lock 10 tokens under `id1`
+   T::Currency::set_lock(*id1, who, amount1, WithdrawReasons::all());
+
+   // Lock 5 tokens under `id2`
+   T::Currency::set_lock(*id2, who, amount2, WithdrawReasons::all());
+
+   // Now you can unlock the 5 tokens locked under `id2` without affecting the 10 tokens locked under `id1`
+   T::Currency::remove_lock(*id2, who);
+   ```
+
+   So in your case, it seems like using `LockableCurrency` could still work fine. But of course, it depends on the specifics of your application, and `ReservableCurrency` could be a better fit in some scenarios.
+
+   </details>
+
+5. Another thought 🤔:
+   <details>
+   <summary><b> Click 🖱️ for details:</b></summary>
+    
+   **Q**. In substrate, in case of reserved tokens is there any need of id generation like what happens in locked tokens?
+
+   **A**. No, in Substrate's `ReservableCurrency` trait, there's no concept of identifiers like in the `LockableCurrency` trait. When you reserve tokens, they are simply deducted from the free balance and added to the reserved balance for that account. You can't have multiple separate reserves on a single account, and you don't need to provide an ID when reserving or unreserving tokens.
+
+   The functions for reserving and unreserving look like this:
+
+   ```rust
+   /// Reserve some funds in an account to be used for a later return or slash.
+   fn reserve(who: &Self::AccountId, value: Self::Balance) -> DispatchResult;
+
+   /// Unreserve some funds in an account.
+   fn unreserve(who: &Self::AccountId, value: Self::Balance) -> Self::Balance;
+   ```
+
+   As you can see, they simply take the account and the amount of tokens to reserve or unreserve.
+
+   This simplifies the interface and makes it easier to use, but it also means you lose the ability to have separate reserves that can be individually controlled. If you need this functionality, you might need to implement your own custom logic or use locks instead.
+   </details>
+
+6. **Applications**: "In terms of application, we should prefer getting our work done with `Lockable` trait as it keeps more free tokens available for the user. Hence, the user can use the free tokens for other purpose without the pallet requiring the free tokens in case of reserved_tokens".
+   In general, this is correct, but still it depends on the specifics of your use case.
+
+   The `LockableCurrency` trait in Substrate is indeed more flexible in that it allows multiple locks on an account's balance, each identified with a unique ID and potentially for different reasons. A user can still use their tokens that are locked for one purpose for another purpose, provided the second purpose doesn't conflict with the reasons for the lock. For example, if tokens are locked for staking, they can still be used for voting if the voting mechanism supports the use of locked tokens.
+
+   On the other hand, the `ReservableCurrency` trait subtracts from an account's `free` balance, so reserved tokens can't be used for other purposes until they're unreserved.
+
+   In general, if a user needs to put some tokens aside as collateral (in DeFi) or a deposit for a specific function and shouldn't use them for anything else, `ReservableCurrency` is the way to go. If a user needs to "lock" their tokens to indicate they're being used for a certain purpose but they could potentially still be used for other non-conflicting purposes, `LockableCurrency` is the better choice.
+
+   Ultimately, the choice between using `LockableCurrency` and `ReservableCurrency` depends on the specifics of your use case and the design of your blockchain.
+
+---
+
+**Coupling**:
+
+![](../../img/pallet-balances-17.png)
+
+![](../../img/pallet-balances-18.png)
+
+⬇️ the `Balances` pallet is dependent on the `frame_system` pallet for the `StoredMap` trait (as declared in `frame_support`) implementation.
+![](../../img/pallet-balances-19.png)
+![](../../img/pallet-balances-20.png)
+
+The `Balances` pallet is dependent on these 5 traits. And these 5 traits can also be used in any other pallets as well.
+![](../../img/pallet-balances-21.png)
+
+`Currency` trait is used in these pallets:
+![](../../img/pallet-balances-22.png)
+
+`ReservableCurrency` trait is used in these pallets:
+![](../../img/pallet-balances-23.png)
+
+`LockableCurrency` trait is used in these pallets:
+![](../../img/pallet-balances-24.png)
+
+Use cases of `ReservableCurrency` vs `LockableCurrency` trait:
+![](../../img/pallet-balances-25.png)
+
+Here 🔝, `pallet_staking` can have multiple scenarios, where it can use `ReservableCurrency` or `LockableCurrency` trait. For example, imagine there is a need of **fixed deposit** in a bank, then we do need to use `ReservableCurrency` to ensure that there is going to be accrued interest for each amount deposited in separate vaults.
+
+![](../../img/pallet-balances-26.png)
+Here 🔝, we have to define types (in a pallet A) with a trait that is defined in another pallet B.
+
+like this:
+
+```rust
+type BalanceOf<T> = <<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
+```
 
 ### Coding
 
