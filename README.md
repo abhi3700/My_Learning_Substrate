@@ -340,6 +340,8 @@ It shows comparo b/w legacy & polkadot blockchains.
 - Lightweight client for Substrate-based chains, such as Polkadot and Kusama: https://github.com/smol-dot/smoldot
 - Subwasm is a cli utility to inside a Substrate WASM Runtime: https://github.com/chevdor/subwasm
 - Pallets by Integritee network: https://github.com/integritee-network/pallets
+- zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
+- Substrate recipes by Ray: https://github.com/AuroraLantean/substrate-node-template
 
 ## Troubleshooting
 

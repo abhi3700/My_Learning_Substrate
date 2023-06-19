@@ -1287,11 +1287,6 @@ Try out the following tutorials:
 
 - [kitties-tutorial](https://learn.figment.io/tutorials/substrate-kitties-setup), [doc in PDF](tuts/Figment%20Learn%20_%20Substrate%20Kitties%20-%20Basic%20Setup.pdf)
 
-## Repositories
-
-- [zhubaiyuan/awesome-substrate](https://github.com/zhubaiyuan/awesome-substrate)
-- [Substrate recipes by Ray](https://github.com/AuroraLantean/substrate-node-template)
-
 ## TODO
 
 List of pallets that can be done:
