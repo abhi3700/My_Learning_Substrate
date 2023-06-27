@@ -92,7 +92,9 @@ The `AccountData` struct in the Substrate `Balances` pallet represents the accou
    > So, lock_balance is the **max.** of all the locked balances whereas the reserve_balance is the **sum** of all the locked balances.
 
 2. `locks` are typically used for **time-based** operations, while `reserves` are used for operations that require a **deposit**.
-3. **One common feature**: Both reserved & locked tokens are not `free` to use. They need to be either unreseved or unlocked to be used.
+3. Reserved tokens are not `free` to use whereas, the locked tokens are `free` to use. So, the reserved tokens need to be unreserved before using them, whereas the locked tokens are always free.
+
+   > The free_balances doesn't reduce when the tokens are locked, but it reduces when the tokens are reserved.
 
 4. **Use case for understanding the difference between `Reservable` & `Lockable`**:
 

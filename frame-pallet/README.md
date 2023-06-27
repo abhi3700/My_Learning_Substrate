@@ -966,6 +966,46 @@ For unit test, use `$ cargo test` command for a pallet like this:
 And for all pallets like this:
 ![](../img/substrate_pallet_test_all_pallets.png)
 
+---
+
+If a pallet depends on another pallet, then add into `dev-dependencies` like this:
+
+⬇️ Here, while writing lockable_currency pallet, it depends on balances pallet. So, add like this in `Cargo.toml` file:
+
+```toml
+[dev-dependencies]
+pallet-balances = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.40" }
+```
+
+> NOTE: 🔝 Here, the `default-features` flag is set to true by default.
+
+And in `mock.rs` file, add like this:
+
+```rust
+frame_support::construct_runtime!(
+	pub enum Test where
+		Block = Block,
+		NodeBlock = Block,
+		UncheckedExtrinsic = UncheckedExtrinsic,
+	{
+		System: frame_system,
+		// used as dependency (for handling accounts and balances) for pallet_lockable_currency
+		Balances: pallet_balances,
+		LockableCurrency: pallet_lockable_currency,
+	}
+);
+
+impl pallet_balances::Config for Test {
+  type Balance = u128;
+  type MaxLocks = ();
+  type Event = Event;
+  type DustRemoval = ();
+  type ExistentialDeposit = ();
+  type AccountStore = System;
+  type WeightInfo = ();
+}
+```
+
 ### Pallet Debug
 
 [Source](https://docs.substrate.io/test/debug/)

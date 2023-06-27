@@ -455,6 +455,19 @@ parameter_types! {
 
     Sources: [1](https://substrate.stackexchange.com/a/1428/2795), [2](https://substrate.stackexchange.com/a/620/2795)
 
+### 5. type mismatch resolving `<Test as Config>::AccountData == AccountData<u128>`
+
+- _Cause_: Didn't use `pallet_balances` in `impl` block of `frame_system` for `Test` runtime
+  ![](img/substrate_troubleshoot_fsystem_type_mismatch.png)
+- _Solution_: Add `pallet_balances` in `impl` block of `frame_system` for `Test` runtime.
+
+![](img/substrate_troubleshoot_fsystem_type_mismatch_sol.png)
+
+```diff
+-type AccountData = ();
++type AccountData = pallet_balances::AccountData<u128>;
+```
+
 ## References
 
 ### Official
