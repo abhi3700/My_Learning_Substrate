@@ -1,4 +1,10 @@
-# Pallets
+# FRAME Pallets
+
+<p align="left">
+  <img src="../img/frame_pallet_logo.png" alt="Substrate FRAME Pallets logo" width="100" height="100">
+</p>
+
+Learn everything about FRAME pallets.
 
 ## Installation
 
@@ -41,7 +47,7 @@ FRAME has transitioned from `v1` to `v2` to `v3`.
 
 Illustrates the old vs new code [here](https://github.com/paritytech/substrate/discussions/7788?sort=top#discussioncomment-482199).
 
-references: [1](https://github.com/paritytech/substrate/discussions/7788), [2](https://blog.knoldus.com/how-substrate-frame-v2-different-from-frame-v1/)
+references: [1](https://github.com/paritytech/substrate/discussions/7788), [2](https://blog.knoldus.com/how-substrate-frame-v2-different-from-frame-v1/) [3](https://github.com/substrate-developer-hub/pallet-did/commit/8510c92b4e550caded56aa7809046066db0f1590)
 
 ---
 
@@ -85,6 +91,7 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 - For example, if you are building a chain with most of the logic defined using other Substrate pallets, you can expose some parts of the chain logic to users through smart contracts. Smart contracts are ideal for this type of use case because they treat all user input as untrusted and potentially adversarial. [Source](https://docs.substrate.io/build/smart-contracts-strategy/)
 - As an example, assume you are building a decentralized exchange. Most of the logic is defined in pallets, but you want to allow users to upload their own trading algorithms through a smart contract. With the gas fees associated with executing a smart contract, users have to pay for the execution time of their trading algorithms. [Source](https://docs.substrate.io/build/smart-contracts-strategy/)
 - SC don't have control over setting the estimated gas cost for their functions unlike setting the weights for pallet dispatchables. Senders must specify a gas limit for every call. Unused gas is refunded after the call, regardless of the execution outcome. [Source](https://docs.substrate.io/build/smart-contracts-strategy/#contract-execution-and-gas).
+- From security standpoint, there is no **Check-Effects-Interaction** pattern to be followed strictly in case of pallets unlike in case of SCs. [Source](https://docs.substrate.io/build/smart-contracts-strategy/#contract-execution-and-gas)
 
 ## My Work
 
@@ -578,6 +585,24 @@ This is mainly to recover your account based on validation given by a set of use
 ---
 
 We can create own types like `AccountOf` & `BalanceOf` in our pallet. These are called `type alias`. [Scaffolding code](./scaffoldings/runtime/create_pallet_type_aliases.rs).
+
+---
+
+**Floating point arithmetic**:
+
+Since Substrate is a framework for blockchains, it is important that each node arrives at the same _deterministic_ result for consensus.
+
+Floating point arithmetic is NOT _deterministic_ and so for this reason is not allowed in Substrate.
+
+The standard way of handling arithmetic where you will need decimal places is to use one of the in-built primitive types for handling fixed point arithmetic. Fixed point arithmetic is safe for Substrate since it represents all rationals as a fraction and always resolves to a deterministic result.
+
+The two types which are used to handle fixed point arithmetic are the [`Permill`](https://crates.parity.io/sp_runtime/struct.Permill.html) and the [`Perbill`](https://crates.parity.io/sp_runtime/struct.Perbill.html) types. [Source](https://stackoverflow.com/a/56564179/6774636)
+
+---
+
+**DeFi for pallets**:
+
+In contrast to smart contracts, the protocol for DeFi involves sending tokens to the smart contract (SC) address, which is often referred to as the Vault SC. However, with Substrate, this process is different. Tokens are not sent to pallets as they don't possess addresses like SCs do. Instead, Substrate provides functionalities such as `reserve` and `lock` to manage tokens.
 
 #### Pallet module (mandatory)
 

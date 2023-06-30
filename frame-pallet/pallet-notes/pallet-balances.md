@@ -19,7 +19,7 @@
 
   - **TotalSupply**: This is often used interchangeably with TotalIssuance in many blockchain contexts. It's a measure of the total amount of tokens of all accounts. It changes when tokens moved to/from Imbalance (postive/negative).
 
-  - **Imbalance**: In the Substrate framework, an "Imbalance" represents an unhandled difference in the token balance that's created when tokens are minted or burned. It's a kind of temporary state that's used internally to help manage changes in account balances and ensure that all token operations are safe and consistent. There are two types of imbalances: `PositiveImbalance<T>` (which represents an increase in the total supply of tokens) and `NegativeImbalance<T>` (which represents a decrease in the total supply of tokens). These imbalances are created when tokens are minted or burned, respectively, and they're automatically handled and "balanced out" by the system.
+  - **Imbalance**: In the Substrate framework, an "Imbalance" represents an unhandled/unallocated difference in the token balance that's created when tokens are minted or burned. It's a kind of temporary state that's used internally to help manage changes in account balances and ensure that all token operations are safe and consistent. There are two types of imbalances: `PositiveImbalance<T>` (which represents an increase in the total supply of tokens) and `NegativeImbalance<T>` (which represents a decrease in the total supply of tokens). These imbalances are created when tokens are minted or burned, respectively, and they're automatically handled and "balanced out" by the system.
 
   > Remember that `<T>` in `PositiveImbalance<T>` and `NegativeImbalance<T>` is a placeholder for the specific type of token being managed.
 
@@ -36,7 +36,7 @@
 
   > **Observations** in the above example 🔝,
   >
-  > - When Alice's balance is reduced by 200 units. Total supply is reduced by 200 units. And the 200 units is moved to Imbalance, hence no change in TotalIssuance.
+  > - When Alice's balance is reduced by 200 units. Total supply is reduced by 200 units. And the 200 units is moved to `Imbalance`, hence no change in `TotalIssuance`.
   >
   > - When the Imbalance was balanced out,
   >   - the 200 units was transferred to treasury. Hence, the TotalIssuance remains unchanged. But the TotalSupply is increased by 200 units as Treasury is an account.
@@ -154,16 +154,20 @@ The `AccountData` struct in the Substrate `Balances` pallet represents the accou
    This simplifies the interface and makes it easier to use, but it also means you lose the ability to have separate reserves that can be individually controlled. If you need this functionality, you might need to implement your own custom logic or use locks instead.
    </details>
 
-6. **Applications**: "In terms of application, we should prefer getting our work done with `Lockable` trait as it keeps more free tokens available for the user. Hence, the user can use the free tokens for other purpose without the pallet requiring the free tokens in case of reserved_tokens".
+6. Locked: View test cases [here](https://github.com/abhi3700/substrate-playground/blob/main/pallets/lockable-currency/src/tests.rs).
+
+7. Reserved: View test cases [here]() // TODO: Add test cases for reserved.
+
+8. **Applications**: "In terms of application, we should prefer getting our work done with `Lockable` trait as it keeps more free tokens available for the user. Hence, the user can use the free tokens for other purpose without the pallet requiring the free tokens in case of reserved_tokens".
    In general, this is correct, but still it depends on the specifics of your use case.
 
-   The `LockableCurrency` trait in Substrate is indeed more flexible in that it allows multiple locks on an account's balance, each identified with a unique ID and potentially for different reasons. A user can still use their tokens that are locked for one purpose for another purpose, provided the second purpose doesn't conflict with the reasons for the lock. For example, if tokens are locked for staking, they can still be used for voting if the voting mechanism supports the use of locked tokens.
+The `LockableCurrency` trait in Substrate is indeed more flexible in that it allows multiple locks on an account's balance, each identified with a unique ID and potentially for different reasons. A user can still use their tokens that are locked for one purpose for another purpose, provided the second purpose doesn't conflict with the reasons for the lock. For example, if tokens are locked for staking, they can still be used for voting if the voting mechanism supports the use of locked tokens.
 
-   On the other hand, the `ReservableCurrency` trait subtracts from an account's `free` balance, so reserved tokens can't be used for other purposes until they're unreserved.
+On the other hand, the `ReservableCurrency` trait subtracts from an account's `free` balance, so reserved tokens can't be used for other purposes until they're unreserved.
 
-   In general, if a user needs to put some tokens aside as collateral (in DeFi) or a deposit for a specific function and shouldn't use them for anything else, `ReservableCurrency` is the way to go. If a user needs to "lock" their tokens to indicate they're being used for a certain purpose but they could potentially still be used for other non-conflicting purposes, `LockableCurrency` is the better choice.
+In general, if a user needs to put some tokens aside as collateral (in DeFi) or a deposit for a specific function and shouldn't use them for anything else, `ReservableCurrency` is the way to go. If a user needs to "lock" their tokens to indicate they're being used for a certain purpose but they could potentially still be used for other non-conflicting purposes, `LockableCurrency` is the better choice.
 
-   Ultimately, the choice between using `LockableCurrency` and `ReservableCurrency` depends on the specifics of your use case and the design of your blockchain.
+Ultimately, the choice between using `LockableCurrency` and `ReservableCurrency` depends on the specifics of your use case and the design of your blockchain.
 
 ---
 

@@ -120,3 +120,4 @@ A[Send Transfer Message on Parachain-1] --> B[Well formed instructions] --> C[by
 - [XCM Overview | Polkadot Deep Dives](https://www.youtube.com/watch?v=kAAzgpTAMZ4&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG&index=20)
 - [XCM Config & Pallet-XCM | Polkadot Deep Dives](https://www.youtube.com/watch?v=bFMvWmU1pYI&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG&index=27) 🧑🏻‍💻
 - [XCM v3 | Polkadot Deep Dives](https://www.youtube.com/watch?v=MMIPNR3SuB4&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG&index=18)
+- [Workshop 11 | “Getting Started with XCM" by Steve Degosserie | IBC Continuum 2022-23](https://www.youtube.com/watch?v=D90bbadkNcE)
