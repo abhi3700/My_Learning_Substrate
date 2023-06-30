@@ -4,7 +4,7 @@
   <img src="img/substrate_logo.png" alt="Substrate logo" width="100" height="100">
 </p>
 
-Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./pallet/), [ink!](./ink!/) etc.
+Learn everything about Polkadot, Kusama chains, [Substrate Pallets](./frame-pallet/), [ink!](./ink!/) etc.
 
 ## About
 
