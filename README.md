@@ -472,6 +472,32 @@ parameter_types! {
 +type AccountData = pallet_balances::AccountData<u128>;
 ```
 
+### 6. running 1 test thread 'tests::open_fd' panicked at '`get_version_1` called outside of an Externalities-provided environment.',
+
+- _Cause_: Didn't use `new_test_ext().execute_with(|| {});` inside the test function
+- Solution: Add `new_test_ext().execute_with(|| {});` inside the test function
+
+Before:
+
+```rust
+#[test]
+fn test_something() {
+    // Test code
+}
+
+```
+
+**After**:
+
+```rust
+#[test]
+fn test_something() {
+    new_test_ext().execute_with(|| {
+        // Test code
+    });
+}
+```
+
 ## References
 
 ### Official
