@@ -77,7 +77,10 @@ Inside a [`substrate-node-template`](https://github.com/substrate-developer-hub/
 
 - Pallets are used to build the runtime of the relaychain whereas contracts are deployed on top of parachain connected to relaychain.
 - Pallets don't have an address, whereas contracts have an address & can be instantiated with some initial data. For pallet, we do have a provision of adding `Default` values for any struct type storage (not stored, just shown when queried for) using `ValueQuery` query kind.
-- Pallet development require Rust native language with some no std library, whereas contract development requires an eDSL (embedded domain specific language) called ink! which is a Rust based language.
+- Pallet development require Rust native language with no (bcoz of WASM binary requirement) std library, whereas contract development requires an eDSL (embedded domain specific language) called ink! (a Rust based language). Having said that, we can also write contracts in solidity & deploy it to substrate parachain using `pallet-evm`.
+- Pallet development deals with traits (like `Config`, `Call`, `Storage`, `Event`), whereas contract development deals with `struct` (like `Storage`, `Event`).
+- Pallet can leverage in-built sort of clock (block production every few seconds), but in case of contracts, we need to write offchain worker (logic) to trigger the contract execution, or else it won't be executed unless triggered by some other contract or EOA.
+  - In pallets, there is a provision of scheduling a task in next immediate block for instance.
 - Pallets are part of the blockchain's runtime, so changing them requires a runtime upgrade, which is a significant operation that can affect the entire blockchain. Contracts, on the other hand, are more isolated: they can be updated or changed by their owner without affecting the rest of the blockchain.
 - Pallets storages can be set with some default value (not stored, just shown when queried for) using `ValueQuery` query kind, whereas the contracts storage can be initialized during deployment & also by default they have the minimum possible value of the data type like with `bool` type, it's `false` by default. But, in case of pallet, it's `Some`/`None`, `Ok`/`Err` based on query kind opted `OptionQuery`, `ResultQuery`.
 
