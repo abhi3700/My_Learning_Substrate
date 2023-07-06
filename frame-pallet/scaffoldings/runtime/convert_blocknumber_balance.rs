@@ -1,8 +1,33 @@
-//! Conversion from block number to balance.
+//! Conversion from block number to balance and viceversa.
 //! 
-//! 1. Just need to use the `where` clause to specify the trait bounds.
-//! 2. Add `.into()` to convert from one type to another.
+//! M-1: is used in `pallet-bank`: https://crates.io/crates/pallet-bank
+//! 
+//! 
 
+//====M-1 ✅=====
+mod pallet {
+	impl<T: Config> for Pallet<T> {
+		// Works in runtime and pallet.
+		// No need to add `where` clause. Just add functions to convert from one type to another using From, Into, TryFrom, TryInto traits.
+		//function to convert `Balance` to `T::BlockNumber`
+		fn balance_to_blocknum(input: BalanceOf<T>) -> Option<T::BlockNumber> {
+			TryInto::<T::BlockNumber>::try_into(input).ok()
+		}
+
+		//function to convert `T::BlockNumber` to `Balance`
+		// NOTE: prefer this to avoid truncating during arithmetic operations
+		fn blocknum_to_balance(input: T::BlockNumber) -> Option<BalanceOf<T>> {
+			TryInto::<BalanceOf<T>>::try_into(input).ok()
+		}
+	}
+}
+
+
+
+//====M-2 ❌=====
+/// 1. Just need to use the `where` clause to specify the trait bounds.
+/// 2. Add `.into()` to convert from one type to another.
+/// Works inside a pallet. But, not in the runtime.
 // `$ cargo add sp-runtime -p pallet-bank --no-default-features` at the node-template repo root.
 use sp_runtime::traits::{CheckedDiv, CheckedMul, CheckedSub, Zero};
 

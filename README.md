@@ -498,6 +498,37 @@ fn test_something() {
 }
 ```
 
+### 7. error: the wasm32-unknown-unknown target is not supported by default, you may need to enable the "js" feature. For more information see: https://docs.rs/getrandom/#webassembly-support
+
+**Details**:
+
+```sh
+|
+  235 | /         compile_error!("the wasm32-unknown-unknown target is not supported by \
+  236 | |                         default, you may need to enable the \"js\" feature. \
+  237 | |                         For more information see: \
+  238 | |                         https://docs.rs/getrandom/#webassembly-support");
+      | |________________________________________________________________________^
+
+  error[E0433]: failed to resolve: use of undeclared crate or module `imp`
+     --> /Users/jackson/.cargo/registry/src/github.com-1ecc6299db9ec823/getrandom-0.2.7/src/lib.rs:262:5
+      |
+  262 |     imp::getrandom_inner(dest)
+      |     ^^^ use of undeclared crate or module `imp`
+```
+
+- _Cause_: it looks like one of your dependencies tries to generate random numbers.
+- _Solution_: Insert `default-feature = false` into one of your dependency in `Cargo.toml
+  > You can enable the default features in `[dev-dependencies]` i.e. `default-features = true` or remove it altogether as implemented by default, but you should not enable that in `[dependencies]` as it might trigger randomization.
+
+```diff
+// Cargo.toml
+
+[dependencies]
+- sp-core = { version = "7.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
++ sp-core = { version = "7.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
+```
+
 ## References
 
 ### Official
