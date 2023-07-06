@@ -51,3 +51,15 @@ Based on the information gathered, here are some potential ways to incorporate a
 4. **Market-based vs State-directed Financial Intermediation**: The nature of financial intermediation in a country could also influence the difficulty factor. In market-based systems, where resource distribution and credit decisions are made by the market, the difficulty factor could be lower. However, in state-directed systems, where these decisions are made by the state, the difficulty factor could be higher. This could be assessed using indicators such as the level of state intervention in the financial sector, the degree of market liberalization, or the extent of financial market development.
 
 Incorporating these factors into the investment score could help to ensure that the score accurately reflects the risk and difficulty associated with investing in a FD in different economic and financial conditions. The exact formula for incorporating these factors would need to be determined based on the specific goals and requirements of your investment system.
+
+---
+
+`IS = a \* IS_FD + b \* IS_RD + c \* IS_ID + d \* IS_ED`
+
+where:
+
+- a, b, c, d = weights for each investment type. would be decided by the admin/root.
+- IS_FD = Investment Score for Fixed Deposits
+- IS_RD = Investment Score for Recurring Deposits
+- IS_ID = Investment Score for Insurance Deposits
+- IS_ED = Investment Score for Equity Deposits
