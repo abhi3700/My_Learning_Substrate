@@ -9,7 +9,7 @@
 //!     type MyBalance = u32;
 //! }
 //! ```
-//! 
+//!
 //! If required, we might have to add crate into `Cargo.toml` as well
 //! ```bash
 //! // mostly without default
@@ -23,7 +23,7 @@
 #[frame_support::pallet]
 pub mod pallet {
     // imports
-	use frame_support::traits::{Currency, LockableCurrency, ReservableCurrency};
+    use frame_support::traits::{Currency, LockableCurrency, ReservableCurrency};
 
     //==========TYPES================
     // NOTE: Types are created after Config trait's associated types
@@ -54,5 +54,9 @@ pub mod pallet {
 // ###############################################################
 //========impl block in RUNTIME | runtime/src/lib.rs==============
 // ###############################################################
-
-impl pallet
+// NOTE: the types for which we don't provide the implementation like RuntimeEvent, Hash, Balance are already
+// implemented via `frame_system::Config`, `pallet_balances`
+impl pallet_template::config for Runtime {
+    type RuntimeEvent = System;
+    type MyCurrency = Balances;
+}
