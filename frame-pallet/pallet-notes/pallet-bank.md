@@ -1,5 +1,7 @@
 # Bank Pallet
 
+![](../../img/substrate_pallet_bank_bg.png)
+
 **TRA**ditional fi**N**ancial system using **SU**bstrate **B**lockchain framework (**TRANSUB**).
 
 ## Overview
