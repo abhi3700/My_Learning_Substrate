@@ -1,6 +1,6 @@
 # Bank Pallet
 
-(My Custom Pallet)
+**TRA**ditional fi**N**ancial system using **SU**bstrate **B**lockchain framework (**TRANSUB**).
 
 ## Overview
 
@@ -8,7 +8,7 @@
 
 ## Concepts
 
-In this formula, Investment Score (IS) = A (`maturity_amount`), I want to enable a `difficulty_factor` in order to scale IS value to be within a specific range (say 0 to 1000). Also, want to have an effect starting with more rapid IS value increase & then saturates (move slowly) when getting closer to 1000.
+In this formula, Investment Score (IS) = MA (`maturity_amount`), I want to enable a `difficulty_factor` in order to scale IS value to be within a specific range (say 0 to 1000). Also, want to have an effect starting with more rapid IS value increase & then saturates (move slowly) when getting closer to 1000.
 
 Please give me suggestion on this.
 
@@ -18,21 +18,63 @@ To achieve this, you can introduce a difficulty factor and use a logarithmic fun
 
 **Let's define**:
 
-**Difficulty Factor (D)**: A constant that you can adjust to control the rate of increase of the investment score. A higher difficulty factor will make the score increase more slowly.
+**Difficulty Factor (DF)**: MA constant that you can adjust to control the rate of increase of the investment score. MA higher difficulty factor will make the score increase more slowly.
 
 Now, you can modify the investment score formula like this:
 
-**`Investment Score (IS) = 1000 * log10(1 + (A/D))`**
+`Investment Score (IS) = 1000 * log10(1 + (MA/DF))`
 
-This formula uses the logarithm base 10 function (log10) to create a score that increases rapidly for smaller A values and slows down as A increases. The "+1" inside the log function ensures that the argument is always greater than zero, as the log of zero is undefined.
+where,
 
-The difficulty factor D is used to scale the maturity amount A. By adjusting D, you can control how quickly the investment score increases. A smaller D will make the score increase more rapidly, while a larger D will make it increase more slowly.
+- MA is the maturity amount and
+- DF is the difficulty factor.
+
+This formula uses the logarithm base 10 function (log10) to create a score that increases rapidly for smaller MA values and slows down as MA increases. The "+1" inside the log function ensures that the argument is always greater than zero, as the log of zero is undefined.
+
+The difficulty factor DF is used to scale the maturity amount MA. By adjusting DF, you can control how quickly the investment score increases. MA smaller DF will make the score increase more rapidly, while a larger DF will make it increase more slowly.
 
 The "1000 \*" outside the log function scales the score to be within the range of 0 to 1000.
 
-Please note that the logarithmic function used here will never actually reach 1000, but it will get very close as A increases. If you want the maximum score to be exactly 1000, you could normalize the scores by dividing by the maximum observed score and then multiplying by 1000.
+Please note that the logarithmic function used here will never actually reach 1000, but it will get very close as MA increases. If you want the maximum score to be exactly 1000, you could normalize the scores by dividing by the maximum observed score and then multiplying by 1000.
 
-Remember to adjust the difficulty factor D based on your specific needs and the range of maturity amounts you expect in your system.
+> Remember to adjust the DF based on your specific needs and the range of maturity amounts you expect in your system.
+
+In a consensus-critical context like Substrate, it's important to avoid using floating-point arithmetic including logarithms. And instead use Power functions. So, you can use a power function instead of a logarithmic function to achieve a similar result. For example, you could use the following formula:
+
+`IS = 1000 * (1 - (1 / (1 + MA / DF)))`
+
+This formula will produce a curve that starts at 0 and asymptotically approaches 1000 as the maturity_amount increases.
+
+> The DF controls how quickly the investment score approaches the maximum value.
+
+Here's how you might implement this formula in Substrate:
+
+```rust
+use sp_arithmetic::traits::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
+use sp_runtime::FixedU128;
+
+fn calculate_investment_score(maturity_amount: FixedU128, difficulty_factor: FixedU128) -> Option<FixedU128> {
+    let one = FixedU128::from(1);
+    let thousand = FixedU128::from(1000);
+
+    // Calculate the ratio of maturity_amount to difficulty_factor
+    maturity_amount.checked_div(&difficulty_factor)
+        // Add 1 to the ratio
+        .and_then(|ratio| ratio.checked_add(&one))
+        // Calculate the reciprocal of the incremented ratio
+        .and_then(|incremented_ratio| one.checked_div(&incremented_ratio))
+        // Subtract the reciprocal from 1
+        .and_then(|reciprocal| one.checked_sub(&reciprocal))
+        // Multiply the result by 1000
+        .and_then(|subtracted| subtracted.checked_mul(&thousand))
+}
+```
+
+In this version of the function, each operation is performed in a separate and_then call. If any operation returns None (indicating an overflow), the remaining operations will be skipped and the function will return None.
+
+This code uses the `CheckedAdd`, `CheckedDiv`, `CheckedMul`, and `CheckedSub` traits from the `sp-arithmetic` crate to perform the arithmetic operations with overflow checking. The `FixedU128` type from the `sp-runtime` crate is used to represent the fractional numbers.
+
+Please note that this is a simplified example and you might need to adjust it to fit your specific use case. Also, keep in mind that the behavior of this formula might not exactly match the behavior of your original formula. You should test it thoroughly to ensure that it meets your requirements.
 
 ---
 

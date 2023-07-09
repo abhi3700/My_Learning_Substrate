@@ -346,6 +346,7 @@ It shows comparo b/w legacy & polkadot blockchains.
 - Pallets by Integritee network: https://github.com/integritee-network/pallets
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - Substrate recipes by Ray: https://github.com/AuroraLantean/substrate-node-template
+- DIA Oracle pallet: https://github.com/pendulum-chain/oracle-pallet
 
 ## Troubleshooting
 
