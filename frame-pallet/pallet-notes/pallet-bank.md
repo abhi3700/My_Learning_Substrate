@@ -98,7 +98,7 @@ Incorporating these factors into the investment score could help to ensure that 
 
 ---
 
-`IS = a \* IS_FD + b \* IS_RD + c \* IS_ID + d \* IS_ED`
+`IS = a * IS_FD + b * IS_RD + c * IS_ID + d * IS_ED`
 
 where:
 
@@ -107,3 +107,32 @@ where:
 - IS_RD = Investment Score for Recurring Deposits
 - IS_ID = Investment Score for Insurance Deposits
 - IS_ED = Investment Score for Equity Deposits
+
+---
+
+**Recurring Deposit (RD)**
+
+- Recurring Deposits (RDs) are typically designed for monthly deposits. The idea behind an RD is to encourage regular savings on a monthly basis. However, the exact terms and conditions can vary from one financial institution to another.
+- While most banks and financial institutions offer RDs with a monthly deposit frequency, some may offer more flexibility with quarterly or even annual deposits. It's less common, but it's possible depending on the specific policies of the financial institution.
+- If you're interested in making quarterly or annual deposits, it would be best to check with the specific bank or financial institution to see if they offer such options. Alternatively, you might want to consider other types of investment products that better suit your preferred deposit frequency.
+- Like FDs, Recurring Deposits (RDs) also offer compounded interest. However, the way interest is calculated for RDs is slightly different from Fixed Deposits (FDs).
+- In a Recurring Deposit, you make regular monthly deposits for a fixed tenure. The interest is compounded quarterly, but it's important to note that each monthly deposit is considered as a separate deposit for the purpose of interest calculation.
+- For example, if you start an RD in January and make monthly deposits, the deposit made in January will earn interest for all the quarters till maturity, the deposit made in February will earn interest from February till maturity, and so on. The last deposit you make (say in December, if it's a one-year RD) will earn interest only for that particular month.
+- So, while the interest on RDs is compounded, each deposit earns interest for a different length of time depending on when it was deposited during the tenure of the RD.
+- Yes, there is a mathematical formula to calculate the maturity amount for a Recurring Deposit (RD). The formula takes into account the fact that every installment of an RD is effectively a separate deposit, each earning interest for a different length of time.
+
+The formula for the maturity amount of an RD is:
+
+```
+  A = P \* [ (1 + r/n)^(nt) - 1 ] / (1 - (1 + r/n)^(t/n))
+  where:
+  A is the maturity amount.
+  P is the monthly installment.
+  r is the annual interest rate (in decimal form).
+  n is the number of times that interest is compounded per year.
+  t is the number of years the money is deposited for.
+```
+
+This formula calculates the sum of the compound interest for each installment. The interest is compounded quarterly for RDs, so n would be 4. The term t is in years, so if the RD is for 6 months, t would be 0.5.
+
+> Please note that this formula assumes that the interest rate remains constant over the entire period of the RD, which may not always be the case in real-world scenarios.
