@@ -340,13 +340,21 @@ It shows comparo b/w legacy & polkadot blockchains.
 - zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
 - A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
 - https://github.com/darwinia-network/darwinia
-- Substrate Open Runtime Module Library: https://github.com/open-web3-stack/open-runtime-module-library
+- Substrate Open Runtime Module Library (ORML): https://github.com/open-web3-stack/open-runtime-module-library
+  - ORML Currencies pallet: https://github.com/open-web3-stack/open-runtime-module-library, package: "orml-currencies"
+  - ORML traits
+  - ORML tokens
 - Lightweight client for Substrate-based chains, such as Polkadot and Kusama: https://github.com/smol-dot/smoldot
 - Subwasm is a cli utility to inside a Substrate WASM Runtime: https://github.com/chevdor/subwasm
 - Pallets by Integritee network: https://github.com/integritee-network/pallets
-- zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
-- Substrate recipes by Ray: https://github.com/AuroraLantean/substrate-node-template
 - DIA Oracle pallet: https://github.com/pendulum-chain/oracle-pallet
+- DeFi based parachain that has DeFi pallets available as a tool:
+  - Permission pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/permissions
+  - DEX manager pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/dex-manager
+  - Orderbook pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/order-book
+  - Multicollateral Bonding curve pool pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/multicollateral-bonding-curve-pool
+  - Pool xy=k pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/pool-xyk
+  - trading pair pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/trading-pair
 
 ## Troubleshooting
 
