@@ -2,8 +2,10 @@
 
 This document focus on everything related to the substrate node development using
 
-- Data indexing tools like OCW,
+- Data indexing tools like Hooks.
+- Submitting data on-chain via off-chain data feeds using OCW.
 - DevOps tools like Prometheus, Docker, etc.
+- Personal Node projects like EOSIO Node, Ethereum Node, etc. All built using `substrate-node-template`.
 
 ## Data Indexing
 

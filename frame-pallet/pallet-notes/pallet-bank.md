@@ -8,6 +8,8 @@
 
 ## [Code](https://github.com/abhi3700/substrate-playground/pallets/bank)
 
+## [Architecture](../../img/pallet-bank.drawio)
+
 ## Concepts
 
 In this formula, Investment Score (IS) = MA (`maturity_amount`), I want to enable a `difficulty_factor` in order to scale IS value to be within a specific range (say 0 to 1000). Also, want to have an effect starting with more rapid IS value increase & then saturates (move slowly) when getting closer to 1000.

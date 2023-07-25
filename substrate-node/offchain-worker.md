@@ -19,6 +19,11 @@ flowchart LR
     A["Off-Chain Application (OCA)"] --Developed by ParityTech--> B["Off-Chain Worker (OCW)"]
 ```
 
+- OCW applications:
+  ![](../img/ocw_applications.png)
+- OCW connection w Substrate node:
+  ![](../img/ocw_connection_w_substrate_node.png)
+
 ## Notes
 
 ### Theory
@@ -199,18 +204,124 @@ Example: Suppose in a pallet's `offchain_worker` function "price fetch OCW" is i
 
 On the other hand, signed transactions are easier to validate as they have to pay a fee. Also, there is replay & DDoS protection in place for signed transactions.
 
+---
+
+**When to use signed & unsigned transactions by OCW?**
+
+- Use **signed transactions** if you want to record the associated transaction caller account and deduct the transaction fee from the caller account.
+
+- Use **unsigned transactions** with signed payload if you want to record the associated transaction caller, but do not want the caller be responsible for the transaction fee payment.
+
+---
+
+**What the future of OCW holds?**
+
+![](../img/ocw_future.png)
+
 ### Coding
+
+Define OCW in a pallet:
+
+```rust
+	#[pallet::hooks]
+	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
+		/// Offchain worker entry point.
+		///
+		/// By implementing `fn offchain_worker` you declare a new offchain worker.
+		/// This function will be called when the node is fully synced and a new best block is
+		/// successfully imported.
+		/// Note that it's not guaranteed for offchain workers to run on EVERY block, there might
+		/// be cases where some blocks are skipped, or for some the worker runs twice (re-orgs),
+		/// so the code should be able to handle that.
+		fn offchain_worker(block_number: T::BlockNumber) {
+			log::info!("Hello from pallet-ocw.");
+			// The entry point of your code called by offchain worker
+		}
+		// ...
+	}
+```
+
+> The code in the screenshots might be outdated. So, please check the latest code in the substrate repo OCW example
+
+**TESTING**:
+
+![](../img/ocw_test.png)
+
+---
+
+**How to push data on-chain from OCW?**
+
+![](../img/ocw_push_data_onchain.png)
+
+---
+
+**How to add OCW related param in a pallet's having OCW feature?**
+![](../img/ocw_include_config_params.png)
+
+---
+
+**What key is used to sign this OCW transaction?**
+
+![](../img/ocw_signing_key_type.png)
+
+Here, we can define the key unique id for this pallet's OCW transaction. So, we can use this key to sign the OCW transaction related to this pallet.
+
+Also, we can set the key type to `sr25519`, `ed25519`, etc. So, then the validator has to use the same key type to sign the OCW transaction. Otherwise, it would fail.
+
+We can also incorporate multi-sig with OCW. So, we can use the multi-sig key to sign the OCW transaction.
+
+> NOTE: Here, the key related code is wrapped into a module and that module can be imported into runtime (`src/lib.rs`).
+
+---
+
+**How to import OCW pallet into runtime?**
+
+![](../img/ocw_import_pallet_into_runtime.png)
+
+1. Here, we are importing application specific module i.e. `crypto`'s `AuthorityID` as `IamOnlineID` required for the Node to sign the OCW transaction.
+2. And then we create a type `SubmitTransaction`.
+3. And then we assign to the corresponding param inside the `impl` block of trait.
+
+---
+
+Some glue code that has to be added to the runtime:
+
+![](../img/ocw_glue_code.png)
+
+Here, we also have the option of adding tip so that our transaction is added faster to the block.
+
+---
+
+**How to test `SubmitTransaction`?**
+
+![](../img/ocw_test_submit_transaction.png)
 
 ## Resources
 
-- [SDC2020: Off-Chain Storage for Blockchain](https://www.youtube.com/watch?v=ulgeRPewC0k)
+- [SDC2020: Off-Chain Storage for Blockchain](https://www.youtube.com/watch?v=ulgeRPewC0k) ✅
+
+<details>
+<summary><b>In short</b>:</summary>
+
+In this conversation, Tomasz give a journey from OCA to OCW and
+how they can be used in a runtime.
+
+**Highlights**:
+
+- Off-chain workers in Substrate allow for the execution of code outside of the blockchain.
+- An example of an off-chain worker is building an Oracle to store BTC prices on chain.
+- Off-chain workers can be used to fetch prices from external sources and submit them on chain.
+- Upgrading off-chain worker code is done through regular runtime upgrades.
+- Off-chain workers can run in parallel with block imports.
+
+</details>
+
 - [Intro to Substrate Off-Chain Workers with Joe Petrowski and Tomasz Drwięga](https://www.youtube.com/watch?v=rwzvRi1JkWU) ✅
 
 <details>
 <summary><b>In short</b>:</summary>
 
-In this conversation, Joe and Tomasz discuss off-chain workers and
-how they can be used in a runtime.
+In this conversation, Joe and Tomasz discuss off-chain workers and how they can be used in a runtime.
 
 **Highlights**:
 
@@ -222,3 +333,5 @@ how they can be used in a runtime.
 - Examples include printing the current block number and making HTTP requests.
 
 </details>
+
+- [Add offchain workers](https://docs.substrate.io/tutorials/build-application-logic/add-offchain-workers/)
