@@ -220,6 +220,20 @@ On the other hand, signed transactions are easier to validate as they have to pa
 
 ### Coding
 
+---
+
+**Layout of a pallet having OCW feature**:
+
+![](../img/ocw_coding_layout.png)
+
+- `crypto` module is a must to allow the validator to sign the OCW transaction. So, we can use the `crypto` module to sign the OCW transaction.
+- `Config` trait is modified with additional trait bound related to `CreateSignedTransaction` trait. So, we can use `CreateSignedTransaction` trait to create signed transactions.
+- For the node to use the OCW, `Hooks` trait is implemented for the pallet. So, the `offchain_worker` function is implemented inside the `Hooks` trait. Inside this function, we can add any logic with **signed**/**unsigned**/**unsigned_w_signed_payload** transactions.
+- For adding custom logic, `ValidateUnsigned` trait is to be implemented for `Pallet<T>` struct (where T is the Runtime type in form of struct).
+- We also need to add some custom utils function for the pallet inside `Utils` impl block as shown in the diagram above. It can be defined inside/outside the pallet module. If defined outside, then use `pub use pallet::*;`.
+
+---
+
 Define OCW in a pallet:
 
 ```rust

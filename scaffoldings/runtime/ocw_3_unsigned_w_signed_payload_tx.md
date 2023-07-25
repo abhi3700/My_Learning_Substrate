@@ -1,5 +1,5 @@
 ---
-title: OCW Signed w Payload Transaction
+title: OCW Unsigned w Signed Payload Transaction
 ---
 
 **Inside the pallet Config trait:**
@@ -20,4 +20,5 @@ pub mod pallet {
 ```
 
 **Inside the pallet hooks trait implementation:**
+
 <!-- TODO: -->
