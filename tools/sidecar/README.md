@@ -6,6 +6,8 @@ REST API to connect to substrate based chains like Polkadot, Kusama to get all i
 
 The default ports for Polkadot RPC are **9933** for HTTP and **9944** for WS.
 
+You can also spin up your own node using `./target/release/node-template` and then feed the http, wss url to the sidecar.
+
 ## Usage
 
 ### Using curl

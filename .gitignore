@@ -3,3 +3,8 @@
 test.rs
 ~$*
 .$*
+
+target/
+.vscode/
+
+*.metadata.*

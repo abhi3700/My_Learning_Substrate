@@ -1,0 +1,3 @@
+[submodule "frame-pallet/substrate-design-patterns"]
+	path = frame-pallet/substrate-design-patterns
+	url = https://github.com/abhi3700/substrate-design-patterns.git
