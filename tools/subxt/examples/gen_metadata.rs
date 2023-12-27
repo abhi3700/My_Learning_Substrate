@@ -1,3 +1,5 @@
+use subxt::utils::AccountId32;
+use subxt::utils::MultiAddress;
 use subxt::{OnlineClient, PolkadotConfig};
 use subxt_signer::sr25519::dev;
 
@@ -11,7 +13,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let api = OnlineClient::<PolkadotConfig>::new().await?;
 
     // Build a balance transfer extrinsic.
-    let dest = dev::bob().public_key().into();
+    let dest: MultiAddress<AccountId32, ()> = dev::bob().public_key().into();
     // println!("{:?}", dest);
 
     let balance_transfer_tx = polkadot::tx().balances().transfer_allow_death(dest, 10_000);
@@ -21,7 +23,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let from = dev::alice();
     let events = api
         .tx()
-        .sign_and_submit_then_watch_default(&balance_transfer_tx, &from)
+        .sign_and_submit_then_watch_default(&balance_transfer_tx, &from.into())
         .await?
         .wait_for_finalized_success()
         .await?;
