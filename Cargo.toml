@@ -1,5 +1,7 @@
 [workspace]
 members = [
-    "tools/subxt/hello",
+    "tools/subxt/",
+    "tools/substrate-api-client/",
+    "recipes/code/"
 ]
 resolver = "2"
