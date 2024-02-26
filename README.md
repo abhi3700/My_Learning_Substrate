@@ -589,9 +589,9 @@ flowchart
   - [Substrate | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/substrate/index.html)
   - [Guides | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/index.html)
   - [Reference | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/index.html)
-
 - [Polkadot Doc](https://paritytech.github.io/polkadot_page/)
 - [Cumulus | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/cumulus/index.html)
+- Collection of Useful Bridge Building Tools 🏗️: [Github](https://github.com/paritytech/parity-bridges-common)
 
 ## Unofficial
 
