@@ -185,15 +185,15 @@ Switch to any L0, parachain, parathread network.
 
 These are the wallets (like Metamask):
 
-URL: https://wiki.polkadot.network/docs/build-wallets
+URL: <https://wiki.polkadot.network/docs/build-wallets>
 
 ---
 
-Browser extension: https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd/related
+Browser extension: <https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd/related>
 
 ---
 
-Mobile wallets: https://polkawallet.io/
+Mobile wallets: <https://polkawallet.io/>
 
 ## Development
 
@@ -248,11 +248,11 @@ There is also a feature of crowdloan where anyone holding DOT can lend to projec
   - [playground](https://playground.substrate.dev/): setup w/o local PC.
 - [Telemetry](https://telemetry.polkadot.io/): View all the nodes running polkadot.
 - Polkadot explorer
-  - polkascan: https://explorer.polkascan.io/polkadot
-  - https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fpolkadot.api.onfinality.io%2Fpublic-ws#/explorer
+  - polkascan: <https://explorer.polkascan.io/polkadot>
+  - <https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fpolkadot.api.onfinality.io%2Fpublic-ws#/explorer>
 - kusama explorer
-  - polkascan: https://explorer.polkascan.io/kusama
-  - https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama.api.onfinality.io%2Fpublic-ws#/explorer
+  - polkascan: <https://explorer.polkascan.io/kusama>
+  - <https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama.api.onfinality.io%2Fpublic-ws#/explorer>
 - [Substrate Utilities by Shawn](https://www.shawntabrizi.com/substrate-js-utilities/)
 
 ## Packages
@@ -324,37 +324,37 @@ It shows comparo b/w legacy & polkadot blockchains.
 
 **By ParityTech**:
 
-- Substrate (The platform for blockchain innovators): https://github.com/paritytech/substrate
-- Cumulus (Write Parachains on Substrate): https://github.com/paritytech/cumulus
-- Polkadot (Polkadot Node Implementation): https://github.com/paritytech/polkadot
-- Substrate node (relaychain) template: https://github.com/substrate-developer-hub/substrate-node-template
-- Substrate parachain template: https://github.com/substrate-developer-hub/substrate-parachain-template
-- Substrate node FE template: https://github.com/substrate-developer-hub/substrate-front-end-template
-- Awesome Substrate (official): https://github.com/substrate-developer-hub/awesome-substrate
-- ink! (Smart Contract Language for Substrate): https://github.com/paritytech/ink
-- Lightweight, efficient, binary serialization and deserialization codec: https://github.com/paritytech/parity-scale-codec
+- Substrate (The platform for blockchain innovators): <https://github.com/paritytech/substrate>
+- Cumulus (Write Parachains on Substrate): <https://github.com/paritytech/cumulus>
+- Polkadot (Polkadot Node Implementation): <https://github.com/paritytech/polkadot>
+- Substrate node (relaychain) template: <https://github.com/substrate-developer-hub/substrate-node-template>
+- Substrate parachain template: <https://github.com/substrate-developer-hub/substrate-parachain-template>
+- Substrate node FE template: <https://github.com/substrate-developer-hub/substrate-front-end-template>
+- Awesome Substrate (official): <https://github.com/substrate-developer-hub/awesome-substrate>
+- ink! (Smart Contract Language for Substrate): <https://github.com/paritytech/ink>
+- Lightweight, efficient, binary serialization and deserialization codec: <https://github.com/paritytech/parity-scale-codec>
   > SCALE is a light-weight format which allows encoding (and decoding) which makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power, low-memory devices.
 
 **By others**:
 
-- zhubaiyuan/awesome-substrate: https://github.com/zhubaiyuan/awesome-substrate
-- A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: https://github.com/gautamdhameja/substrate-rbac [TODO: add test to this repo]
-- https://github.com/darwinia-network/darwinia
-- Substrate Open Runtime Module Library (ORML): https://github.com/open-web3-stack/open-runtime-module-library
-  - ORML Currencies pallet: https://github.com/open-web3-stack/open-runtime-module-library, package: "orml-currencies"
+- zhubaiyuan/awesome-substrate: <https://github.com/zhubaiyuan/awesome-substrate>
+- A Substrate pallet implementing role-based access control and permissions for Substrate extrinsic calls: <https://github.com/gautamdhameja/substrate-rbac> [TODO: add test to this repo]
+- <https://github.com/darwinia-network/darwinia>
+- Substrate Open Runtime Module Library (ORML): <https://github.com/open-web3-stack/open-runtime-module-library>
+  - ORML Currencies pallet: <https://github.com/open-web3-stack/open-runtime-module-library>, package: "orml-currencies"
   - ORML traits
   - ORML tokens
-- Lightweight client for Substrate-based chains, such as Polkadot and Kusama: https://github.com/smol-dot/smoldot
-- Subwasm is a cli utility to inside a Substrate WASM Runtime: https://github.com/chevdor/subwasm
-- Pallets by Integritee network: https://github.com/integritee-network/pallets
-- DIA Oracle pallet: https://github.com/pendulum-chain/oracle-pallet
+- Lightweight client for Substrate-based chains, such as Polkadot and Kusama: <https://github.com/smol-dot/smoldot>
+- Subwasm is a cli utility to inside a Substrate WASM Runtime: <https://github.com/chevdor/subwasm>
+- Pallets by Integritee network: <https://github.com/integritee-network/pallets>
+- DIA Oracle pallet: <https://github.com/pendulum-chain/oracle-pallet>
 - DeFi based parachain that has DeFi pallets available as a tool:
-  - Permission pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/permissions
-  - DEX manager pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/dex-manager
-  - Orderbook pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/order-book
-  - Multicollateral Bonding curve pool pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/multicollateral-bonding-curve-pool
-  - Pool xy=k pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/pool-xyk
-  - trading pair pallet: https://github.com/sora-xor/sora2-network/tree/master/pallets/trading-pair
+  - Permission pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/permissions>
+  - DEX manager pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/dex-manager>
+  - Orderbook pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/order-book>
+  - Multicollateral Bonding curve pool pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/multicollateral-bonding-curve-pool>
+  - Pool xy=k pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/pool-xyk>
+  - trading pair pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/trading-pair>
 
 ## Troubleshooting
 
@@ -376,15 +376,15 @@ Raised a question over [stackexchange](https://substrate.stackexchange.com/quest
 
 ```rust
 parameter_types! {
-	pub const MaxProposalLength: u32 = 100;
-	pub const MinProposalLength: u32 = 5;
+ pub const MaxProposalLength: u32 = 100;
+ pub const MinProposalLength: u32 = 5;
 }
 
 /// Configure the pallet-voting in pallets/voting.
 impl pallet_voting::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type MaxProposalLength = Self::MaxProposalLength;
-	type MinProposalLength = Self::MinProposalLength;
+ type RuntimeEvent = RuntimeEvent;
+ type MaxProposalLength = Self::MaxProposalLength;
+ type MinProposalLength = Self::MinProposalLength;
 }
 ```
 
@@ -392,25 +392,27 @@ impl pallet_voting::Config for Runtime {
 
 ```rust
 parameter_types! {
-	pub const MaxProposalLength: u32 = 100;
-	pub const MinProposalLength: u32 = 5;
+ pub const MaxProposalLength: u32 = 100;
+ pub const MinProposalLength: u32 = 5;
 }
 
 /// Configure the pallet-voting in pallets/voting.
 impl pallet_voting::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type MaxProposalLength = MaxProposalLength;
-	type MinProposalLength = MinProposalLength;
+ type RuntimeEvent = RuntimeEvent;
+ type MaxProposalLength = MaxProposalLength;
+ type MinProposalLength = MinProposalLength;
 }
 ```
 
 ### 3. error: no rules expected the token `=`
 
 - _Cause_: This error is seen during runtime build as there is no type annotation used the variables.
+
   ```sh
   307 |     pub const MaxProposalLength = 100;
         |                                 ^ no rules expected this token in macro call
   ```
+
 - _Solution_: We need to add type annotation to the variables like this:
 
 **Before**:
@@ -418,8 +420,8 @@ impl pallet_voting::Config for Runtime {
 ```rust
 // runtime/src/lib.rs
 parameter_types! {
-	pub const MaxProposalLength = 100;
-	pub const MinProposalLength = 5;
+ pub const MaxProposalLength = 100;
+ pub const MinProposalLength = 5;
 }
 ```
 
@@ -428,8 +430,8 @@ parameter_types! {
 ```rust
 // runtime/src/lib.rs
 parameter_types! {
-	pub const MaxProposalLength: u32 = 100;
-	pub const MinProposalLength: u32 = 5;
+ pub const MaxProposalLength: u32 = 100;
+ pub const MinProposalLength: u32 = 5;
 }
 ```
 
@@ -481,7 +483,7 @@ parameter_types! {
 +type AccountData = pallet_balances::AccountData<u128>;
 ```
 
-### 6. running 1 test thread 'tests::open_fd' panicked at '`get_version_1` called outside of an Externalities-provided environment.',
+### 6. running 1 test thread 'tests::open_fd' panicked at '`get_version_1` called outside of an Externalities-provided environment.'
 
 - _Cause_: Didn't use `new_test_ext().execute_with(|| {});` inside the test function
 - Solution: Add `new_test_ext().execute_with(|| {});` inside the test function
@@ -507,7 +509,7 @@ fn test_something() {
 }
 ```
 
-### 7. error: the wasm32-unknown-unknown target is not supported by default, you may need to enable the "js" feature. For more information see: https://docs.rs/getrandom/#webassembly-support
+### 7. error: the wasm32-unknown-unknown target is not supported by default, you may need to enable the "js" feature. For more information see: <https://docs.rs/getrandom/#webassembly-support>
 
 **Details**:
 
@@ -543,13 +545,59 @@ fn test_something() {
 ### Official
 
 - [Parity Homepage](https://www.parity.io/)
+- **Polkadot Blockchain Academy**:
+  - [Github](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW)
+  - [Book](https://polkadot-blockchain-academy.github.io/pba-book/index.html)
 - [Polkadot Wiki](https://wiki.polkadot.network/)
 - [Substrate Homepage](https://substrate.io/)
+  > Many pages need to be updated.
 - [Parity Tech Rust Doc](https://paritytech.github.io/)
-  - [Substrate Rust doc](https://paritytech.github.io/substrate/)
-  - [Polkadot Rust doc](https://paritytech.github.io/polkadot/)
-  - [Cumulus Rust doc](https://paritytech.github.io/cumulus)
-  - [Wasmi Rust doc](https://paritytech.github.io/wasmi)
+  - [Project Pages](https://paritytech.github.io/#project-pages)
+    - subxt: [rust-doc](https://docs.rs/subxt/latest/subxt/index.html), [book](https://docs.rs/subxt/latest/subxt/book/index.html)
+    - [frontier | docs.rs](https://paritytech.github.io/frontier/)
+    - [XCM | docs.rs](https://paritytech.github.io/xcm-docs/)
+    - [Wasmi | docs.rs](https://docs.rs/wasmi/latest/wasmi/)
+    - [Parity Scale Codec | docs.rs](https://docs.rs/parity-scale-codec/latest/parity_scale_codec/)
+
+```mermaid
+flowchart
+    parity[paritytech.github.io] --> devhub[polkadot_sdk_docs]
+
+    devhub --> polkadot_sdk
+    devhub --> reference_docs
+    devhub --> tutorial
+
+    polkadot_sdk --> substrate
+    polkadot_sdk --> frame
+    polkadot_sdk --> cumulus
+    polkadot_sdk --> polkadot
+    polkadot_sdk --> xcm
+```
+
+- Polkadot Documentation
+  > This doc has been created with `.rs` files. So, all the markdown based docs has been created inside `//!` in `.rs` files.
+  > The crate name: "**polkadot_sdk_docs**".
+  >
+  > Modules:
+  > - guides
+  > - meta_contributing
+  > - polkadot_sdk
+  > - reference_docs
+
+  - [Github](https://github.com/paritytech/polkadot-sdk/tree/master/docs)
+  - [Polkadot SDK | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)
+  - [Substrate | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/substrate/index.html)
+  - [Guides | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/index.html)
+  - [Reference | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/index.html)
+
+- [Polkadot Doc](https://paritytech.github.io/polkadot_page/)
+- [Cumulus | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/cumulus/index.html)
+
+## Unofficial
+
+- By Josh:
+  - [Blockchain from scratch](https://github.com/JoshOrndorff/blockchain-from-scratch)
+- [Substrate tutorials by **rusty-crewmates**](https://github.com/rusty-crewmates/substrate-tutorials)
 
 ### Blogs
 
