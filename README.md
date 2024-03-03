@@ -540,6 +540,46 @@ fn test_something() {
 + sp-core = { version = "7.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.42" }
 ```
 
+### 8. Error: error[E0463]: can't find crate for `std`
+
+<details>
+<summary><b>Error details:</b></summary>
+
+```sh
+Rust WASM toolchain not installed, please install it!
+
+  Further error information:
+  ------------------------------------------------------------
+     Compiling wasm-test v1.0.0 (/var/folders/cw/dc7mkcsd6yx76lscv6w1hpcw0000gn/T/.tmp3NWr2N)
+  error[E0463]: can't find crate for `std`
+    |
+    = note: the `wasm32-unknown-unknown` target may not be installed
+    = help: consider downloading the target with `rustup target add wasm32-unknown-unknown`
+
+  error: requires `sized` lang_item
+
+  libunwind: malformed __unwind_info at 0x18AC83CA8 bad second level page
+  error: cannot find macro `println` in this scope
+   --> src/main.rs:3:5
+    |
+  3 |                 println!("{}", env!("RUSTC_VERSION"));
+    |                 ^^^^^^^
+
+  For more information about this error, try `rustc --explain E0463`.
+  libunwind: malformed __unwind_info at 0x18AC83CA8 bad second level page
+  error: could not compile `wasm-test` (lib) due to 2 previous errors
+  warning: build failed, waiting for other jobs to finish...
+  error: could not compile `wasm-test` (bin "wasm-test") due to 3 previous errors
+  ------------------------------------------------------------
+
+warning: build failed, waiting for other jobs to finish...
+```
+
+</details>
+
+- _Cause_: `wasm32-unknown-unknown` target is not installed or may be it's installed but due to switching of channels, it's not supported anymore.
+- _Solution_: If the error is popping up even after doing `$ rustup target add wasm32-unknown-unknown` & `$ rustup target install wasm32-unknown-unknown` then just uninstall `rustup` entirely and then reinstall. Build again. It would be fixed now.
+
 ## References
 
 ### Official
