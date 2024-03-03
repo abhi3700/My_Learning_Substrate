@@ -2,16 +2,17 @@
 
 ## Overview
 
-Build EOSIO node using substrate.
+Build EOSIO node (with modules) using substrate.
 
-## Code
+## Repository
 
-- Node
-- [EOSIO System Pallet](https://github.com/substrate-developer-hub/substrate-node-template/blob/main/pallets/eosio_system)
+- [substrate-eosio](https://github.com/abhi3700/substrate-eosio)
+
+OLD work:
+
+- [EOSIO System Pallet](https://github.com/abhi3700/substrate-playground/blob/main/pallets/eosio_system)
 
 ## [Architecture](../img/node-dpos.drawio)
-
-## Theory
 
 ## References
 
