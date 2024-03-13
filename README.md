@@ -254,6 +254,9 @@ There is also a feature of crowdloan where anyone holding DOT can lend to projec
   - polkascan: <https://explorer.polkascan.io/kusama>
   - <https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama.api.onfinality.io%2Fpublic-ws#/explorer>
 - [Substrate Utilities by Shawn](https://www.shawntabrizi.com/substrate-js-utilities/)
+- CLIs
+  - [`subxt`](https://docs.rs/subxt/latest/subxt/book/setup/codegen/index.html): to generate substrate node metadata that is analogous to smart contract's ABI. To install, just use `cargo install subxt-cli`. [Usage](https://docs.rs/subxt/latest/subxt/book/setup/codegen/index.html)
+  - `subkey`: to generate keys like `cast` of foundry for evm chains. Follow my [notes](https://github.com/abhi3700/My_Learning_Substrate/blob/2ec47aba422fddad11df2bfef8267d018ae38b3f/tools/subkey) for installation & usage.
 
 ## Packages
 
@@ -632,6 +635,7 @@ flowchart
 - [Polkadot Doc](https://paritytech.github.io/polkadot_page/)
 - [Cumulus | docs.rs](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/cumulus/index.html)
 - Collection of Useful Bridge Building Tools 🏗️: [Github](https://github.com/paritytech/parity-bridges-common)
+- [Simple EVM TPS tool](https://github.com/paritytech/evm-tps)
 
 ## Unofficial
 
