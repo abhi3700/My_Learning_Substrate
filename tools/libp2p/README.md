@@ -115,3 +115,4 @@ So, each peer has to store part of a file in its own storage. This is done by th
 ## References
 
 - [A Crash Course in P2P](https://blog.bytebytego.com/p/a-crash-course-in-p2p) by ByteByteGo ✅
+- <https://www.youtube.com/watch?v=dszmcR5hOPw>
