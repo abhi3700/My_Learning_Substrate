@@ -128,6 +128,28 @@ Parachain --when less budget--> ParaThread --when more budget--> Parachain
 
 - Follow [this](https://docs.substrate.io/quick-start/)
 
+1. Run PolkadotJS App locally as block explorer.
+
+```sh
+yarn --version
+v1.22.19
+
+# inside polkadotjs apps repo.
+yarn install
+
+# Open in localhost:3000.
+yarn start
+```
+
+To set, refer [this](https://github.com/abhi3700/My_Learning_NodeJSTS/blob/a3e71fc73d3884f6172628fab139ca7d31bd86ed/README.md?plain=1#L103-L162). Open code tab.
+
+2. Run a substrate node as 9994 port.
+
+```sh
+./target/release/substrate-node-template ...
+```
+
+
 ## Parachains
 
 - People interacting with parachains via smart contracts won't have to have DOT tokens to pay for fees. Instead, they'll pay in the native token of the parachain. So, with this feature user would not need to have DOT tokens in order to make any transaction on parachain. This is a huge step towards mass adoption because it would be easier for the user to interact with the parachain rather than having to buy DOT tokens.
