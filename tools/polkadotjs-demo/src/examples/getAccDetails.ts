@@ -4,11 +4,12 @@
 
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import { AccountInfo } from "@polkadot/types/interfaces";
-import { POLKADOT_API_URL } from "./constants";
+import { POLKADOT_RPC_API_URL } from "./constants";
 
 async function getAccountDetails(address: string) {
-    const provider = new WsProvider(POLKADOT_API_URL);
+    const provider = new WsProvider(POLKADOT_RPC_API_URL);
     const api = await ApiPromise.create({ provider });
+    await api.isReady;
 
     // Query the account information and cast to the expected type
     const accountInfo = (await api.query.system.account(

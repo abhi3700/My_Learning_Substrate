@@ -1,0 +1,18 @@
+[package]
+name = "tuts"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Substrate core primitives
+# sp-core = "28.0.0"
+sp-core = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "master", package = "sp-core" }
+# sp-runtime = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "master", package = "sp-runtime" }
+# sp-std = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "master", package = "sp-std" }
+
+# # FRAME support crates for types like BoundedVec, StorageMap, etc.
+frame-support = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "master", package = "frame-support" }
+# frame-system = { git = "https://github.com/paritytech/polkadot-sdk.git", branch = "master", package = "frame-system" }
+eyre = "0.6.12"

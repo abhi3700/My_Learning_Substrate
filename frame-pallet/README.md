@@ -115,6 +115,54 @@ All the related notes are maintained [here](./pallet-notes/) or in the `README` 
   - macros are syntactical sugars or a way to improve the developer UX in the compiled languages.
 
 - **FRAME pallet**: The runtime modules which are used to build the runtime. They are different from the typical smart contracts which are generally designed to be used by the end-users. FRAME pallets are designed to be used by the blockchain developers. They are like the building blocks of the blockchain runtime. Also, they are very important for the L0 network stakeholders like validators, collators, etc.
+- **Runtime API**: `decl_runtime_apis` is used to expose the functions that we want to fetch externally.
+  Example code:
+
+  In pallet, declare via `sp_api::decl_runtime_apis!`:
+
+  > Write this at the bottom of the pallet.
+
+  ```rust
+  // Source code: https://github.com/subspace/subspace/blob/f79f225b799f16c2a9efe41123a8c75307e50456/crates/sp-objects/src/lib.rs#L29-L38
+  sp_api::decl_runtime_apis! {
+      pub trait ObjectsApi {
+          /// Returns all the validated object call hashes for a given block
+          fn validated_object_call_hashes() -> Vec<Hash>;
+
+          /// Extract block object mapping for a given block
+          fn extract_block_object_mapping(block: Block, validated_object_calls: Vec<Hash>) -> BlockObjectMapping;
+      }
+  }
+  ```
+
+  And then one can implement the trait (`ObjectsApi` in this case) for Runtime in `runtime/src/lib.rs` file.<br/>
+  The implementation of runtime apis of all pallets has to happen inside one block (curly braces) via `impl_runtime_apis!`:
+
+  ```rust
+  impl_runtime_apis! {
+      impl pallet_balances::BalancesApi<Block, AccountId, Balance> for Runtime {
+        // ....
+      }
+
+      impl pallet_transaction_fees::TotalSpacePledgedApi<Block> for Runtime {
+          fn get_total_space_pledged() -> u128 {
+              self::TotalSpacePledged::get()
+          }
+      }
+  }
+  ```
+
+  <u>Pros</u>: It's just a wrapper around Runtime API methods (e.g. `State_getMetadata`), and has zero calls.
+
+- **Custom RPC**: This is more like JSON RPC. We can use `subxt` crate for this.<br/>
+  Make sure:
+  - add `subxt` crate to your project
+  - generate metadata using `subxt-cli` command having a node running.
+  - write code to fetch the data from your ws url.
+
+  <u>Cons</u>: It has some runtime overhead in comparison to direct runtime api calls.
+
+  So, always select Runtime APIs over Custom RPC if you want to lessen the technical debt/overhead. 🎉
 
 ## Comparo with EVM
 
@@ -264,7 +312,7 @@ One can transfer
 
 FRAME is itself a programming language. It's a DSL (Domain Specific Language) for writing Substrate runtime, pallets.
 
-#### Before jumping any further, I would highly recommend to try this small module - [Balance module](https://github.com/abhi3700/My_Learning-Rust/tree/main/pro/balance_module), to understand the jump from simple to complex rust code snippets.
+#### Before jumping any further, I would highly recommend to try this small module - [Balance module](https://github.com/abhi3700/My_Learning-Rust/tree/main/pro/balance_module), to understand the jump from simple to complex rust code snippets
 
 ### FRAME macros
 
@@ -364,7 +412,7 @@ And therefore, we get to see `<T>`, `T::` like `T::AccountId`, `T::BlockNumber`.
 
 [Source](https://docs.substrate.io/build/pallet-coupling/)
 
-More than one pallets when dependent on each other, they are said to be coupled. There are two types of coupling:
+More than one pallet when depend on each other, they are said to be coupled. There are two types of coupling:
 
 - Tight coupling
 - Loose coupling
@@ -388,10 +436,10 @@ All FRAME pallets are tightly coupled to the `frame_system` pallet. This is more
    ```toml
    [dependencies]
 
-   # external dependencies
+   # external dependencies i.e. pallet is imported as crate that might have been used in other runtimes like Balances pallet, Sudo pallet, etc.
    pallet-some = { default-features = false, version = '2.0.0',  git = "https://github.com/pallet_some/pallet-some.git" }
 
-   # internal dependencies
+   # internal dependencies i.e. pallet is one of the modules in my runtime
    pallet-some = { default-features = false, version = '2.0.0',  path = "../pallet-some" }
    ```
 
@@ -409,6 +457,12 @@ All FRAME pallets are tightly coupled to the `frame_system` pallet. This is more
 - **Reusability**: both modules are to be used together, if they are dependent on each other.
 
 #### Loose coupling
+
+<details><summary>Diagram:</summary>
+
+![](../img/loose_coupling.png)
+
+</details>
 
 [Source](https://docs.substrate.io/reference/how-to-guides/pallet-design/use-loose-coupling/)
 
@@ -679,10 +733,10 @@ Here, the `PhantomData` is a zero-date size type.
 
 ```rs
 #[derive(
-	frame_support::CloneNoBound,
-	frame_support::EqNoBound,
-	frame_support::PartialEqNoBound,
-	frame_support::RuntimeDebugNoBound,
+ frame_support::CloneNoBound,
+ frame_support::EqNoBound,
+ frame_support::PartialEqNoBound,
+ frame_support::RuntimeDebugNoBound,
 )]
 ```
 
@@ -789,17 +843,17 @@ using Hooks implementation.
 ```rs
 #[pallet::call]
 impl<T: Config> for Pallet<T> {
-	/// $some_doc
-	#[pallet::weight($ExpressionResultingInWeight)]
-	pub fn $fn_name(
-		origin: OriginFor<T>, // NOTE: mandatory
-		$some_arg: $some_type,
-		// or with compact attribute: #[pallet::compact] $some_arg: $some_type,
-		...
-	) -> DispatchResultWithPostInfo { // or `-> DispatchResult`
-		...
-	}
-	...
+ /// $some_doc
+ #[pallet::weight($ExpressionResultingInWeight)]
+ pub fn $fn_name(
+  origin: OriginFor<T>, // NOTE: mandatory
+  $some_arg: $some_type,
+  // or with compact attribute: #[pallet::compact] $some_arg: $some_type,
+  ...
+ ) -> DispatchResultWithPostInfo { // or `-> DispatchResult`
+  ...
+ }
+ ...
 }
 ```
 
@@ -1011,16 +1065,16 @@ And in `mock.rs` file, add like this:
 
 ```rust
 frame_support::construct_runtime!(
-	pub enum Test where
-		Block = Block,
-		NodeBlock = Block,
-		UncheckedExtrinsic = UncheckedExtrinsic,
-	{
-		System: frame_system,
-		// used as dependency (for handling accounts and balances) for pallet_lockable_currency
-		Balances: pallet_balances,
-		LockableCurrency: pallet_lockable_currency,
-	}
+ pub enum Test where
+  Block = Block,
+  NodeBlock = Block,
+  UncheckedExtrinsic = UncheckedExtrinsic,
+ {
+  System: frame_system,
+  // used as dependency (for handling accounts and balances) for pallet_lockable_currency
+  Balances: pallet_balances,
+  LockableCurrency: pallet_lockable_currency,
+ }
 );
 
 impl pallet_balances::Config for Test {
@@ -1081,11 +1135,11 @@ The `node-template` command-line options specify how you want the running node t
 **1st time**:
 
 ```console
-$ git clone https://github.com/substrate-developer-hub/substrate-node-template
-$ cd substrate-node-template
-$ git switch -c my-branch-v0.9.29
-$ cargo build --release
-$ ./target/release/node-template --dev
+git clone https://github.com/substrate-developer-hub/substrate-node-template
+cd substrate-node-template
+git switch -c my-branch-v0.9.29
+cargo build --release
+./target/release/node-template --dev
 ```
 
 > check for the latest version [here](https://github.com/substrate-developer-hub/substrate-node-template/tags)
@@ -1132,22 +1186,22 @@ We can see the full log stored in a file (on VSCode):
 **1st time**:
 
 ```console
-$ git clone https://github.com/substrate-developer-hub/substrate-front-end-template
-$ cd substrate-front-end-template
-$ gco latest
-$ yarn install  // `v1.22.1` was not able to download semantic-ui dependency, so chose npm instead
-$ npm i
-$ npm run start or yarn start
+git clone https://github.com/substrate-developer-hub/substrate-front-end-template
+cd substrate-front-end-template
+gco latest
+yarn install  // `v1.22.1` was not able to download semantic-ui dependency, so chose npm instead
+npm i
+npm run start or yarn start
 ```
 
 **next time onwards**:
 
 ```console
-$ gco main
-$ git pull origin main
-$ gco latest
-$ npm i
-$ npm run start
+gco main
+git pull origin main
+gco latest
+npm i
+npm run start
 ```
 
 It opens [this](http://localhost:8000/substrate-front-end-template)
@@ -1206,7 +1260,7 @@ We can start a private blockchain network with an **authority set** of private *
 First clear the data from the node `alice`:
 
 ```sh
-$ ./target/release/node-template purge-chain --base-path /tmp/alice --chain local
+./target/release/node-template purge-chain --base-path /tmp/alice --chain local
 ```
 
 ![](../img/simulate-network-clear-data-alice.png)
@@ -1247,7 +1301,7 @@ You can view the block explorer [here](https://polkadot.js.org/apps/?rpc=ws%3A%2
 First clear the data from the node `bob`:
 
 ```sh
-$ ./target/release/node-template purge-chain --base-path /tmp/bob --chain local -y
+./target/release/node-template purge-chain --base-path /tmp/bob --chain local -y
 ```
 
 ![](../img/simulate-network-clear-data-bob.png)

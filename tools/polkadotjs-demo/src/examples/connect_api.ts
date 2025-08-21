@@ -1,11 +1,16 @@
 /**
  * Put this file inside `src/examples/` folder
  */
-import { createSubstrateApiInstance } from "./create_api";
+import { ApiPromise, WsProvider } from "@polkadot/api";
 
-export async function connectApi(rpc_api_url: string) {
-    // Create the API and wait until ready
-    const api = await createSubstrateApiInstance(rpc_api_url);
+export async function main(rpc_api_url: string) {
+    const rpcApiUrl = rpc_api_url;
+    // Construct
+    const wsProvider = new WsProvider(rpcApiUrl);
+    const api = await ApiPromise.create({
+        provider: wsProvider,
+    });
+    await api.isReady;
 
     // Retrieve the chain & node information information via rpc calls
     const [chain, nodeName, nodeVersion] = await Promise.all([

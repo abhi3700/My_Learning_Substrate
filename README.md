@@ -359,6 +359,7 @@ It shows comparo b/w legacy & polkadot blockchains.
   - Pool xy=k pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/pool-xyk>
   - trading pair pallet: <https://github.com/sora-xor/sora2-network/tree/master/pallets/trading-pair>
 - [A tutorial for building a Decentralized Exchange Pallet using the Polkadot SDK](https://github.com/philoniare/polkadot-sdk-tutorial-dex)
+- [Equilibrium: cross-chain money market on Substrate & EVM](https://github.com/equilibrium-eosdt/equilibrium-substrate-chain)
 
 ## Troubleshooting
 
